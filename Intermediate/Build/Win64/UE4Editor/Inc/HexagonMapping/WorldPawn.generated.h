@@ -14,8 +14,22 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define HEXAGONMAPPING_WorldPawn_generated_h
 
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_15_SPARSE_DATA
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_15_RPC_WRAPPERS
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_15_RPC_WRAPPERS_NO_PURE_DECLS
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_15_RPC_WRAPPERS \
+ \
+	DECLARE_FUNCTION(execAddPitchInput); \
+	DECLARE_FUNCTION(execAddYawInput); \
+	DECLARE_FUNCTION(execDeActivateRotation); \
+	DECLARE_FUNCTION(execActivateRotation);
+
+
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
+ \
+	DECLARE_FUNCTION(execAddPitchInput); \
+	DECLARE_FUNCTION(execAddYawInput); \
+	DECLARE_FUNCTION(execDeActivateRotation); \
+	DECLARE_FUNCTION(execActivateRotation);
+
+
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_15_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAWorldPawn(); \

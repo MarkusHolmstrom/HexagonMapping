@@ -20,7 +20,7 @@ void AHexagonMappingPlayerController::PlayerTick(float DeltaTime)
 	// keep updating the destination every tick while desired
 	if (bMoveToMouseCursor)
 	{
-		MoveToMouseCursor();
+		//MoveToMouseCursor();
 	}
 }
 
@@ -29,8 +29,8 @@ void AHexagonMappingPlayerController::SetupInputComponent()
 	// set up gameplay key bindings
 	Super::SetupInputComponent();
 
-	InputComponent->BindAction("SetDestination", IE_Pressed, this, &AHexagonMappingPlayerController::OnSetDestinationPressed);
-	InputComponent->BindAction("SetDestination", IE_Released, this, &AHexagonMappingPlayerController::OnSetDestinationReleased);
+	/*InputComponent->BindAction("SetDestination", IE_Pressed, this, &AHexagonMappingPlayerController::OnSetDestinationPressed);
+	InputComponent->BindAction("SetDestination", IE_Released, this, &AHexagonMappingPlayerController::OnSetDestinationReleased);*/
 
 	// support touch devices 
 	InputComponent->BindTouch(EInputEvent::IE_Pressed, this, &AHexagonMappingPlayerController::MoveToTouchLocation);

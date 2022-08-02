@@ -23,8 +23,24 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UStaticMeshComponent* SphereMesh;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Rotation)
+	bool CanRotate = false;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Rotation)
+	int RotationSpeed = 30;
+
 	// Sets default values for this pawn's properties
 	AWorldPawn();
+
+	UFUNCTION()
+	void ActivateRotation();
+	UFUNCTION()
+	void DeActivateRotation();
+	UFUNCTION()
+	void AddYawInput(float Val);
+	UFUNCTION()
+	void AddPitchInput(float Val);
+	UFUNCTION()
+	void SetZooming(float Val);
 
 protected:
 	// Called when the game starts or when spawned

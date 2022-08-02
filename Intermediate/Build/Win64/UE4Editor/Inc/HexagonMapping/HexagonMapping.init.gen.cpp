@@ -21,7 +21,7 @@ void EmptyLinkFunctionForGeneratedCodeHexagonMapping_init() {}
 				nullptr,
 				0,
 				PKG_CompiledIn | 0x00000000,
-				0x44C4929F,
+				0xB80C4619,
 				0x4374A86B,
 				METADATA_PARAMS(nullptr, 0)
 			};

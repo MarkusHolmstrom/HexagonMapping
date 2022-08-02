@@ -7,6 +7,7 @@
 /IGNORE:4221
 /NODEFAULTLIB
 "C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\HexagonMappingEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.obj"
+"C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\WorldPawn.cpp.obj"
 "C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\HexagonMapping.cpp.obj"
 "C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\HexagonMappingCharacter.cpp.obj"
 "C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\HexagonMappingGameMode.cpp.obj"
@@ -15,5 +16,6 @@
 "C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\HexagonMappingCharacter.gen.cpp.obj"
 "C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\HexagonMappingGameMode.gen.cpp.obj"
 "C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\HexagonMappingPlayerController.gen.cpp.obj"
+"C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\WorldPawn.gen.cpp.obj"
 "C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\Default.rc2.res"
 /OUT:"C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\UE4Editor-HexagonMapping.lib"

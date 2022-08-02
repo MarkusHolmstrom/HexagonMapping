@@ -3,7 +3,7 @@
   <ItemGroup>
     <None Include="..\..\HexagonMapping.uproject" />
     <Filter Include="Source">
-      <UniqueIdentifier>{2A4AA5AE-6450-460E-9434-82399F4AE607}</UniqueIdentifier>
+      <UniqueIdentifier>{7C9937DC-CA52-4F4F-A975-F65B1744AF0F}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\HexagonMapping.Target.cs">
       <Filter>Source</Filter>
@@ -11,8 +11,11 @@
     <None Include="..\..\Source\HexagonMappingEditor.Target.cs">
       <Filter>Source</Filter>
     </None>
+    <None Include="..\..\.gitattributes" />
+    <None Include="..\..\.gitignore" />
+    <None Include="..\..\README.md" />
     <Filter Include="Config">
-      <UniqueIdentifier>{9FFD853F-6F8D-48C4-9125-A52EE6F6ED24}</UniqueIdentifier>
+      <UniqueIdentifier>{0CCFBB74-CC15-40D6-A181-BC33F7DC1BFE}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Config\DefaultEditor.ini">
       <Filter>Config</Filter>
@@ -30,7 +33,7 @@
       <Filter>Config</Filter>
     </None>
     <Filter Include="Source\HexagonMapping">
-      <UniqueIdentifier>{2B6B0FD9-546A-4D08-B3F9-E0814E10FCA6}</UniqueIdentifier>
+      <UniqueIdentifier>{978F382D-02C3-4FE6-AD77-94D5346FA144}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\HexagonMapping\HexagonMapping.Build.cs">
       <Filter>Source\HexagonMapping</Filter>
@@ -58,6 +61,24 @@
     </ClCompile>
     <ClInclude Include="..\..\Source\HexagonMapping\HexagonMappingPlayerController.h">
       <Filter>Source\HexagonMapping</Filter>
+    </ClInclude>
+    <Filter Include="Source\HexagonMapping\Private">
+      <UniqueIdentifier>{C1A69D4B-4FCA-459C-8893-8AF80F787595}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\HexagonMapping\Private\Earth">
+      <UniqueIdentifier>{686FD557-49A6-463A-8BB0-A8FA82F160F7}</UniqueIdentifier>
+    </Filter>
+    <ClCompile Include="..\..\Source\HexagonMapping\Private\Earth\WorldPawn.cpp">
+      <Filter>Source\HexagonMapping\Private\Earth</Filter>
+    </ClCompile>
+    <Filter Include="Source\HexagonMapping\Public">
+      <UniqueIdentifier>{780A24D5-F369-45F4-AC1C-D4F1D180E21C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\HexagonMapping\Public\Earth">
+      <UniqueIdentifier>{1A2508D9-5A93-4CDA-A9F4-D01860376A19}</UniqueIdentifier>
+    </Filter>
+    <ClInclude Include="..\..\Source\HexagonMapping\Public\Earth\WorldPawn.h">
+      <Filter>Source\HexagonMapping\Public\Earth</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

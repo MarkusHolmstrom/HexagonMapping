@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"C:\\Users\\Marku\\OneDrive\\Dokument\\Unreal Projects\\HexagonMapping\\Source\\HexagonMapping\\HexagonMapping.Build.cs",
+		"C:\\Users\\Marku\\OneDrive\\Dokument\\Unreal Projects\\HexagonMapping\\Source\\HexagonMapping.Target.cs",
+		"C:\\Users\\Marku\\OneDrive\\Dokument\\Unreal Projects\\HexagonMapping\\Source\\HexagonMappingEditor.Target.cs"
+	],
+	"EngineVersion": "4.27.2"
+}

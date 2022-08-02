@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "HexagonMapping",
+			"Path": "C:\\Users\\Marku\\OneDrive\\Dokument\\Unreal Projects\\HexagonMapping\\Source\\HexagonMapping.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "HexagonMappingEditor",
+			"Path": "C:\\Users\\Marku\\OneDrive\\Dokument\\Unreal Projects\\HexagonMapping\\Source\\HexagonMappingEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}

@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <None Include="..\..\HexagonMapping.uproject" />
+    <Filter Include="Source">
+      <UniqueIdentifier>{2A4AA5AE-6450-460E-9434-82399F4AE607}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\HexagonMapping.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <None Include="..\..\Source\HexagonMappingEditor.Target.cs">
+      <Filter>Source</Filter>
+    </None>
+    <Filter Include="Config">
+      <UniqueIdentifier>{9FFD853F-6F8D-48C4-9125-A52EE6F6ED24}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\DefaultEditor.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEditorPerProjectUserSettings.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultEngine.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultGame.ini">
+      <Filter>Config</Filter>
+    </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Source\HexagonMapping">
+      <UniqueIdentifier>{2B6B0FD9-546A-4D08-B3F9-E0814E10FCA6}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Source\HexagonMapping\HexagonMapping.Build.cs">
+      <Filter>Source\HexagonMapping</Filter>
+    </None>
+    <ClCompile Include="..\..\Source\HexagonMapping\HexagonMapping.cpp">
+      <Filter>Source\HexagonMapping</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\HexagonMapping\HexagonMapping.h">
+      <Filter>Source\HexagonMapping</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\HexagonMapping\HexagonMappingCharacter.cpp">
+      <Filter>Source\HexagonMapping</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\HexagonMapping\HexagonMappingCharacter.h">
+      <Filter>Source\HexagonMapping</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\HexagonMapping\HexagonMappingGameMode.cpp">
+      <Filter>Source\HexagonMapping</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\HexagonMapping\HexagonMappingGameMode.h">
+      <Filter>Source\HexagonMapping</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\HexagonMapping\HexagonMappingPlayerController.cpp">
+      <Filter>Source\HexagonMapping</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\HexagonMapping\HexagonMappingPlayerController.h">
+      <Filter>Source\HexagonMapping</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

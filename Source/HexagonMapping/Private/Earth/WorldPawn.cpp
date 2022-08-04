@@ -4,6 +4,8 @@
 #include "Earth/WorldPawn.h"
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Camera/CameraComponent.h"
+#include "Camera/CameraActor.h"
 
 // Sets default values
 AWorldPawn::AWorldPawn()
@@ -23,19 +25,22 @@ void AWorldPawn::BeginPlay()
 {
 	Super::BeginPlay();
 	SphereMesh->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
+	if (!CameraComponent)
+	{
+		CameraComponent = CameraActor->FindComponentByClass<UCameraComponent>();
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("cam comp found"));
+
+	}
 }
 
 void AWorldPawn::ActivateRotation()
 {
 	CanRotate = true;
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("activate"));
 }
 
 void AWorldPawn::DeActivateRotation()
 {
 	CanRotate = false;
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("deactivate"));
-
 }
 
 void AWorldPawn::AddYawInput(float Val)
@@ -57,7 +62,22 @@ void AWorldPawn::AddPitchInput(float Val)
 
 void AWorldPawn::SetZooming(float Val)
 {
-	
+	if (CameraComponent && Val != 0)
+	{
+		if (DefaultCameraFOV <= MAXFOV && DefaultCameraFOV >= MINFOV)
+		{
+			CameraComponent->SetFieldOfView(FMath::Lerp(CameraComponent->FieldOfView, 
+				DefaultCameraFOV -= Val * ZoomSpeed, 0.1f));
+		}
+		else if (DefaultCameraFOV > MAXFOV)
+		{
+			DefaultCameraFOV = MAXFOV;
+		}
+		else if (DefaultCameraFOV < MINFOV)
+		{
+			DefaultCameraFOV = MINFOV;
+		}
+	}
 }
 
 // Called every frame

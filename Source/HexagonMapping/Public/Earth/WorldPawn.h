@@ -8,6 +8,9 @@
 
 class USphereComponent;
 class UStaticMeshComponent;
+class ACameraActor;
+class UCameraComponent;
+
 
 UCLASS()
 class HEXAGONMAPPING_API AWorldPawn : public APawn
@@ -28,6 +31,18 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Rotation)
 	int RotationSpeed = 30;
 
+	UPROPERTY(EditAnywhere)
+	ACameraActor* CameraActor;
+	UPROPERTY(EditAnywhere)
+	UCameraComponent* CameraComponent;
+	UPROPERTY(EditAnywhere)
+	float DefaultCameraFOV = 90;
+	UPROPERTY(EditAnywhere)
+		float MAXFOV = 120;
+	UPROPERTY(EditAnywhere)
+		float MINFOV = 40;
+	UPROPERTY(EditAnywhere)
+	float ZoomSpeed = 5;
 	// Sets default values for this pawn's properties
 	AWorldPawn();
 

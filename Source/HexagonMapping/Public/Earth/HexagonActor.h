@@ -10,12 +10,10 @@ class HexagonInformation;
 class UStaticMeshComponent;
 
 UENUM()
-enum class EHexType : uint8
+enum EHexType
 {
-	INVALID,
 	Desert, Tundra, Plains, Grassland, Mountain, 
-	Jungle, Ocean, Shore, Snow, Ice,
-	MAX UMETA(Hidden) // hidden in editor max enum value
+	Jungle, Ocean, Shore, Snow, Ice
 };
 
 UCLASS()
@@ -26,8 +24,8 @@ class HEXAGONMAPPING_API AHexagonActor : public AActor
 
 public:	
 	// nsort: desert, tundra, plains, grassland, mountain, jungle - string, enum
-	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = TileInformation)
-	EHexType Type;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = TileInformation)
+	TEnumAsByte<EHexType> Type;
 	// trees/hill (def resource) string
 	UPROPERTY(EditAnywhere, Category = TileInformation)
 	FString Hinder = "None";

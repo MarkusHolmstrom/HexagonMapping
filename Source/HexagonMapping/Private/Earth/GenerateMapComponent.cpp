@@ -90,7 +90,7 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 			const float yPos = y * VerOffset;
 
 			FClimateInfo FCI;
-			if (IsLandMoreLikely(x, y, bLandLikely) && y >= 9 && y <= 90)
+			if (IsLandMoreLikely(x, y, bLandLikely))
 			{
 				// This arrays content give larger chance of land tiles
 				FCI = GetCorrectClimate(y, true);
@@ -222,7 +222,7 @@ bool UGenerateMapComponent::IsLandMoreLikely(int32 X, int32 Y, bool Land)
 {
 	if (LandLikely.Contains(FIntPoint(X, Y)))
 	{
-		LandLikely.Empty();
+		//LandLikely.Empty();
 		return true;
 	}
 	else if (OceanLikely.Contains(FIntPoint(X, Y)))
@@ -234,24 +234,40 @@ bool UGenerateMapComponent::IsLandMoreLikely(int32 X, int32 Y, bool Land)
 	if (Land)
 	{
 		// add positive tiles to make em more likely to be land tiles
-		LandLikely.Add(FIntPoint(X, Y));
-		LandLikely.Add(FIntPoint(X, Y + 1));
-		if (Y > 0) // removed to save some performance?
-		{
-			LandLikely.Add(FIntPoint(X + 1, Y - 1));
-		}
+		LandLikely.Add(FIntPoint(X, Y)); 
+		LandLikely.Add(FIntPoint(X, Y + 1)); 
 		LandLikely.Add(FIntPoint(X + 1, Y));
+		if (X > 0)
+		{
+			LandLikely.Add(FIntPoint(X - 1, Y + 1));
+			//LandLikely.Add(FIntPoint(X - 1, Y + 2));
+		}
+		//LandLikely.Add(FIntPoint(X + 2, Y));
+		//LandLikely.Add(FIntPoint(X + 1, Y + 1));
+		//LandLikely.Add(FIntPoint(X + 1, Y + 2));
+		/*if (X > 1)
+		{
+			LandLikely.Add(FIntPoint(X - 2, Y + 1));
+		}*/
 		return true;
 	}
 	else
 	{
 		OceanLikely.Add(FIntPoint(X, Y));
+		OceanLikely.Add(FIntPoint(X + 1, Y + 1));
+		OceanLikely.Add(FIntPoint(X + 1, Y + 2));
 		OceanLikely.Add(FIntPoint(X, Y + 1));
-		if (Y > 0)
+		if (X > 1)
 		{
-			OceanLikely.Add(FIntPoint(X + 1, Y - 1));
+			OceanLikely.Add(FIntPoint(X - 2, Y + 1));
+		}
+		if (X > 0)
+		{
+			OceanLikely.Add(FIntPoint(X - 1, Y + 1));
+			OceanLikely.Add(FIntPoint(X - 1, Y + 2));
 		}
 		OceanLikely.Add(FIntPoint(X + 1, Y));
+		OceanLikely.Add(FIntPoint(X + 2, Y));
 		return false;
 	}
 }

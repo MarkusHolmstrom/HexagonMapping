@@ -212,9 +212,9 @@ public:
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
 		float WaterLikelihood = 0.6f;
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
-		float DefaultLandMultiplier = 0.2f;
+		float DefaultLandMultiplier = 0.5f;
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
-		float IncreasedLandMultiplier = 6.6f;
+		float IncreasedLandMultiplier = 12.5f;
 
 	// Create lieklkyhood for land/water, than decide what tile it will be
 

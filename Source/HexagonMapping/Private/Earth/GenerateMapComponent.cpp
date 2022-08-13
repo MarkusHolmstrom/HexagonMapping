@@ -243,6 +243,12 @@ bool UGenerateMapComponent::IsLandMoreLikely(int32 X, int32 Y, bool Land)
 			LandLikely.Add(FIntPoint(X - 1, Y + 1));
 			//LandLikely.Add(FIntPoint(X - 1, Y + 2));
 		}
+		else
+		{
+			// Opposite side of the map
+			LandLikely.Add(FIntPoint(100 - 1, Y));
+			LandLikely.Add(FIntPoint(100 - 1, Y + 1));
+		}
 		//LandLikely.Add(FIntPoint(X + 2, Y));
 		//LandLikely.Add(FIntPoint(X + 1, Y + 1));
 		//LandLikely.Add(FIntPoint(X + 1, Y + 2));
@@ -261,6 +267,10 @@ bool UGenerateMapComponent::IsLandMoreLikely(int32 X, int32 Y, bool Land)
 		if (X > 1)
 		{
 			OceanLikely.Add(FIntPoint(X - 2, Y + 1));
+		}
+		else
+		{
+			OceanLikely.Add(FIntPoint(100 - 1, Y + 1));
 		}
 		if (X > 0)
 		{

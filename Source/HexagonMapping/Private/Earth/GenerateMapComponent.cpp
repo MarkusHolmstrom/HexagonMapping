@@ -233,7 +233,8 @@ bool UGenerateMapComponent::IsLandMoreLikely(int32 X, int32 Y, bool Land)
 
 	if (Land)
 	{
-		// add positive tiles to make em more likely to be land tiles
+		// add positive tiles (that has not been iterated) to make em 
+		// more likely to be land tiles
 		LandLikely.Add(FIntPoint(X, Y)); 
 		LandLikely.Add(FIntPoint(X, Y + 1)); 
 		LandLikely.Add(FIntPoint(X + 1, Y));

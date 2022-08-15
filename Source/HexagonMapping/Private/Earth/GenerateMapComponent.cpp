@@ -235,7 +235,7 @@ bool UGenerateMapComponent::IsLandMoreLikely(int32 X, int32 Y, bool Land)
 	{
 		// add positive tiles (that has not been iterated) to make em 
 		// more likely to be land tiles
-		LandLikely.Add(FIntPoint(X, Y)); 
+		//LandLikely.Add(FIntPoint(X, Y)); 
 		LandLikely.Add(FIntPoint(X, Y + 1)); 
 		LandLikely.Add(FIntPoint(X + 1, Y));
 		if (X > 0)
@@ -249,7 +249,7 @@ bool UGenerateMapComponent::IsLandMoreLikely(int32 X, int32 Y, bool Land)
 			LandLikely.Add(FIntPoint(100 - 1, Y));
 			LandLikely.Add(FIntPoint(100 - 1, Y + 1));
 		}
-		//LandLikely.Add(FIntPoint(X + 2, Y));
+		LandLikely.Add(FIntPoint(X + 2, Y));
 		//LandLikely.Add(FIntPoint(X + 1, Y + 1));
 		//LandLikely.Add(FIntPoint(X + 1, Y + 2));
 		/*if (X > 1)
@@ -260,9 +260,9 @@ bool UGenerateMapComponent::IsLandMoreLikely(int32 X, int32 Y, bool Land)
 	}
 	else
 	{
-		OceanLikely.Add(FIntPoint(X, Y));
+		//OceanLikely.Add(FIntPoint(X, Y));
 		OceanLikely.Add(FIntPoint(X + 1, Y + 1));
-		OceanLikely.Add(FIntPoint(X + 1, Y + 2));
+		//OceanLikely.Add(FIntPoint(X + 1, Y + 2));
 		OceanLikely.Add(FIntPoint(X, Y + 1));
 		if (X > 1)
 		{
@@ -275,10 +275,10 @@ bool UGenerateMapComponent::IsLandMoreLikely(int32 X, int32 Y, bool Land)
 		if (X > 0)
 		{
 			OceanLikely.Add(FIntPoint(X - 1, Y + 1));
-			OceanLikely.Add(FIntPoint(X - 1, Y + 2));
+			//OceanLikely.Add(FIntPoint(X - 1, Y + 2));
 		}
 		OceanLikely.Add(FIntPoint(X + 1, Y));
-		OceanLikely.Add(FIntPoint(X + 2, Y));
+		//OceanLikely.Add(FIntPoint(X + 2, Y));
 		return false;
 	}
 }

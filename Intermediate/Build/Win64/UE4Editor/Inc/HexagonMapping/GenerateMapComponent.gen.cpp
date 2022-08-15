@@ -916,10 +916,6 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		static void NewProp_bLandLikely_SetBit(void* Obj);
 		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_bLandLikely;
 #if WITH_METADATA
-		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_WaterLikelihood_MetaData[];
-#endif
-		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_WaterLikelihood;
-#if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_DefaultLandMultiplier_MetaData[];
 #endif
 		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_DefaultLandMultiplier;
@@ -1194,13 +1190,6 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 	}
 	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_bLandLikely = { "bLandLikely", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(UGenerateMapComponent), &Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_bLandLikely_SetBit, METADATA_PARAMS(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_bLandLikely_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_bLandLikely_MetaData)) };
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_WaterLikelihood_MetaData[] = {
-		{ "Category", "ClimateInfo" },
-		{ "ModuleRelativePath", "Public/Earth/GenerateMapComponent.h" },
-	};
-#endif
-	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_WaterLikelihood = { "WaterLikelihood", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UGenerateMapComponent, WaterLikelihood), METADATA_PARAMS(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_WaterLikelihood_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_WaterLikelihood_MetaData)) };
-#if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_DefaultLandMultiplier_MetaData[] = {
 		{ "Category", "ClimateInfo" },
 		{ "ModuleRelativePath", "Public/Earth/GenerateMapComponent.h" },
@@ -1258,7 +1247,6 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_OceanLikely_Inner,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_OceanLikely,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_bLandLikely,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_WaterLikelihood,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_DefaultLandMultiplier,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_IncreasedLandMultiplier,
 	};
@@ -1289,7 +1277,7 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(UGenerateMapComponent, 2304537131);
+	IMPLEMENT_CLASS(UGenerateMapComponent, 3739083476);
 	template<> HEXAGONMAPPING_API UClass* StaticClass<UGenerateMapComponent>()
 	{
 		return UGenerateMapComponent::StaticClass();

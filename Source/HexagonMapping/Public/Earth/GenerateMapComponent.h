@@ -210,13 +210,9 @@ public:
 	bool bLandLikely = false;
 
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
-		float WaterLikelihood = 0.6f;
+		float DefaultLandMultiplier = 0.33f;
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
-		float DefaultLandMultiplier = 0.25f;
-	UPROPERTY(EditAnywhere, Category = ClimateInfo)
-		float IncreasedLandMultiplier = 8.0f;
-
-	// Create lieklkyhood for land/water, than decide what tile it will be
+		float IncreasedLandMultiplier = 6.0f;
 
 private:
 	FVector Start = FVector(0,0,0);

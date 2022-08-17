@@ -4,17 +4,18 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Enums.h"
 #include "GenerateMapComponent.generated.h"
 
 class AHexagonActor;
 
-UENUM(BlueprintType)
-enum EClimateType 
-{
-	INVALID,
-	Cold, Timid, Normal, Warm, Hot,
-	MAX UMETA(Hidden) // hidden in editor max enum value
-};
+//UENUM(BlueprintType)
+//enum EClimateType 
+//{
+//	INVALID,
+//	Cold, Timid, Normal, Warm, Hot,
+//	MAX UMETA(Hidden) // hidden in editor max enum value
+//};
 
 USTRUCT()
 struct FClimateInfo
@@ -103,8 +104,8 @@ struct FClimateInfo
 
 	//   
 	// Default constructor - without parameters, so it will work inside other structures 
-	FClimateInfo() : MinHor(-1), MaxHor(-1), Modifier(1.0f),
-		ClimateType(EClimateType::INVALID),
+	FClimateInfo() : MinHor(-1), MaxHor(-1), 
+		ClimateType(EClimateType::INVALID), Modifier(1.0f),
 		MapPercentages(TArray<float>(0,0))
 	{
 
@@ -160,9 +161,10 @@ protected:
 		TSubclassOf<AHexagonActor> JungleHexTile;
 	UPROPERTY(EditAnywhere, Category = Tiles)
 		TSubclassOf<AHexagonActor> SnowHexTile;
-
 	UPROPERTY(EditAnywhere, Category = Tiles)
 		TSubclassOf<AHexagonActor> IceHexTile;
+	//UPROPERTY(EditAnywhere, Category = Tiles)
+	//	TArray<AHexagonActor*> AllHexTiles;
 
 	UPROPERTY(EditAnywhere)
 	int32 MapHeight = 100;
@@ -212,9 +214,15 @@ public:
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
 		float DefaultLandMultiplier = 0.33f;
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
-		float IncreasedLandMultiplier = 6.0f;
+		float IncreasedLandMultiplier = 5.4f;
 
 private:
+	int32 CurX;
+	int32 CurY;
+	EHexType CurType;
+	bool bCurIsLand = false;
+
+	//3D sphere stuff
 	FVector Start = FVector(0,0,0);
 	FVector ForwardVector;
 	FVector End;
@@ -236,7 +244,18 @@ public:
 	UFUNCTION()
 	void GenerateMap(int Height, int Width);
 	UFUNCTION()
-	TSubclassOf<AHexagonActor> GetTile(FClimateInfo Info);
+	TSubclassOf<AHexagonActor> SetTile(FClimateInfo Info);
+	UFUNCTION()
+	void SetHexagonInfo(AHexagonActor* Tile, bool Land);
+	UFUNCTION()
+	TSubclassOf<AHexagonActor> SetWaterTile(int32 X, int32 Y);
+	UFUNCTION()
+	bool CheckTileForCoast(int32 X, int32 Y);
+	UFUNCTION()
+	AHexagonActor* GetTile(int32 X, int32 Y);
+	UFUNCTION()
+	void SetShoreTilesAround(int32 X, int32 Y);
+
 	UFUNCTION()
 	bool IsLandMoreLikely(int32 X, int32 Y, bool Land);
 	UFUNCTION()

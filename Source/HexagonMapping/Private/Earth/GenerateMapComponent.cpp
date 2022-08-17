@@ -4,6 +4,7 @@
 #include "Earth/GenerateMapComponent.h"
 #include "DrawDebugHelpers.h"
 #include "Earth/HexagonActor.h"
+#include "Enums.h"
 
 // Sets default values for this component's properties
 UGenerateMapComponent::UGenerateMapComponent()
@@ -100,11 +101,17 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 			{
 				FCI = GetCorrectClimate(y, false);
 			}
-			TSubclassOf<AHexagonActor> tileToSpawn = GetTile(FCI);
+			CurX = x;
+			CurY = y;
+			TSubclassOf<AHexagonActor> tileToSpawn = SetTile(FCI);
 			//RandomFloatIndex = UpdateRandomIndex(RandomFloatIndex);
+			if (bCurIsLand)
+			{
+				SetShoreTilesAround(CurX, CurY);
+			}
 			AHexagonActor* newTile = GetWorld()->SpawnActor<AHexagonActor>(tileToSpawn, FVector(FIntPoint(xPos, yPos)), FRotator::ZeroRotator);
-			newTile->TileIndex = FIntPoint(x, y);
-			
+			SetHexagonInfo(newTile, true);
+			//AllHexTiles.Add(newTile);
 			bLandLikely = SetLikelihoodLand(newTile);
 			//newTile->SetActorLabel(FString::Printf(TEXT("Tile %d, %d"), x, y));
 			HexGrid[x][y] = newTile;
@@ -112,40 +119,50 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 	}
 }
 
-TSubclassOf<AHexagonActor> UGenerateMapComponent::GetTile(FClimateInfo Info)
+TSubclassOf<AHexagonActor> UGenerateMapComponent::SetTile(FClimateInfo Info)
 {
+	bCurIsLand = true;
 	if (FMath::RandRange(0.0f, 1.0f) <= Info.GrasslandPercentage)
 	{
+		CurType = EHexType::Grassland;
 		return GrassHexTile;
 	}
 	if (FMath::RandRange(0.0f, 1.0f) <= Info.PlainsPercentage)
 	{
+		CurType = EHexType::Plains;
 		return PlainsHexTile;
 	}
 	if (FMath::RandRange(0.0f, 1.0f) <= Info.DesertPercentage)
 	{
+		CurType = EHexType::Desert;
 		return DesertHexTile;
 	}
 	if (FMath::RandRange(0.0f, 1.0f) <= Info.MountainPercentage)
 	{
+		CurType = EHexType::Mountain;
 		return MountainHexTile;
 	}
 	if (FMath::RandRange(0.0f, 1.0f) <= Info.JunglePercentage)
 	{
+		CurType = EHexType::Jungle;
 		return JungleHexTile;
 	}
 	if (FMath::RandRange(0.0f, 1.0f) <= Info.TundraPercentage)
 	{
+		CurType = EHexType::Tundra;
 		return TundraHexTile;
 	}
 	if (FMath::RandRange(0.0f, 1.0f) <= Info.IcePercentage)
 	{
+		CurType = EHexType::Ice;
 		return IceHexTile;
 	}
 	if (FMath::RandRange(0.0f, 1.0f) <= Info.SnowPercentage)
 	{
+		CurType = EHexType::Snow;
 		return SnowHexTile;
 	}
+	bCurIsLand = false;
 	/*if (RandomFloatList[RandomFloatIndex] <= Info.GrasslandPercentage)
 	{
 		return GrassHexTile;
@@ -215,6 +232,35 @@ TSubclassOf<AHexagonActor> UGenerateMapComponent::GetTile(FClimateInfo Info)
 		return SnowHexTile;
 	}*/
 	/*RandomIndex = FMath::RandRange(0, RandomListLength - 1);*/
+	return SetWaterTile(CurX, CurY);
+}
+
+void UGenerateMapComponent::SetHexagonInfo(AHexagonActor* Tile, bool Land)
+{
+	if (Land)
+	{
+		Tile->Type = CurType;
+		//Tile->Hinder = 
+		Tile->MoveCost = 1.0f;
+		//Tile->Resource =
+		//Tile->ResourceType =
+		Tile->DefModifier = 1.5f;
+		Tile->Appeal = 2;
+		Tile->Continent = "Your continent name here, plz...";
+		Tile->TileIndex = FIntPoint(CurX, CurY);
+	}
+}
+
+TSubclassOf<AHexagonActor> UGenerateMapComponent::SetWaterTile(int32 X, int32 Y)
+{
+	if (CheckTileForCoast(X - 1, Y - 1) || 
+		CheckTileForCoast(X, Y - 1) || 
+		CheckTileForCoast(X - 1, Y))
+	{
+		CurType = EHexType::Shore;
+		return ShoreHexTile;
+	}
+	CurType = EHexType::Ocean;
 	return WaterHexTile;
 }
 
@@ -252,10 +298,10 @@ bool UGenerateMapComponent::IsLandMoreLikely(int32 X, int32 Y, bool Land)
 		LandLikely.Add(FIntPoint(X + 2, Y));
 		//LandLikely.Add(FIntPoint(X + 1, Y + 1));
 		//LandLikely.Add(FIntPoint(X + 1, Y + 2));
-		/*if (X > 1)
+		if (X > 1)
 		{
 			LandLikely.Add(FIntPoint(X - 2, Y + 1));
-		}*/
+		}
 		return true;
 	}
 	else
@@ -281,6 +327,72 @@ bool UGenerateMapComponent::IsLandMoreLikely(int32 X, int32 Y, bool Land)
 		//OceanLikely.Add(FIntPoint(X + 2, Y));
 		return false;
 	}
+}
+
+
+bool UGenerateMapComponent::CheckTileForCoast(int32 X, int32 Y)
+{
+	if (LandLikely.Contains(FIntPoint(X, Y)))
+	{
+		return true;
+	}
+	else if (GetTile(X, Y))
+	{
+		if (GetTile(X, Y)->Type != EHexType::Ocean &&
+			GetTile(X, Y)->Type != EHexType::Shore)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else // if (OceanLikely.Contains(FIntPoint(X, Y)))
+	{
+		return false;
+	}
+}
+
+AHexagonActor* UGenerateMapComponent::GetTile(int32 X, int32 Y)
+{
+	if (HexGrid.IsValidIndex(X) && HexGrid.IsValidIndex(Y))
+	{
+		return HexGrid[X][Y];
+	}
+	return nullptr;
+}
+
+void UGenerateMapComponent::SetShoreTilesAround(int32 X, int32 Y)
+{
+	if (Y > 0)
+	{
+		if (GetTile(X, Y - 1)->Type == EHexType::Ocean)
+		{
+			GetTile(X, Y - 1)->Type == EHexType::Shore;
+			HexGrid[X][Y - 1]->Destroy();
+			HexGrid[X][Y - 1] = GetWorld()->SpawnActor<AHexagonActor>(ShoreHexTile,
+				HexGrid[X][Y - 1]->GetActorLocation(), FRotator::ZeroRotator);
+			return;
+		}
+		else if (X > 0 && GetTile(X - 1, Y - 1)->Type == EHexType::Ocean)
+		{
+			GetTile(X - 1, Y - 1)->Type == EHexType::Shore;
+			HexGrid[X - 1][Y - 1]->Destroy();
+			HexGrid[X - 1][Y - 1] = GetWorld()->SpawnActor<AHexagonActor>(ShoreHexTile,
+				HexGrid[X - 1][Y - 1]->GetActorLocation(), FRotator::ZeroRotator);
+			return;
+		}
+	}
+	if (X > 0 && GetTile(X - 1, Y)->Type == EHexType::Ocean)
+	{
+		GetTile(X - 1, Y)->Type == EHexType::Shore;
+		HexGrid[X - 1][Y]->Destroy();
+		HexGrid[X - 1][Y] = GetWorld()->SpawnActor<AHexagonActor>(ShoreHexTile,
+			HexGrid[X - 1][Y]->GetActorLocation(), FRotator::ZeroRotator);
+		return;
+	}
+
 }
 
 bool UGenerateMapComponent::SetLikelihoodLand(AHexagonActor* Tile)

@@ -1,5 +1,6 @@
 C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\Definitions.HexagonMapping.h
 C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Source\HexagonMapping\Public\Earth/GenerateMapComponent.h
+C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Source\HexagonMapping\Public\Enums.h
 C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Inc\HexagonMapping\GenerateMapComponent.generated.h
 C:\UE_4.27\Engine\Source\Runtime\Engine\Public\DrawDebugHelpers.h
 C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Source\HexagonMapping\Public\Earth/HexagonActor.h

@@ -4,6 +4,7 @@
 #include "Earth/HexagonActor.h"
 #include "Components/SceneComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Enums.h"
 
 // Sets default values
 AHexagonActor::AHexagonActor()

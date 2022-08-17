@@ -3,7 +3,7 @@
   <ItemGroup>
     <None Include="..\..\HexagonMapping.uproject" />
     <Filter Include="Source">
-      <UniqueIdentifier>{89096580-068C-4FD8-975D-8E1374E160CA}</UniqueIdentifier>
+      <UniqueIdentifier>{67E3420D-6455-4BC5-9385-F47A9BAA9728}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\HexagonMapping.Target.cs">
       <Filter>Source</Filter>
@@ -15,7 +15,7 @@
     <None Include="..\..\.gitignore" />
     <None Include="..\..\README.md" />
     <Filter Include="Config">
-      <UniqueIdentifier>{C49E4E40-91B1-4BE5-9828-E047DE1F9B27}</UniqueIdentifier>
+      <UniqueIdentifier>{D1838938-4A3F-426A-9E83-AA204A1EF738}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Config\DefaultEditor.ini">
       <Filter>Config</Filter>
@@ -33,7 +33,7 @@
       <Filter>Config</Filter>
     </None>
     <Filter Include="Source\HexagonMapping">
-      <UniqueIdentifier>{7B1C9AA9-23E3-4315-A88B-16E1AB026FCB}</UniqueIdentifier>
+      <UniqueIdentifier>{446EEC36-9AD2-4EAE-B6F1-4ABF9F469A1A}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\HexagonMapping\HexagonMapping.Build.cs">
       <Filter>Source\HexagonMapping</Filter>
@@ -63,10 +63,13 @@
       <Filter>Source\HexagonMapping</Filter>
     </ClInclude>
     <Filter Include="Source\HexagonMapping\Private">
-      <UniqueIdentifier>{A86BCE1D-E55E-4808-BE85-F11F5507B789}</UniqueIdentifier>
+      <UniqueIdentifier>{554C202C-428B-41A6-A70D-C9DFBB77F90C}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\HexagonMapping\Private\Enums.cpp">
+      <Filter>Source\HexagonMapping\Private</Filter>
+    </ClCompile>
     <Filter Include="Source\HexagonMapping\Private\Earth">
-      <UniqueIdentifier>{9A8EF053-ABF3-4930-AD4B-2AF9CDB4028C}</UniqueIdentifier>
+      <UniqueIdentifier>{A4D72DC6-5506-4443-8A90-6C4EE479C906}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\HexagonMapping\Private\Earth\GenerateMapComponent.cpp">
       <Filter>Source\HexagonMapping\Private\Earth</Filter>
@@ -81,10 +84,13 @@
       <Filter>Source\HexagonMapping\Private\Earth</Filter>
     </ClCompile>
     <Filter Include="Source\HexagonMapping\Public">
-      <UniqueIdentifier>{75AB401E-21D1-429C-8971-F2630D986D5D}</UniqueIdentifier>
+      <UniqueIdentifier>{73AFA114-6848-4DC3-99FE-97F951A1BE48}</UniqueIdentifier>
     </Filter>
+    <ClInclude Include="..\..\Source\HexagonMapping\Public\Enums.h">
+      <Filter>Source\HexagonMapping\Public</Filter>
+    </ClInclude>
     <Filter Include="Source\HexagonMapping\Public\Earth">
-      <UniqueIdentifier>{16706908-F058-4A07-A500-67859107CFD3}</UniqueIdentifier>
+      <UniqueIdentifier>{A9550189-D3AC-4087-B9B8-DE56CA069397}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="..\..\Source\HexagonMapping\Public\Earth\GenerateMapComponent.h">
       <Filter>Source\HexagonMapping\Public\Earth</Filter>

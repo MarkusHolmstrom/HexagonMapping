@@ -4,17 +4,11 @@
 //// https://www.youtube.com/watch?v=viw8QLV-lJ8
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Enums.h"
 #include "HexagonActor.generated.h"
 
 class HexagonInformation;
 class UStaticMeshComponent;
-
-UENUM()
-enum EHexType
-{
-	Desert, Tundra, Plains, Grassland, Mountain, 
-	Jungle, Ocean, Shore, Snow, Ice
-};
 
 UCLASS()
 class HEXAGONMAPPING_API AHexagonActor : public AActor
@@ -23,21 +17,21 @@ class HEXAGONMAPPING_API AHexagonActor : public AActor
 
 
 public:	
-	// nsort: desert, tundra, plains, grassland, mountain, jungle - string, enum
+	// nsort: desert, tundra, plains, grassland, mountain, jungle, snow, ice, ocean, shore
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = TileInformation)
 	TEnumAsByte<EHexType> Type;
 	// trees/hill (def resource) string
 	UPROPERTY(EditAnywhere, Category = TileInformation)
-	FString Hinder = "None";
+	EHinder Hinder = EHinder::None;
 	// movement cost, float 1-3?
 	UPROPERTY(EditAnywhere, Category = TileInformation)
 	float MoveCost = 1;
 	// resource - bonus or luxury - Enum
 	UPROPERTY(EditAnywhere, Category = TileInformation)
-	FString Resource = "None";
+	EResource Resource = EResource::None;
 	// (specific resource) enum? string
 	UPROPERTY(EditAnywhere, Category = TileInformation)
-	FString ResourceType = "None";
+	EResourceType ResourceType = EResourceType::None;
 	// defensive modifier float or int
 	UPROPERTY(EditAnywhere, Category = TileInformation)
 	float DefModifier = 0;

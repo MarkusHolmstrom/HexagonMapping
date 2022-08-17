@@ -13,83 +13,14 @@
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeHexagonActor() {}
 // Cross Module References
-	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EHexType();
-	UPackage* Z_Construct_UPackage__Script_HexagonMapping();
 	HEXAGONMAPPING_API UClass* Z_Construct_UClass_AHexagonActor_NoRegister();
 	HEXAGONMAPPING_API UClass* Z_Construct_UClass_AHexagonActor();
 	ENGINE_API UClass* Z_Construct_UClass_AActor();
+	UPackage* Z_Construct_UPackage__Script_HexagonMapping();
+	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EHexType();
 	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FIntPoint();
 	ENGINE_API UClass* Z_Construct_UClass_UStaticMeshComponent_NoRegister();
 // End Cross Module References
-	static UEnum* EHexType_StaticEnum()
-	{
-		static UEnum* Singleton = nullptr;
-		if (!Singleton)
-		{
-			Singleton = GetStaticEnum(Z_Construct_UEnum_HexagonMapping_EHexType, Z_Construct_UPackage__Script_HexagonMapping(), TEXT("EHexType"));
-		}
-		return Singleton;
-	}
-	template<> HEXAGONMAPPING_API UEnum* StaticEnum<EHexType>()
-	{
-		return EHexType_StaticEnum();
-	}
-	static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EHexType(EHexType_StaticEnum, TEXT("/Script/HexagonMapping"), TEXT("EHexType"), false, nullptr, nullptr);
-	uint32 Get_Z_Construct_UEnum_HexagonMapping_EHexType_Hash() { return 1712888034U; }
-	UEnum* Z_Construct_UEnum_HexagonMapping_EHexType()
-	{
-#if WITH_HOT_RELOAD
-		UPackage* Outer = Z_Construct_UPackage__Script_HexagonMapping();
-		static UEnum* ReturnEnum = FindExistingEnumIfHotReloadOrDynamic(Outer, TEXT("EHexType"), 0, Get_Z_Construct_UEnum_HexagonMapping_EHexType_Hash(), false);
-#else
-		static UEnum* ReturnEnum = nullptr;
-#endif // WITH_HOT_RELOAD
-		if (!ReturnEnum)
-		{
-			static const UE4CodeGen_Private::FEnumeratorParam Enumerators[] = {
-				{ "Desert", (int64)Desert },
-				{ "Tundra", (int64)Tundra },
-				{ "Plains", (int64)Plains },
-				{ "Grassland", (int64)Grassland },
-				{ "Mountain", (int64)Mountain },
-				{ "Jungle", (int64)Jungle },
-				{ "Ocean", (int64)Ocean },
-				{ "Shore", (int64)Shore },
-				{ "Snow", (int64)Snow },
-				{ "Ice", (int64)Ice },
-			};
-#if WITH_METADATA
-			const UE4CodeGen_Private::FMetaDataPairParam Enum_MetaDataParams[] = {
-				{ "Desert.Name", "Desert" },
-				{ "Grassland.Name", "Grassland" },
-				{ "Ice.Name", "Ice" },
-				{ "Jungle.Name", "Jungle" },
-				{ "ModuleRelativePath", "Public/Earth/HexagonActor.h" },
-				{ "Mountain.Name", "Mountain" },
-				{ "Ocean.Name", "Ocean" },
-				{ "Plains.Name", "Plains" },
-				{ "Shore.Name", "Shore" },
-				{ "Snow.Name", "Snow" },
-				{ "Tundra.Name", "Tundra" },
-			};
-#endif
-			static const UE4CodeGen_Private::FEnumParams EnumParams = {
-				(UObject*(*)())Z_Construct_UPackage__Script_HexagonMapping,
-				nullptr,
-				"EHexType",
-				"EHexType",
-				Enumerators,
-				UE_ARRAY_COUNT(Enumerators),
-				RF_Public|RF_Transient|RF_MarkAsNative,
-				EEnumFlags::None,
-				UE4CodeGen_Private::EDynamicType::NotDynamic,
-				(uint8)UEnum::ECppForm::Regular,
-				METADATA_PARAMS(Enum_MetaDataParams, UE_ARRAY_COUNT(Enum_MetaDataParams))
-			};
-			UE4CodeGen_Private::ConstructUEnum(ReturnEnum, EnumParams);
-		}
-		return ReturnEnum;
-	}
 	void AHexagonActor::StaticRegisterNativesAHexagonActor()
 	{
 	}
@@ -103,10 +34,11 @@ void EmptyLinkFunctionForGeneratedCodeHexagonActor() {}
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam Class_MetaDataParams[];
 #endif
+		static const UE4CodeGen_Private::FBytePropertyParams NewProp_Type_Underlying;
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_Type_MetaData[];
 #endif
-		static const UE4CodeGen_Private::FBytePropertyParams NewProp_Type;
+		static const UE4CodeGen_Private::FEnumPropertyParams NewProp_Type;
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_Hinder_MetaData[];
 #endif
@@ -153,10 +85,13 @@ void EmptyLinkFunctionForGeneratedCodeHexagonActor() {}
 	};
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AHexagonActor_Statics::Class_MetaDataParams[] = {
+		{ "Comment", "//UENUM(BlueprintType)\n//enum EHexType\n//{\n//\x09""Desert, Tundra, Plains, Grassland, Mountain, \n//\x09Jungle, Ocean, Shore, Snow, Ice\n//};\n" },
 		{ "IncludePath", "Earth/HexagonActor.h" },
 		{ "ModuleRelativePath", "Public/Earth/HexagonActor.h" },
+		{ "ToolTip", "UENUM(BlueprintType)\nenum EHexType\n{\n       Desert, Tundra, Plains, Grassland, Mountain,\n       Jungle, Ocean, Shore, Snow, Ice\n};" },
 	};
 #endif
+	const UE4CodeGen_Private::FBytePropertyParams Z_Construct_UClass_AHexagonActor_Statics::NewProp_Type_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UE4CodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, nullptr, METADATA_PARAMS(nullptr, 0) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AHexagonActor_Statics::NewProp_Type_MetaData[] = {
 		{ "Category", "TileInformation" },
@@ -165,7 +100,7 @@ void EmptyLinkFunctionForGeneratedCodeHexagonActor() {}
 		{ "ToolTip", "nsort: desert, tundra, plains, grassland, mountain, jungle - string, enum" },
 	};
 #endif
-	const UE4CodeGen_Private::FBytePropertyParams Z_Construct_UClass_AHexagonActor_Statics::NewProp_Type = { "Type", nullptr, (EPropertyFlags)0x0010000000000005, UE4CodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AHexagonActor, Type), Z_Construct_UEnum_HexagonMapping_EHexType, METADATA_PARAMS(Z_Construct_UClass_AHexagonActor_Statics::NewProp_Type_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AHexagonActor_Statics::NewProp_Type_MetaData)) };
+	const UE4CodeGen_Private::FEnumPropertyParams Z_Construct_UClass_AHexagonActor_Statics::NewProp_Type = { "Type", nullptr, (EPropertyFlags)0x0010000000000005, UE4CodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AHexagonActor, Type), Z_Construct_UEnum_HexagonMapping_EHexType, METADATA_PARAMS(Z_Construct_UClass_AHexagonActor_Statics::NewProp_Type_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AHexagonActor_Statics::NewProp_Type_MetaData)) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AHexagonActor_Statics::NewProp_Hinder_MetaData[] = {
 		{ "Category", "TileInformation" },
@@ -247,6 +182,7 @@ void EmptyLinkFunctionForGeneratedCodeHexagonActor() {}
 #endif
 	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AHexagonActor_Statics::NewProp_MeshTile = { "MeshTile", nullptr, (EPropertyFlags)0x001000000009000d, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AHexagonActor, MeshTile), Z_Construct_UClass_UStaticMeshComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_AHexagonActor_Statics::NewProp_MeshTile_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AHexagonActor_Statics::NewProp_MeshTile_MetaData)) };
 	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AHexagonActor_Statics::PropPointers[] = {
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AHexagonActor_Statics::NewProp_Type_Underlying,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AHexagonActor_Statics::NewProp_Type,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AHexagonActor_Statics::NewProp_Hinder,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AHexagonActor_Statics::NewProp_MoveCost,
@@ -285,7 +221,7 @@ void EmptyLinkFunctionForGeneratedCodeHexagonActor() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AHexagonActor, 128942988);
+	IMPLEMENT_CLASS(AHexagonActor, 510867745);
 	template<> HEXAGONMAPPING_API UClass* StaticClass<AHexagonActor>()
 	{
 		return AHexagonActor::StaticClass();

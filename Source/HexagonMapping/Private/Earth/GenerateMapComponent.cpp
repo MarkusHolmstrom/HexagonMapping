@@ -5,6 +5,7 @@
 #include "DrawDebugHelpers.h"
 #include "Earth/HexagonActor.h"
 #include "Enums.h"
+#include "Components/StaticMeshComponent.h"
 
 // Sets default values for this component's properties
 UGenerateMapComponent::UGenerateMapComponent()
@@ -113,6 +114,17 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 			SetHexagonInfo(newTile, true);
 			//AllHexTiles.Add(newTile);
 			bLandLikely = SetLikelihoodLand(newTile);
+			// Check if hill will be set:
+			newTile->bHasHill = GetHill(newTile);
+			// Check if add forest or not
+			if (newTile->Type == EHexType::Grassland || newTile->Type == EHexType::Plains || newTile->Type == EHexType::Tundra)
+			{
+				float ForestChance = FMath::RandRange(0.0f, 1.0f);
+				if (ForestChance < ForestPercentage)
+				{
+					GetWorld()->SpawnActor<AHexagonActor>(GetTrees(ForestChance), FVector(FIntPoint(xPos, yPos)), FRotator::ZeroRotator);
+				}
+			}
 			//newTile->SetActorLabel(FString::Printf(TEXT("Tile %d, %d"), x, y));
 			HexGrid[x][y] = newTile;
 		}
@@ -369,7 +381,7 @@ void UGenerateMapComponent::SetShoreTilesAround(int32 X, int32 Y)
 	{
 		if (GetTile(X, Y - 1)->Type == EHexType::Ocean)
 		{
-			GetTile(X, Y - 1)->Type == EHexType::Shore;
+			GetTile(X, Y - 1)->Type = EHexType::Shore;
 			HexGrid[X][Y - 1]->Destroy();
 			HexGrid[X][Y - 1] = GetWorld()->SpawnActor<AHexagonActor>(ShoreHexTile,
 				HexGrid[X][Y - 1]->GetActorLocation(), FRotator::ZeroRotator);
@@ -377,7 +389,7 @@ void UGenerateMapComponent::SetShoreTilesAround(int32 X, int32 Y)
 		}
 		else if (X > 0 && GetTile(X - 1, Y - 1)->Type == EHexType::Ocean)
 		{
-			GetTile(X - 1, Y - 1)->Type == EHexType::Shore;
+			GetTile(X - 1, Y - 1)->Type = EHexType::Shore;
 			HexGrid[X - 1][Y - 1]->Destroy();
 			HexGrid[X - 1][Y - 1] = GetWorld()->SpawnActor<AHexagonActor>(ShoreHexTile,
 				HexGrid[X - 1][Y - 1]->GetActorLocation(), FRotator::ZeroRotator);
@@ -386,7 +398,7 @@ void UGenerateMapComponent::SetShoreTilesAround(int32 X, int32 Y)
 	}
 	if (X > 0 && GetTile(X - 1, Y)->Type == EHexType::Ocean)
 	{
-		GetTile(X - 1, Y)->Type == EHexType::Shore;
+		GetTile(X - 1, Y)->Type = EHexType::Shore;
 		HexGrid[X - 1][Y]->Destroy();
 		HexGrid[X - 1][Y] = GetWorld()->SpawnActor<AHexagonActor>(ShoreHexTile,
 			HexGrid[X - 1][Y]->GetActorLocation(), FRotator::ZeroRotator);
@@ -464,6 +476,41 @@ FClimateInfo UGenerateMapComponent::GetCorrectClimate(int32 Index, bool HigherPo
 		return ClimateInfo[4];
 	}
 	return FClimateInfo();
+}
+
+TSubclassOf<AHexagonActor> UGenerateMapComponent::GetTrees(float Random)
+{
+	if (Random < ForestPercentage * 0.25)
+	{
+		return TreeTiles[0];
+	}
+	else if (Random < ForestPercentage * 0.5)
+	{
+		return TreeTiles[1];
+	}
+	else if (Random < ForestPercentage * 0.75)
+	{
+		return TreeTiles[2];
+	}
+	else 
+	{
+		return TreeTiles[3];
+	}
+}
+
+bool UGenerateMapComponent::GetHill(AHexagonActor* Hex)
+{
+	if (Hex->Type != EHexType::Ocean && Hex->Type != EHexType::Shore && Hex->Type != EHexType::Mountain)
+	{
+		float HillChance = FMath::RandRange(0.0f, 1.0f);
+		if (HillChance < HillPercentage)
+		{
+			AHexagonActor* Hill = GetWorld()->SpawnActor<AHexagonActor>(HillTile, 
+				Hex->GetActorLocation(),FRotator::ZeroRotator);
+			Hill->MeshTile = Hex->MeshTile;
+		}
+	}
+	return false;
 }
 
 TArray<float> UGenerateMapComponent::SetRandomList()

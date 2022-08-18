@@ -19,7 +19,7 @@ class HEXAGONMAPPING_API AHexagonActor : public AActor
 public:	
 	// nsort: desert, tundra, plains, grassland, mountain, jungle, snow, ice, ocean, shore
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = TileInformation)
-	TEnumAsByte<EHexType> Type;
+	EHexType Type;
 	// trees/hill (def resource) string
 	UPROPERTY(EditAnywhere, Category = TileInformation)
 	EHinder Hinder = EHinder::None;
@@ -43,6 +43,8 @@ public:
 	FString Continent = "Europe";
 	// basic resource(s) custom class
 
+	UPROPERTY(EditAnywhere, Category = TileInformation)
+		bool bHasHill = false;
 	UPROPERTY(EditAnywhere)
 	FIntPoint TileIndex;
 

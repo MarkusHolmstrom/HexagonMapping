@@ -36,7 +36,7 @@ enum class EResourceType : uint8
 	// Basic:
 	Banana, Fish, 
 	// Bonus:
-	Horses, Iron, Copper, Coal, Oil, Uranium,
+	Coal, Copper, Horses, Iron, Oil, Uranium,
 	// Luxury:
 	Amber, Citrus, Diamonds, Ivory, Lithium, Gold, Salt, Silver, Tobacco 
 };

@@ -13,10 +13,219 @@
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeEnums() {}
 // Cross Module References
-	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EClimateType();
+	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EResourceType();
 	UPackage* Z_Construct_UPackage__Script_HexagonMapping();
+	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EResource();
+	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EHinder();
+	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EClimateType();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EHexType();
 // End Cross Module References
+	static UEnum* EResourceType_StaticEnum()
+	{
+		static UEnum* Singleton = nullptr;
+		if (!Singleton)
+		{
+			Singleton = GetStaticEnum(Z_Construct_UEnum_HexagonMapping_EResourceType, Z_Construct_UPackage__Script_HexagonMapping(), TEXT("EResourceType"));
+		}
+		return Singleton;
+	}
+	template<> HEXAGONMAPPING_API UEnum* StaticEnum<EResourceType>()
+	{
+		return EResourceType_StaticEnum();
+	}
+	static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EResourceType(EResourceType_StaticEnum, TEXT("/Script/HexagonMapping"), TEXT("EResourceType"), false, nullptr, nullptr);
+	uint32 Get_Z_Construct_UEnum_HexagonMapping_EResourceType_Hash() { return 3846036059U; }
+	UEnum* Z_Construct_UEnum_HexagonMapping_EResourceType()
+	{
+#if WITH_HOT_RELOAD
+		UPackage* Outer = Z_Construct_UPackage__Script_HexagonMapping();
+		static UEnum* ReturnEnum = FindExistingEnumIfHotReloadOrDynamic(Outer, TEXT("EResourceType"), 0, Get_Z_Construct_UEnum_HexagonMapping_EResourceType_Hash(), false);
+#else
+		static UEnum* ReturnEnum = nullptr;
+#endif // WITH_HOT_RELOAD
+		if (!ReturnEnum)
+		{
+			static const UE4CodeGen_Private::FEnumeratorParam Enumerators[] = {
+				{ "EResourceType::None", (int64)EResourceType::None },
+				{ "EResourceType::Banana", (int64)EResourceType::Banana },
+				{ "EResourceType::Fish", (int64)EResourceType::Fish },
+				{ "EResourceType::Coal", (int64)EResourceType::Coal },
+				{ "EResourceType::Copper", (int64)EResourceType::Copper },
+				{ "EResourceType::Horses", (int64)EResourceType::Horses },
+				{ "EResourceType::Iron", (int64)EResourceType::Iron },
+				{ "EResourceType::Oil", (int64)EResourceType::Oil },
+				{ "EResourceType::Uranium", (int64)EResourceType::Uranium },
+				{ "EResourceType::Amber", (int64)EResourceType::Amber },
+				{ "EResourceType::Citrus", (int64)EResourceType::Citrus },
+				{ "EResourceType::Diamonds", (int64)EResourceType::Diamonds },
+				{ "EResourceType::Ivory", (int64)EResourceType::Ivory },
+				{ "EResourceType::Lithium", (int64)EResourceType::Lithium },
+				{ "EResourceType::Gold", (int64)EResourceType::Gold },
+				{ "EResourceType::Salt", (int64)EResourceType::Salt },
+				{ "EResourceType::Silver", (int64)EResourceType::Silver },
+				{ "EResourceType::Tobacco", (int64)EResourceType::Tobacco },
+			};
+#if WITH_METADATA
+			const UE4CodeGen_Private::FMetaDataPairParam Enum_MetaDataParams[] = {
+				{ "Amber.Comment", "// Luxury:\n" },
+				{ "Amber.Name", "EResourceType::Amber" },
+				{ "Amber.ToolTip", "Luxury:" },
+				{ "Banana.Comment", "// Basic:\n" },
+				{ "Banana.Name", "EResourceType::Banana" },
+				{ "Banana.ToolTip", "Basic:" },
+				{ "BlueprintType", "true" },
+				{ "Citrus.Name", "EResourceType::Citrus" },
+				{ "Coal.Comment", "// Bonus:\n" },
+				{ "Coal.Name", "EResourceType::Coal" },
+				{ "Coal.ToolTip", "Bonus:" },
+				{ "Copper.Name", "EResourceType::Copper" },
+				{ "Diamonds.Name", "EResourceType::Diamonds" },
+				{ "Fish.Name", "EResourceType::Fish" },
+				{ "Gold.Name", "EResourceType::Gold" },
+				{ "Horses.Name", "EResourceType::Horses" },
+				{ "Iron.Name", "EResourceType::Iron" },
+				{ "Ivory.Name", "EResourceType::Ivory" },
+				{ "Lithium.Name", "EResourceType::Lithium" },
+				{ "ModuleRelativePath", "Public/Enums.h" },
+				{ "None.Name", "EResourceType::None" },
+				{ "Oil.Name", "EResourceType::Oil" },
+				{ "Salt.Name", "EResourceType::Salt" },
+				{ "Silver.Name", "EResourceType::Silver" },
+				{ "Tobacco.Name", "EResourceType::Tobacco" },
+				{ "Uranium.Name", "EResourceType::Uranium" },
+			};
+#endif
+			static const UE4CodeGen_Private::FEnumParams EnumParams = {
+				(UObject*(*)())Z_Construct_UPackage__Script_HexagonMapping,
+				nullptr,
+				"EResourceType",
+				"EResourceType",
+				Enumerators,
+				UE_ARRAY_COUNT(Enumerators),
+				RF_Public|RF_Transient|RF_MarkAsNative,
+				EEnumFlags::None,
+				UE4CodeGen_Private::EDynamicType::NotDynamic,
+				(uint8)UEnum::ECppForm::EnumClass,
+				METADATA_PARAMS(Enum_MetaDataParams, UE_ARRAY_COUNT(Enum_MetaDataParams))
+			};
+			UE4CodeGen_Private::ConstructUEnum(ReturnEnum, EnumParams);
+		}
+		return ReturnEnum;
+	}
+	static UEnum* EResource_StaticEnum()
+	{
+		static UEnum* Singleton = nullptr;
+		if (!Singleton)
+		{
+			Singleton = GetStaticEnum(Z_Construct_UEnum_HexagonMapping_EResource, Z_Construct_UPackage__Script_HexagonMapping(), TEXT("EResource"));
+		}
+		return Singleton;
+	}
+	template<> HEXAGONMAPPING_API UEnum* StaticEnum<EResource>()
+	{
+		return EResource_StaticEnum();
+	}
+	static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EResource(EResource_StaticEnum, TEXT("/Script/HexagonMapping"), TEXT("EResource"), false, nullptr, nullptr);
+	uint32 Get_Z_Construct_UEnum_HexagonMapping_EResource_Hash() { return 2007177657U; }
+	UEnum* Z_Construct_UEnum_HexagonMapping_EResource()
+	{
+#if WITH_HOT_RELOAD
+		UPackage* Outer = Z_Construct_UPackage__Script_HexagonMapping();
+		static UEnum* ReturnEnum = FindExistingEnumIfHotReloadOrDynamic(Outer, TEXT("EResource"), 0, Get_Z_Construct_UEnum_HexagonMapping_EResource_Hash(), false);
+#else
+		static UEnum* ReturnEnum = nullptr;
+#endif // WITH_HOT_RELOAD
+		if (!ReturnEnum)
+		{
+			static const UE4CodeGen_Private::FEnumeratorParam Enumerators[] = {
+				{ "EResource::None", (int64)EResource::None },
+				{ "EResource::Basic", (int64)EResource::Basic },
+				{ "EResource::Bonus", (int64)EResource::Bonus },
+				{ "EResource::Luxury", (int64)EResource::Luxury },
+			};
+#if WITH_METADATA
+			const UE4CodeGen_Private::FMetaDataPairParam Enum_MetaDataParams[] = {
+				{ "Basic.Name", "EResource::Basic" },
+				{ "BlueprintType", "true" },
+				{ "Bonus.Name", "EResource::Bonus" },
+				{ "Luxury.Name", "EResource::Luxury" },
+				{ "ModuleRelativePath", "Public/Enums.h" },
+				{ "None.Name", "EResource::None" },
+			};
+#endif
+			static const UE4CodeGen_Private::FEnumParams EnumParams = {
+				(UObject*(*)())Z_Construct_UPackage__Script_HexagonMapping,
+				nullptr,
+				"EResource",
+				"EResource",
+				Enumerators,
+				UE_ARRAY_COUNT(Enumerators),
+				RF_Public|RF_Transient|RF_MarkAsNative,
+				EEnumFlags::None,
+				UE4CodeGen_Private::EDynamicType::NotDynamic,
+				(uint8)UEnum::ECppForm::EnumClass,
+				METADATA_PARAMS(Enum_MetaDataParams, UE_ARRAY_COUNT(Enum_MetaDataParams))
+			};
+			UE4CodeGen_Private::ConstructUEnum(ReturnEnum, EnumParams);
+		}
+		return ReturnEnum;
+	}
+	static UEnum* EHinder_StaticEnum()
+	{
+		static UEnum* Singleton = nullptr;
+		if (!Singleton)
+		{
+			Singleton = GetStaticEnum(Z_Construct_UEnum_HexagonMapping_EHinder, Z_Construct_UPackage__Script_HexagonMapping(), TEXT("EHinder"));
+		}
+		return Singleton;
+	}
+	template<> HEXAGONMAPPING_API UEnum* StaticEnum<EHinder>()
+	{
+		return EHinder_StaticEnum();
+	}
+	static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EHinder(EHinder_StaticEnum, TEXT("/Script/HexagonMapping"), TEXT("EHinder"), false, nullptr, nullptr);
+	uint32 Get_Z_Construct_UEnum_HexagonMapping_EHinder_Hash() { return 3667371497U; }
+	UEnum* Z_Construct_UEnum_HexagonMapping_EHinder()
+	{
+#if WITH_HOT_RELOAD
+		UPackage* Outer = Z_Construct_UPackage__Script_HexagonMapping();
+		static UEnum* ReturnEnum = FindExistingEnumIfHotReloadOrDynamic(Outer, TEXT("EHinder"), 0, Get_Z_Construct_UEnum_HexagonMapping_EHinder_Hash(), false);
+#else
+		static UEnum* ReturnEnum = nullptr;
+#endif // WITH_HOT_RELOAD
+		if (!ReturnEnum)
+		{
+			static const UE4CodeGen_Private::FEnumeratorParam Enumerators[] = {
+				{ "EHinder::None", (int64)EHinder::None },
+				{ "EHinder::Hill", (int64)EHinder::Hill },
+				{ "EHinder::Trees", (int64)EHinder::Trees },
+			};
+#if WITH_METADATA
+			const UE4CodeGen_Private::FMetaDataPairParam Enum_MetaDataParams[] = {
+				{ "BlueprintType", "true" },
+				{ "Hill.Name", "EHinder::Hill" },
+				{ "ModuleRelativePath", "Public/Enums.h" },
+				{ "None.Name", "EHinder::None" },
+				{ "Trees.Name", "EHinder::Trees" },
+			};
+#endif
+			static const UE4CodeGen_Private::FEnumParams EnumParams = {
+				(UObject*(*)())Z_Construct_UPackage__Script_HexagonMapping,
+				nullptr,
+				"EHinder",
+				"EHinder",
+				Enumerators,
+				UE_ARRAY_COUNT(Enumerators),
+				RF_Public|RF_Transient|RF_MarkAsNative,
+				EEnumFlags::None,
+				UE4CodeGen_Private::EDynamicType::NotDynamic,
+				(uint8)UEnum::ECppForm::EnumClass,
+				METADATA_PARAMS(Enum_MetaDataParams, UE_ARRAY_COUNT(Enum_MetaDataParams))
+			};
+			UE4CodeGen_Private::ConstructUEnum(ReturnEnum, EnumParams);
+		}
+		return ReturnEnum;
+	}
 	static UEnum* EClimateType_StaticEnum()
 	{
 		static UEnum* Singleton = nullptr;

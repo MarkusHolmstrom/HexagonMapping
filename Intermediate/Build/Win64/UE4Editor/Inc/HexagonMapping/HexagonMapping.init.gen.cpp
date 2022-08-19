@@ -21,8 +21,8 @@ void EmptyLinkFunctionForGeneratedCodeHexagonMapping_init() {}
 				nullptr,
 				0,
 				PKG_CompiledIn | 0x00000000,
-				0x5F53D34B,
-				0xC5EB0FAD,
+				0x278F504F,
+				0xABD9480D,
 				METADATA_PARAMS(nullptr, 0)
 			};
 			UE4CodeGen_Private::ConstructUPackage(ReturnPackage, PackageParams);

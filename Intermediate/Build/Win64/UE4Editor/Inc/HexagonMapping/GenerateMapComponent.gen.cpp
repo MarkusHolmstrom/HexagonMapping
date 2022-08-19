@@ -22,6 +22,8 @@ void EmptyLinkFunctionForGeneratedCodeGenerateMapComponent() {}
 	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector();
 	HEXAGONMAPPING_API UClass* Z_Construct_UClass_AHexagonActor_NoRegister();
 	COREUOBJECT_API UClass* Z_Construct_UClass_UClass();
+	HEXAGONMAPPING_API UClass* Z_Construct_UClass_ADetailActor_NoRegister();
+	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EHinder();
 	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FIntPoint();
 // End Cross Module References
 class UScriptStruct* FClimateInfo::StaticStruct()
@@ -304,7 +306,7 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		P_GET_PROPERTY(FFloatProperty,Z_Param_Random);
 		P_FINISH;
 		P_NATIVE_BEGIN;
-		*(TSubclassOf<AHexagonActor> *)Z_Param__Result=P_THIS->GetTrees(Z_Param_Random);
+		*(TSubclassOf<ADetailActor> *)Z_Param__Result=P_THIS->GetTrees(Z_Param_Random);
 		P_NATIVE_END;
 	}
 	DEFINE_FUNCTION(UGenerateMapComponent::execGetCorrectClimate)
@@ -382,9 +384,10 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 	{
 		P_GET_OBJECT(AHexagonActor,Z_Param_Tile);
 		P_GET_UBOOL(Z_Param_Land);
+		P_GET_ENUM(EHinder,Z_Param_Hinder);
 		P_FINISH;
 		P_NATIVE_BEGIN;
-		P_THIS->SetHexagonInfo(Z_Param_Tile,Z_Param_Land);
+		P_THIS->SetHexagonInfo(Z_Param_Tile,Z_Param_Land,EHinder(Z_Param_Hinder));
 		P_NATIVE_END;
 	}
 	DEFINE_FUNCTION(UGenerateMapComponent::execSetTile)
@@ -679,7 +682,7 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		struct GenerateMapComponent_eventGetTrees_Parms
 		{
 			float Random;
-			TSubclassOf<AHexagonActor>  ReturnValue;
+			TSubclassOf<ADetailActor>  ReturnValue;
 		};
 		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_Random;
 		static const UE4CodeGen_Private::FClassPropertyParams NewProp_ReturnValue;
@@ -690,7 +693,7 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		static const UE4CodeGen_Private::FFunctionParams FuncParams;
 	};
 	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UGenerateMapComponent_GetTrees_Statics::NewProp_Random = { "Random", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(GenerateMapComponent_eventGetTrees_Parms, Random), METADATA_PARAMS(nullptr, 0) };
-	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UFunction_UGenerateMapComponent_GetTrees_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0014000000000580, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(GenerateMapComponent_eventGetTrees_Parms, ReturnValue), Z_Construct_UClass_AHexagonActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UFunction_UGenerateMapComponent_GetTrees_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0014000000000580, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(GenerateMapComponent_eventGetTrees_Parms, ReturnValue), Z_Construct_UClass_ADetailActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(nullptr, 0) };
 	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UGenerateMapComponent_GetTrees_Statics::PropPointers[] = {
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UGenerateMapComponent_GetTrees_Statics::NewProp_Random,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UGenerateMapComponent_GetTrees_Statics::NewProp_ReturnValue,
@@ -770,10 +773,13 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		{
 			AHexagonActor* Tile;
 			bool Land;
+			EHinder Hinder;
 		};
 		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_Tile;
 		static void NewProp_Land_SetBit(void* Obj);
 		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_Land;
+		static const UE4CodeGen_Private::FBytePropertyParams NewProp_Hinder_Underlying;
+		static const UE4CodeGen_Private::FEnumPropertyParams NewProp_Hinder;
 		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
@@ -786,9 +792,13 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		((GenerateMapComponent_eventSetHexagonInfo_Parms*)Obj)->Land = 1;
 	}
 	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_UGenerateMapComponent_SetHexagonInfo_Statics::NewProp_Land = { "Land", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(GenerateMapComponent_eventSetHexagonInfo_Parms), &Z_Construct_UFunction_UGenerateMapComponent_SetHexagonInfo_Statics::NewProp_Land_SetBit, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FBytePropertyParams Z_Construct_UFunction_UGenerateMapComponent_SetHexagonInfo_Statics::NewProp_Hinder_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UE4CodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, nullptr, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_UGenerateMapComponent_SetHexagonInfo_Statics::NewProp_Hinder = { "Hinder", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(GenerateMapComponent_eventSetHexagonInfo_Parms, Hinder), Z_Construct_UEnum_HexagonMapping_EHinder, METADATA_PARAMS(nullptr, 0) };
 	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UGenerateMapComponent_SetHexagonInfo_Statics::PropPointers[] = {
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UGenerateMapComponent_SetHexagonInfo_Statics::NewProp_Tile,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UGenerateMapComponent_SetHexagonInfo_Statics::NewProp_Land,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UGenerateMapComponent_SetHexagonInfo_Statics::NewProp_Hinder_Underlying,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UGenerateMapComponent_SetHexagonInfo_Statics::NewProp_Hinder,
 	};
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UGenerateMapComponent_SetHexagonInfo_Statics::Function_MetaDataParams[] = {
@@ -1242,9 +1252,9 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		{ &Z_Construct_UFunction_UGenerateMapComponent_GetEndLocation, "GetEndLocation" }, // 1430992825
 		{ &Z_Construct_UFunction_UGenerateMapComponent_GetHill, "GetHill" }, // 558904244
 		{ &Z_Construct_UFunction_UGenerateMapComponent_GetTile, "GetTile" }, // 1722052232
-		{ &Z_Construct_UFunction_UGenerateMapComponent_GetTrees, "GetTrees" }, // 1052173468
+		{ &Z_Construct_UFunction_UGenerateMapComponent_GetTrees, "GetTrees" }, // 3972870122
 		{ &Z_Construct_UFunction_UGenerateMapComponent_IsLandMoreLikely, "IsLandMoreLikely" }, // 4147419234
-		{ &Z_Construct_UFunction_UGenerateMapComponent_SetHexagonInfo, "SetHexagonInfo" }, // 471466605
+		{ &Z_Construct_UFunction_UGenerateMapComponent_SetHexagonInfo, "SetHexagonInfo" }, // 3727764356
 		{ &Z_Construct_UFunction_UGenerateMapComponent_SetLikelihoodLand, "SetLikelihoodLand" }, // 1052173778
 		{ &Z_Construct_UFunction_UGenerateMapComponent_SetRandomList, "SetRandomList" }, // 511828710
 		{ &Z_Construct_UFunction_UGenerateMapComponent_SetShoreTilesAround, "SetShoreTilesAround" }, // 209382633
@@ -1352,7 +1362,7 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 	};
 #endif
 	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_IceHexTile = { "IceHexTile", nullptr, (EPropertyFlags)0x0024080000000001, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UGenerateMapComponent, IceHexTile), Z_Construct_UClass_AHexagonActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_IceHexTile_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_IceHexTile_MetaData)) };
-	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_TreeTiles_Inner = { "TreeTiles", nullptr, (EPropertyFlags)0x0004000000000000, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, Z_Construct_UClass_AHexagonActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_TreeTiles_Inner = { "TreeTiles", nullptr, (EPropertyFlags)0x0004000000000000, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, Z_Construct_UClass_ADetailActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(nullptr, 0) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_TreeTiles_MetaData[] = {
 		{ "Category", "Details" },
@@ -1373,7 +1383,7 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		{ "ModuleRelativePath", "Public/Earth/GenerateMapComponent.h" },
 	};
 #endif
-	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_HillTile = { "HillTile", nullptr, (EPropertyFlags)0x0024080000000001, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UGenerateMapComponent, HillTile), Z_Construct_UClass_AHexagonActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_HillTile_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_HillTile_MetaData)) };
+	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_HillTile = { "HillTile", nullptr, (EPropertyFlags)0x0024080000000001, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UGenerateMapComponent, HillTile), Z_Construct_UClass_ADetailActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_HillTile_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_HillTile_MetaData)) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_HillPercentage_MetaData[] = {
 		{ "Category", "Details" },
@@ -1622,7 +1632,7 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(UGenerateMapComponent, 2380040476);
+	IMPLEMENT_CLASS(UGenerateMapComponent, 4085775073);
 	template<> HEXAGONMAPPING_API UClass* StaticClass<UGenerateMapComponent>()
 	{
 		return UGenerateMapComponent::StaticClass();

@@ -4,6 +4,7 @@
 #include "Earth/GenerateMapComponent.h"
 #include "DrawDebugHelpers.h"
 #include "Earth/HexagonActor.h"
+#include "Earth/DetailActor.h"
 #include "Enums.h"
 #include "Components/StaticMeshComponent.h"
 
@@ -111,8 +112,9 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 				SetShoreTilesAround(CurX, CurY);
 			}
 			AHexagonActor* newTile = GetWorld()->SpawnActor<AHexagonActor>(tileToSpawn, FVector(FIntPoint(xPos, yPos)), FRotator::ZeroRotator);
-			SetHexagonInfo(newTile, true);
+			
 			//AllHexTiles.Add(newTile);
+			EHinder CurHinder = EHinder::None;
 			bLandLikely = SetLikelihoodLand(newTile);
 			// Check if hill will be set:
 			newTile->bHasHill = GetHill(newTile);
@@ -122,9 +124,11 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 				float ForestChance = FMath::RandRange(0.0f, 1.0f);
 				if (ForestChance < ForestPercentage)
 				{
-					GetWorld()->SpawnActor<AHexagonActor>(GetTrees(ForestChance), FVector(FIntPoint(xPos, yPos)), FRotator::ZeroRotator);
+					CurHinder = EHinder::Trees;
+					GetWorld()->SpawnActor<ADetailActor>(GetTrees(ForestChance), FVector(FIntPoint(xPos, yPos)), FRotator::ZeroRotator);
 				}
 			}
+			SetHexagonInfo(newTile, true, CurHinder);
 			//newTile->SetActorLabel(FString::Printf(TEXT("Tile %d, %d"), x, y));
 			HexGrid[x][y] = newTile;
 		}
@@ -247,13 +251,28 @@ TSubclassOf<AHexagonActor> UGenerateMapComponent::SetTile(FClimateInfo Info)
 	return SetWaterTile(CurX, CurY);
 }
 
-void UGenerateMapComponent::SetHexagonInfo(AHexagonActor* Tile, bool Land)
+void UGenerateMapComponent::SetHexagonInfo(AHexagonActor* Tile, bool Land, EHinder Hinder)
 {
 	if (Land)
 	{
 		Tile->Type = CurType;
-		//Tile->Hinder = 
-		Tile->MoveCost = 1.0f;
+		if (Tile->bHasHill)
+		{
+			// Hills overrides trees, because trees can be removed
+			Tile->Hinder = EHinder::Hill;
+		}
+		else
+		{
+			Tile->Hinder = Hinder;
+		}
+		if (Tile->bHasHill || Tile->Hinder == EHinder::Trees)
+		{
+			Tile->MoveCost = 2.0f;
+		}
+		else
+		{
+			Tile->MoveCost = 1.0f;
+		}
 		//Tile->Resource =
 		//Tile->ResourceType =
 		Tile->DefModifier = 1.5f;
@@ -478,7 +497,7 @@ FClimateInfo UGenerateMapComponent::GetCorrectClimate(int32 Index, bool HigherPo
 	return FClimateInfo();
 }
 
-TSubclassOf<AHexagonActor> UGenerateMapComponent::GetTrees(float Random)
+TSubclassOf<ADetailActor> UGenerateMapComponent::GetTrees(float Random)
 {
 	if (Random < ForestPercentage * 0.25)
 	{
@@ -505,9 +524,9 @@ bool UGenerateMapComponent::GetHill(AHexagonActor* Hex)
 		float HillChance = FMath::RandRange(0.0f, 1.0f);
 		if (HillChance < HillPercentage)
 		{
-			AHexagonActor* Hill = GetWorld()->SpawnActor<AHexagonActor>(HillTile, 
+			ADetailActor* Hill = GetWorld()->SpawnActor<ADetailActor>(HillTile,
 				Hex->GetActorLocation(),FRotator::ZeroRotator);
-			Hill->MeshTile = Hex->MeshTile;
+			Hill->MeshHill->SetMaterial(0, Hex->MeshTile->GetMaterial(0)); 
 		}
 	}
 	return false;

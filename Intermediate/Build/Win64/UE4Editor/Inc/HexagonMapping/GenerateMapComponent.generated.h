@@ -10,21 +10,23 @@
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 struct FVector;
 class AHexagonActor;
+class ADetailActor;
 struct FClimateInfo;
+enum class EHinder : uint8;
 #ifdef HEXAGONMAPPING_GenerateMapComponent_generated_h
 #error "GenerateMapComponent.generated.h already included, missing '#pragma once' in GenerateMapComponent.h"
 #endif
 #define HEXAGONMAPPING_GenerateMapComponent_generated_h
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_24_GENERATED_BODY \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_25_GENERATED_BODY \
 	friend struct Z_Construct_UScriptStruct_FClimateInfo_Statics; \
 	HEXAGONMAPPING_API static class UScriptStruct* StaticStruct();
 
 
 template<> HEXAGONMAPPING_API UScriptStruct* StaticStruct<struct FClimateInfo>();
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_131_SPARSE_DATA
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_131_RPC_WRAPPERS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_132_SPARSE_DATA
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_132_RPC_WRAPPERS \
  \
 	DECLARE_FUNCTION(execShootLaser); \
 	DECLARE_FUNCTION(execGetEndLocation); \
@@ -44,7 +46,7 @@ template<> HEXAGONMAPPING_API UScriptStruct* StaticStruct<struct FClimateInfo>()
 	DECLARE_FUNCTION(execGenerateMap);
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_131_RPC_WRAPPERS_NO_PURE_DECLS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_132_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execShootLaser); \
 	DECLARE_FUNCTION(execGetEndLocation); \
@@ -64,7 +66,7 @@ template<> HEXAGONMAPPING_API UScriptStruct* StaticStruct<struct FClimateInfo>()
 	DECLARE_FUNCTION(execGenerateMap);
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_131_INCLASS_NO_PURE_DECLS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_132_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesUGenerateMapComponent(); \
 	friend struct Z_Construct_UClass_UGenerateMapComponent_Statics; \
@@ -73,7 +75,7 @@ public: \
 	DECLARE_SERIALIZER(UGenerateMapComponent)
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_131_INCLASS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_132_INCLASS \
 private: \
 	static void StaticRegisterNativesUGenerateMapComponent(); \
 	friend struct Z_Construct_UClass_UGenerateMapComponent_Statics; \
@@ -82,7 +84,7 @@ public: \
 	DECLARE_SERIALIZER(UGenerateMapComponent)
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_131_STANDARD_CONSTRUCTORS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_132_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API UGenerateMapComponent(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(UGenerateMapComponent) \
@@ -95,7 +97,7 @@ private: \
 public:
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_131_ENHANCED_CONSTRUCTORS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_132_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API UGenerateMapComponent(UGenerateMapComponent&&); \
@@ -106,7 +108,7 @@ public: \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(UGenerateMapComponent)
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_131_PRIVATE_PROPERTY_OFFSET \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_132_PRIVATE_PROPERTY_OFFSET \
 	FORCEINLINE static uint32 __PPO__HorOffset() { return STRUCT_OFFSET(UGenerateMapComponent, HorOffset); } \
 	FORCEINLINE static uint32 __PPO__OddRowHorOffset() { return STRUCT_OFFSET(UGenerateMapComponent, OddRowHorOffset); } \
 	FORCEINLINE static uint32 __PPO__VerOffset() { return STRUCT_OFFSET(UGenerateMapComponent, VerOffset); } \
@@ -135,27 +137,27 @@ public: \
 	FORCEINLINE static uint32 __PPO__RandomIntIndex() { return STRUCT_OFFSET(UGenerateMapComponent, RandomIntIndex); }
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_128_PROLOG
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_131_GENERATED_BODY_LEGACY \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_129_PROLOG
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_132_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_131_PRIVATE_PROPERTY_OFFSET \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_131_SPARSE_DATA \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_131_RPC_WRAPPERS \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_131_INCLASS \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_131_STANDARD_CONSTRUCTORS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_132_PRIVATE_PROPERTY_OFFSET \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_132_SPARSE_DATA \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_132_RPC_WRAPPERS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_132_INCLASS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_132_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_131_GENERATED_BODY \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_132_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_131_PRIVATE_PROPERTY_OFFSET \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_131_SPARSE_DATA \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_131_RPC_WRAPPERS_NO_PURE_DECLS \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_131_INCLASS_NO_PURE_DECLS \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_131_ENHANCED_CONSTRUCTORS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_132_PRIVATE_PROPERTY_OFFSET \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_132_SPARSE_DATA \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_132_RPC_WRAPPERS_NO_PURE_DECLS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_132_INCLASS_NO_PURE_DECLS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_132_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

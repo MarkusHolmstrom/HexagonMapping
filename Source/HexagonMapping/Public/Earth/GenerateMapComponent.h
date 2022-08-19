@@ -8,6 +8,7 @@
 #include "GenerateMapComponent.generated.h"
 
 class AHexagonActor;
+class ADetailActor;
 class UStaticMeshComponent;
 
 //UENUM(BlueprintType)
@@ -166,13 +167,13 @@ protected:
 		TSubclassOf<AHexagonActor> IceHexTile;
 
 	UPROPERTY(EditDefaultsOnly, Category = Details)
-		TArray<TSubclassOf<AHexagonActor>> TreeTiles;
+		TArray<TSubclassOf<ADetailActor>> TreeTiles;
 	UPROPERTY(EditAnywhere, Category = Details)
 		float ForestPercentage = 0.6f;
 	UPROPERTY(EditAnywhere, Category = Details)
-		TSubclassOf<AHexagonActor> HillTile;
+		TSubclassOf<ADetailActor> HillTile;
 	UPROPERTY(EditAnywhere, Category = Details)
-		float HillPercentage = 0.2f;
+		float HillPercentage = 0.35f;
 
 	UPROPERTY(EditAnywhere)
 	int32 MapHeight = 100;
@@ -254,7 +255,7 @@ public:
 	UFUNCTION()
 	TSubclassOf<AHexagonActor> SetTile(FClimateInfo Info);
 	UFUNCTION()
-	void SetHexagonInfo(AHexagonActor* Tile, bool Land);
+	void SetHexagonInfo(AHexagonActor* Tile, bool Land, EHinder Hinder);
 	UFUNCTION()
 	TSubclassOf<AHexagonActor> SetWaterTile(int32 X, int32 Y);
 	UFUNCTION()
@@ -273,9 +274,9 @@ public:
 	UFUNCTION()
 	FClimateInfo GetCorrectClimate(int32 Index, bool HigherPossLand);
 	UFUNCTION()
-		TSubclassOf<AHexagonActor> GetTrees(float Random);
+	TSubclassOf<ADetailActor> GetTrees(float Random);
 	UFUNCTION()
-		bool GetHill(AHexagonActor* Hex);
+	bool GetHill(AHexagonActor* Hex);
 private:
 	UFUNCTION()
 	TArray<float> SetRandomList();

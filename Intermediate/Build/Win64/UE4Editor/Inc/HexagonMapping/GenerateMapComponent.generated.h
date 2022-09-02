@@ -31,6 +31,7 @@ template<> HEXAGONMAPPING_API UScriptStruct* StaticStruct<struct FClimateInfo>()
 	DECLARE_FUNCTION(execShootLaser); \
 	DECLARE_FUNCTION(execGetEndLocation); \
 	DECLARE_FUNCTION(execSetRandomList); \
+	DECLARE_FUNCTION(execRandomLCG); \
 	DECLARE_FUNCTION(execGetHill); \
 	DECLARE_FUNCTION(execGetTrees); \
 	DECLARE_FUNCTION(execGetCorrectClimate); \
@@ -51,6 +52,7 @@ template<> HEXAGONMAPPING_API UScriptStruct* StaticStruct<struct FClimateInfo>()
 	DECLARE_FUNCTION(execShootLaser); \
 	DECLARE_FUNCTION(execGetEndLocation); \
 	DECLARE_FUNCTION(execSetRandomList); \
+	DECLARE_FUNCTION(execRandomLCG); \
 	DECLARE_FUNCTION(execGetHill); \
 	DECLARE_FUNCTION(execGetTrees); \
 	DECLARE_FUNCTION(execGetCorrectClimate); \

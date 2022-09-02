@@ -223,7 +223,18 @@ public:
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
 		float DefaultLandMultiplier = 0.33f;
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
-		float IncreasedLandMultiplier = 5.4f;
+		float IncreasedLandMultiplier = 4.0f;
+
+	UPROPERTY(EditAnywhere, Category = Random)
+		float Seed = 57;
+	UPROPERTY(EditAnywhere, Category = Random)
+		float A = 174903786;
+	UPROPERTY(EditAnywhere, Category = Random)
+		float C = 2450000450;
+	UPROPERTY(EditAnywhere, Category = Random)
+		float M = 1209837645;
+	UPROPERTY(EditAnywhere, Category = Random)
+		float MaxRandom = 1.0f;
 
 private:
 	int32 CurX;
@@ -278,6 +289,9 @@ public:
 	UFUNCTION()
 	bool GetHill(AHexagonActor* Hex);
 private:
+
+	UFUNCTION()
+	float RandomLCG(float Min, float Max);
 	UFUNCTION()
 	TArray<float> SetRandomList();
 	UFUNCTION()

@@ -28,7 +28,7 @@ void AWorldPawn::BeginPlay()
 	if (!CameraComponent)
 	{
 		CameraComponent = CameraActor->FindComponentByClass<UCameraComponent>();
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("cam comp found"));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("cam comp found"));
 
 	}
 }

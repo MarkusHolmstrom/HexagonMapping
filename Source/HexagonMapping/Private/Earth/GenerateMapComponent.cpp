@@ -77,6 +77,8 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 	{
 		for (size_t y = 0; y < Width; y++)
 		{
+			//RandomLCG(0, 1);
+
 			//RandomFloatIndex = RandomIntList[Index];
 			if (Index < RandomIntListLength - 1)
 			{
@@ -103,6 +105,7 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 			{
 				FCI = GetCorrectClimate(y, false);
 			}
+
 			CurX = x;
 			CurY = y;
 			TSubclassOf<AHexagonActor> tileToSpawn = SetTile(FCI);
@@ -328,7 +331,7 @@ bool UGenerateMapComponent::IsLandMoreLikely(int32 X, int32 Y, bool Land)
 		}
 		LandLikely.Add(FIntPoint(X + 2, Y));
 		//LandLikely.Add(FIntPoint(X + 1, Y + 1));
-		//LandLikely.Add(FIntPoint(X + 1, Y + 2));
+		LandLikely.Add(FIntPoint(X + 1, Y + 2));
 		if (X > 1)
 		{
 			LandLikely.Add(FIntPoint(X - 2, Y + 1));
@@ -530,6 +533,14 @@ bool UGenerateMapComponent::GetHill(AHexagonActor* Hex)
 		}
 	}
 	return false;
+}
+
+float UGenerateMapComponent::RandomLCG(float Min, float Max)
+{
+	float Rand = Max / ((A * Seed + C) / M);
+	GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Blue, 
+		FString::Printf(TEXT("%f"), Rand));
+	return Rand; //funkar?
 }
 
 TArray<float> UGenerateMapComponent::SetRandomList()

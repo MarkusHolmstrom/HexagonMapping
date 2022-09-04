@@ -19,11 +19,12 @@ void EmptyLinkFunctionForGeneratedCodeGenerateMapComponent() {}
 	HEXAGONMAPPING_API UClass* Z_Construct_UClass_UGenerateMapComponent_NoRegister();
 	HEXAGONMAPPING_API UClass* Z_Construct_UClass_UGenerateMapComponent();
 	ENGINE_API UClass* Z_Construct_UClass_UActorComponent();
-	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector();
 	HEXAGONMAPPING_API UClass* Z_Construct_UClass_AHexagonActor_NoRegister();
 	COREUOBJECT_API UClass* Z_Construct_UClass_UClass();
 	HEXAGONMAPPING_API UClass* Z_Construct_UClass_ADetailActor_NoRegister();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EHinder();
+	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EMapType();
+	HEXAGONMAPPING_API UClass* Z_Construct_UClass_AShapeMapping_NoRegister();
 	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FIntPoint();
 // End Cross Module References
 class UScriptStruct* FClimateInfo::StaticStruct()
@@ -270,22 +271,6 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		return ReturnStruct;
 	}
 	uint32 Get_Z_Construct_UScriptStruct_FClimateInfo_Hash() { return 4268037925U; }
-	DEFINE_FUNCTION(UGenerateMapComponent::execShootLaser)
-	{
-		P_FINISH;
-		P_NATIVE_BEGIN;
-		P_THIS->ShootLaser();
-		P_NATIVE_END;
-	}
-	DEFINE_FUNCTION(UGenerateMapComponent::execGetEndLocation)
-	{
-		P_GET_PROPERTY(FIntProperty,Z_Param_Height);
-		P_GET_PROPERTY(FIntProperty,Z_Param_Width);
-		P_FINISH;
-		P_NATIVE_BEGIN;
-		*(FVector*)Z_Param__Result=P_THIS->GetEndLocation(Z_Param_Height,Z_Param_Width);
-		P_NATIVE_END;
-	}
 	DEFINE_FUNCTION(UGenerateMapComponent::execSetRandomList)
 	{
 		P_FINISH;
@@ -423,7 +408,6 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 			{ "CheckTileForCoast", &UGenerateMapComponent::execCheckTileForCoast },
 			{ "GenerateMap", &UGenerateMapComponent::execGenerateMap },
 			{ "GetCorrectClimate", &UGenerateMapComponent::execGetCorrectClimate },
-			{ "GetEndLocation", &UGenerateMapComponent::execGetEndLocation },
 			{ "GetHill", &UGenerateMapComponent::execGetHill },
 			{ "GetTile", &UGenerateMapComponent::execGetTile },
 			{ "GetTrees", &UGenerateMapComponent::execGetTrees },
@@ -435,7 +419,6 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 			{ "SetShoreTilesAround", &UGenerateMapComponent::execSetShoreTilesAround },
 			{ "SetTile", &UGenerateMapComponent::execSetTile },
 			{ "SetWaterTile", &UGenerateMapComponent::execSetWaterTile },
-			{ "ShootLaser", &UGenerateMapComponent::execShootLaser },
 			{ "UpdateRandomIndex", &UGenerateMapComponent::execUpdateRandomIndex },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
@@ -563,46 +546,6 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		if (!ReturnFunction)
 		{
 			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_UGenerateMapComponent_GetCorrectClimate_Statics::FuncParams);
-		}
-		return ReturnFunction;
-	}
-	struct Z_Construct_UFunction_UGenerateMapComponent_GetEndLocation_Statics
-	{
-		struct GenerateMapComponent_eventGetEndLocation_Parms
-		{
-			int32 Height;
-			int32 Width;
-			FVector ReturnValue;
-		};
-		static const UE4CodeGen_Private::FUnsizedIntPropertyParams NewProp_Height;
-		static const UE4CodeGen_Private::FUnsizedIntPropertyParams NewProp_Width;
-		static const UE4CodeGen_Private::FStructPropertyParams NewProp_ReturnValue;
-		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
-#if WITH_METADATA
-		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
-#endif
-		static const UE4CodeGen_Private::FFunctionParams FuncParams;
-	};
-	const UE4CodeGen_Private::FUnsizedIntPropertyParams Z_Construct_UFunction_UGenerateMapComponent_GetEndLocation_Statics::NewProp_Height = { "Height", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(GenerateMapComponent_eventGetEndLocation_Parms, Height), METADATA_PARAMS(nullptr, 0) };
-	const UE4CodeGen_Private::FUnsizedIntPropertyParams Z_Construct_UFunction_UGenerateMapComponent_GetEndLocation_Statics::NewProp_Width = { "Width", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(GenerateMapComponent_eventGetEndLocation_Parms, Width), METADATA_PARAMS(nullptr, 0) };
-	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UFunction_UGenerateMapComponent_GetEndLocation_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(GenerateMapComponent_eventGetEndLocation_Parms, ReturnValue), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(nullptr, 0) };
-	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UGenerateMapComponent_GetEndLocation_Statics::PropPointers[] = {
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UGenerateMapComponent_GetEndLocation_Statics::NewProp_Height,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UGenerateMapComponent_GetEndLocation_Statics::NewProp_Width,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UGenerateMapComponent_GetEndLocation_Statics::NewProp_ReturnValue,
-	};
-#if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UGenerateMapComponent_GetEndLocation_Statics::Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "Public/Earth/GenerateMapComponent.h" },
-	};
-#endif
-	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_UGenerateMapComponent_GetEndLocation_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UGenerateMapComponent, nullptr, "GetEndLocation", nullptr, nullptr, sizeof(GenerateMapComponent_eventGetEndLocation_Parms), Z_Construct_UFunction_UGenerateMapComponent_GetEndLocation_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_UGenerateMapComponent_GetEndLocation_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00840401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UGenerateMapComponent_GetEndLocation_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UGenerateMapComponent_GetEndLocation_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_UGenerateMapComponent_GetEndLocation()
-	{
-		static UFunction* ReturnFunction = nullptr;
-		if (!ReturnFunction)
-		{
-			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_UGenerateMapComponent_GetEndLocation_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -1053,28 +996,6 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		}
 		return ReturnFunction;
 	}
-	struct Z_Construct_UFunction_UGenerateMapComponent_ShootLaser_Statics
-	{
-#if WITH_METADATA
-		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
-#endif
-		static const UE4CodeGen_Private::FFunctionParams FuncParams;
-	};
-#if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_UGenerateMapComponent_ShootLaser_Statics::Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "Public/Earth/GenerateMapComponent.h" },
-	};
-#endif
-	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_UGenerateMapComponent_ShootLaser_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_UGenerateMapComponent, nullptr, "ShootLaser", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00040401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_UGenerateMapComponent_ShootLaser_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_UGenerateMapComponent_ShootLaser_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_UGenerateMapComponent_ShootLaser()
-	{
-		static UFunction* ReturnFunction = nullptr;
-		if (!ReturnFunction)
-		{
-			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_UGenerateMapComponent_ShootLaser_Statics::FuncParams);
-		}
-		return ReturnFunction;
-	}
 	struct Z_Construct_UFunction_UGenerateMapComponent_UpdateRandomIndex_Statics
 	{
 		struct GenerateMapComponent_eventUpdateRandomIndex_Parms
@@ -1134,6 +1055,15 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_VerOffset_MetaData[];
 #endif
 		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_VerOffset;
+		static const UE4CodeGen_Private::FBytePropertyParams NewProp_MapType_Underlying;
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_MapType_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FEnumPropertyParams NewProp_MapType;
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_ShapeMap_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_ShapeMap;
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_GrassHexTile_MetaData[];
 #endif
@@ -1199,6 +1129,10 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_MapWidth_MetaData[];
 #endif
 		static const UE4CodeGen_Private::FIntPropertyParams NewProp_MapWidth;
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_Radius_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FIntPropertyParams NewProp_Radius;
 		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_RandomFloatList_Inner;
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_RandomFloatList_MetaData[];
@@ -1319,7 +1253,6 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		{ &Z_Construct_UFunction_UGenerateMapComponent_CheckTileForCoast, "CheckTileForCoast" }, // 916828182
 		{ &Z_Construct_UFunction_UGenerateMapComponent_GenerateMap, "GenerateMap" }, // 3521790880
 		{ &Z_Construct_UFunction_UGenerateMapComponent_GetCorrectClimate, "GetCorrectClimate" }, // 3299510511
-		{ &Z_Construct_UFunction_UGenerateMapComponent_GetEndLocation, "GetEndLocation" }, // 1430992825
 		{ &Z_Construct_UFunction_UGenerateMapComponent_GetHill, "GetHill" }, // 558904244
 		{ &Z_Construct_UFunction_UGenerateMapComponent_GetTile, "GetTile" }, // 1722052232
 		{ &Z_Construct_UFunction_UGenerateMapComponent_GetTrees, "GetTrees" }, // 3972870122
@@ -1331,7 +1264,6 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		{ &Z_Construct_UFunction_UGenerateMapComponent_SetShoreTilesAround, "SetShoreTilesAround" }, // 209382633
 		{ &Z_Construct_UFunction_UGenerateMapComponent_SetTile, "SetTile" }, // 1667020501
 		{ &Z_Construct_UFunction_UGenerateMapComponent_SetWaterTile, "SetWaterTile" }, // 3848272490
-		{ &Z_Construct_UFunction_UGenerateMapComponent_ShootLaser, "ShootLaser" }, // 2790374742
 		{ &Z_Construct_UFunction_UGenerateMapComponent_UpdateRandomIndex, "UpdateRandomIndex" }, // 659767632
 	};
 #if WITH_METADATA
@@ -1363,6 +1295,21 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 	};
 #endif
 	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_VerOffset = { "VerOffset", nullptr, (EPropertyFlags)0x0020080000000001, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UGenerateMapComponent, VerOffset), METADATA_PARAMS(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_VerOffset_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_VerOffset_MetaData)) };
+	const UE4CodeGen_Private::FBytePropertyParams Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_MapType_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UE4CodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, nullptr, METADATA_PARAMS(nullptr, 0) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_MapType_MetaData[] = {
+		{ "Category", "GenerateMapComponent" },
+		{ "ModuleRelativePath", "Public/Earth/GenerateMapComponent.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FEnumPropertyParams Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_MapType = { "MapType", nullptr, (EPropertyFlags)0x0020080000000001, UE4CodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UGenerateMapComponent, MapType), Z_Construct_UEnum_HexagonMapping_EMapType, METADATA_PARAMS(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_MapType_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_MapType_MetaData)) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_ShapeMap_MetaData[] = {
+		{ "Category", "GenerateMapComponent" },
+		{ "ModuleRelativePath", "Public/Earth/GenerateMapComponent.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_ShapeMap = { "ShapeMap", nullptr, (EPropertyFlags)0x0020080000000001, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UGenerateMapComponent, ShapeMap), Z_Construct_UClass_AShapeMapping_NoRegister, METADATA_PARAMS(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_ShapeMap_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_ShapeMap_MetaData)) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_GrassHexTile_MetaData[] = {
 		{ "Category", "Tiles" },
@@ -1476,6 +1423,13 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 	};
 #endif
 	const UE4CodeGen_Private::FIntPropertyParams Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_MapWidth = { "MapWidth", nullptr, (EPropertyFlags)0x0020080000000001, UE4CodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UGenerateMapComponent, MapWidth), METADATA_PARAMS(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_MapWidth_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_MapWidth_MetaData)) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_Radius_MetaData[] = {
+		{ "Category", "GenerateMapComponent" },
+		{ "ModuleRelativePath", "Public/Earth/GenerateMapComponent.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FIntPropertyParams Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_Radius = { "Radius", nullptr, (EPropertyFlags)0x0020080000000001, UE4CodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UGenerateMapComponent, Radius), METADATA_PARAMS(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_Radius_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_Radius_MetaData)) };
 	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_RandomFloatList_Inner = { "RandomFloatList", nullptr, (EPropertyFlags)0x0000000000000000, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, METADATA_PARAMS(nullptr, 0) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_RandomFloatList_MetaData[] = {
@@ -1663,6 +1617,9 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_HorOffset,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_OddRowHorOffset,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_VerOffset,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_MapType_Underlying,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_MapType,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_ShapeMap,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_GrassHexTile,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_WaterHexTile,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_ShoreHexTile,
@@ -1680,6 +1637,7 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_HillPercentage,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_MapHeight,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_MapWidth,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_Radius,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_RandomFloatList_Inner,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_RandomFloatList,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_List_Inner,
@@ -1743,7 +1701,7 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(UGenerateMapComponent, 269554410);
+	IMPLEMENT_CLASS(UGenerateMapComponent, 127633964);
 	template<> HEXAGONMAPPING_API UClass* StaticClass<UGenerateMapComponent>()
 	{
 		return UGenerateMapComponent::StaticClass();

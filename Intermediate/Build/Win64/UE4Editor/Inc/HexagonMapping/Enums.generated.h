@@ -17,6 +17,15 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define CURRENT_FILE_ID HexagonMapping_Source_HexagonMapping_Public_Enums_h
 
 
+#define FOREACH_ENUM_EMAPTYPE(op) \
+	op(EMapType::Invalid) \
+	op(EMapType::FlatEarthIsRealDontTryToStopUsAndYesMarsIsSphericalBecauseItsBeenProvenWithPhotosThatIsNotEnoughEvidenceForTheEarthForSomeUnknownReason) \
+	op(EMapType::Cylinder) \
+	op(EMapType::Sphere) 
+
+enum class EMapType : uint8;
+template<> HEXAGONMAPPING_API UEnum* StaticEnum<EMapType>();
+
 #define FOREACH_ENUM_ERESOURCETYPE(op) \
 	op(EResourceType::None) \
 	op(EResourceType::Banana) \

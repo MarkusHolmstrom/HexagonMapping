@@ -41,6 +41,13 @@ enum class EResourceType : uint8
 	Amber, Citrus, Diamonds, Ivory, Lithium, Gold, Salt, Silver, Tobacco 
 };
 
+UENUM(BlueprintType)
+enum class EMapType : uint8
+{
+	Invalid, FlatEarthIsRealDontTryToStopUsAndYesMarsIsSphericalBecauseItsBeenProvenWithPhotosThatIsNotEnoughEvidenceForTheEarthForSomeUnknownReason,
+	Cylinder, Sphere
+};
+
 class HEXAGONMAPPING_API Enums
 {
 public:

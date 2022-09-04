@@ -11,7 +11,6 @@ class UStaticMeshComponent;
 class ACameraActor;
 class UCameraComponent;
 
-
 UCLASS()
 class HEXAGONMAPPING_API AWorldPawn : public APawn
 {
@@ -43,6 +42,8 @@ public:
 		float MINFOV = 40;
 	UPROPERTY(EditAnywhere)
 	float ZoomSpeed = 5;
+
+
 	// Sets default values for this pawn's properties
 	AWorldPawn();
 

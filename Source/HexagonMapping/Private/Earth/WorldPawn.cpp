@@ -16,7 +16,7 @@ AWorldPawn::AWorldPawn()
 	Surface->SetSphereRadius(EarthRadius);
 	RootComponent = Surface;
 	SphereMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshSurface"));
-	SphereMesh->AttachTo(RootComponent);
+	SphereMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 	SphereMesh->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
 }
 
@@ -103,4 +103,5 @@ void AWorldPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	PlayerInputComponent->BindAxis(TEXT("Zooming"), this,
 		&AWorldPawn::SetZooming);
 }
+
 

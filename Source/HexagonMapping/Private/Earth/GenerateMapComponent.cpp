@@ -5,6 +5,7 @@
 #include "DrawDebugHelpers.h"
 #include "Earth/HexagonActor.h"
 #include "Earth/DetailActor.h"
+#include "Earth/CylinderShapeMapping.h"
 #include "Enums.h"
 #include "Components/StaticMeshComponent.h"
 
@@ -13,7 +14,7 @@ UGenerateMapComponent::UGenerateMapComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = true;
+	//PrimaryComponentTick.bCanEverTick = true;
 
 	// ...DrawDebugLine(
 	/*GetWorld(),
@@ -30,6 +31,17 @@ UGenerateMapComponent::UGenerateMapComponent()
 void UGenerateMapComponent::BeginPlay()
 {
 	Super::BeginPlay();
+	if (MapType == EMapType::Cylinder)
+	{
+		ShapeMap->SetShape(true);
+		GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Blue,
+			FString::Printf(TEXT("cylinder")));
+	}
+	else if (MapType == EMapType::Sphere)
+	{
+		ShapeMap->SetShape(false);
+	}
+
 	//Adding climates manually
 	ClimateInfo.Add(FClimateInfo(0, 5, EClimateType::Cold, DefaultLandMultiplier, ColdPercentages));
 	ClimateInfo.Add(FClimateInfo(6, 14, EClimateType::Timid, DefaultLandMultiplier, TimidPercentages));
@@ -56,9 +68,9 @@ void UGenerateMapComponent::BeginPlay()
 	{
 		HexGrid[i].SetNumZeroed(MapHeight);
 	}
-	// iterate through the grid
+	// create a map
 	GenerateMap(MapHeight, MapWidth);
-
+	FVector Pos = ShapeMap->GetHexLocation(2, 2, MapHeight, MapWidth, Radius);
 }
 
 
@@ -80,19 +92,34 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 			//RandomLCG(0, 1);
 
 			//RandomFloatIndex = RandomIntList[Index];
-			if (Index < RandomIntListLength - 1)
+			/*if (Index < RandomIntListLength - 1)
 			{
 				Index++;
 			}
 			else
 			{
 				Index = 0;
-			}
+			}*/
 				//FMath::RandRange(0, RandomFloatListLength - 1);
 
 			const bool oddRow = y % 2 == 1;
-			const float xPos = oddRow ? (x * HorOffset) + OddRowHorOffset : x * HorOffset;
-			const float yPos = y * VerOffset;
+			float xPos = 0;
+			float yPos = 0;
+			FVector Pos = FVector::ZeroVector;
+
+			if (MapType == EMapType::Cylinder)
+			{
+				//Pos = ShapeMap->GetHexLocation(x, y, MapHeight, MapWidth, Radius);
+			}
+			else if (MapType == EMapType::Sphere)
+			{
+
+			}
+			else // Create flat surface map
+			{
+				xPos = oddRow ? (x * HorOffset) + OddRowHorOffset : x * HorOffset;
+				yPos = y * VerOffset;
+			}
 
 			FClimateInfo FCI;
 			if (IsLandMoreLikely(x, y, bLandLikely))
@@ -114,26 +141,46 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 			{
 				SetShoreTilesAround(CurX, CurY);
 			}
-			AHexagonActor* newTile = GetWorld()->SpawnActor<AHexagonActor>(tileToSpawn, FVector(FIntPoint(xPos, yPos)), FRotator::ZeroRotator);
+
+			AHexagonActor* newTile = nullptr;
+
+			if (MapType == EMapType::Cylinder)
+			{
+				newTile = GetWorld()->SpawnActor<AHexagonActor>(
+					tileToSpawn, Pos, FRotator::ZeroRotator);
+
+			}
+			else if (MapType == EMapType::Sphere)
+			{
+
+			}
+			else // Create flat surface map
+			{
+				newTile = GetWorld()->SpawnActor<AHexagonActor>(
+					tileToSpawn, FVector(FIntPoint(xPos, yPos)), FRotator::ZeroRotator);
+			}
 			
 			//AllHexTiles.Add(newTile);
 			EHinder CurHinder = EHinder::None;
-			bLandLikely = SetLikelihoodLand(newTile);
-			// Check if hill will be set:
-			newTile->bHasHill = GetHill(newTile);
-			// Check if add forest or not
-			if (newTile->Type == EHexType::Grassland || newTile->Type == EHexType::Plains || newTile->Type == EHexType::Tundra)
+			if (newTile)
 			{
-				float ForestChance = FMath::RandRange(0.0f, 1.0f);
-				if (ForestChance < ForestPercentage)
+				bLandLikely = SetLikelihoodLand(newTile);
+				// Check if hill will be set:
+				newTile->bHasHill = GetHill(newTile);
+				// Check if add forest or not
+				if (newTile->Type == EHexType::Grassland || newTile->Type == EHexType::Plains || newTile->Type == EHexType::Tundra)
 				{
-					CurHinder = EHinder::Trees;
-					GetWorld()->SpawnActor<ADetailActor>(GetTrees(ForestChance), FVector(FIntPoint(xPos, yPos)), FRotator::ZeroRotator);
+					float ForestChance = FMath::RandRange(0.0f, 1.0f);
+					if (ForestChance < ForestPercentage)
+					{
+						CurHinder = EHinder::Trees;
+						GetWorld()->SpawnActor<ADetailActor>(GetTrees(ForestChance), FVector(FIntPoint(xPos, yPos)), FRotator::ZeroRotator);
+					}
 				}
+				SetHexagonInfo(newTile, true, CurHinder);
+				//newTile->SetActorLabel(FString::Printf(TEXT("Tile %d, %d"), x, y));
+				HexGrid[x][y] = newTile;
 			}
-			SetHexagonInfo(newTile, true, CurHinder);
-			//newTile->SetActorLabel(FString::Printf(TEXT("Tile %d, %d"), x, y));
-			HexGrid[x][y] = newTile;
 		}
 	}
 }
@@ -552,17 +599,4 @@ TArray<float> UGenerateMapComponent::SetRandomList()
 	return RandomFloatList;
 }
 
-FVector UGenerateMapComponent::GetEndLocation(int Height, int Width)
-{
-	return FVector();
-}
-
-void UGenerateMapComponent::ShootLaser()
-{
-	FHitResult Hit;
-	if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_Visibility, DefaultComponentQueryParams,
-		DefaultResponseParams)) {
-
-	}
-}
 

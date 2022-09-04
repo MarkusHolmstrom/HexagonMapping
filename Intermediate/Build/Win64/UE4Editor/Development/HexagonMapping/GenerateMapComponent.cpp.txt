@@ -7,3 +7,5 @@ C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Source\HexagonMa
 C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Inc\HexagonMapping\HexagonActor.generated.h
 C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Source\HexagonMapping\Public\Earth/DetailActor.h
 C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Inc\HexagonMapping\DetailActor.generated.h
+C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Source\HexagonMapping\Public\Earth/CylinderShapeMapping.h
+C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Inc\HexagonMapping\CylinderShapeMapping.generated.h

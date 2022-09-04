@@ -13,8 +13,8 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #endif
 #define HEXAGONMAPPING_WorldPawn_generated_h
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_18_SPARSE_DATA
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_18_RPC_WRAPPERS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_17_SPARSE_DATA
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_17_RPC_WRAPPERS \
  \
 	DECLARE_FUNCTION(execSetZooming); \
 	DECLARE_FUNCTION(execAddPitchInput); \
@@ -23,7 +23,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	DECLARE_FUNCTION(execActivateRotation);
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_18_RPC_WRAPPERS_NO_PURE_DECLS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_17_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execSetZooming); \
 	DECLARE_FUNCTION(execAddPitchInput); \
@@ -32,7 +32,7 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	DECLARE_FUNCTION(execActivateRotation);
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_18_INCLASS_NO_PURE_DECLS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_17_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAWorldPawn(); \
 	friend struct Z_Construct_UClass_AWorldPawn_Statics; \
@@ -41,7 +41,7 @@ public: \
 	DECLARE_SERIALIZER(AWorldPawn)
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_18_INCLASS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_17_INCLASS \
 private: \
 	static void StaticRegisterNativesAWorldPawn(); \
 	friend struct Z_Construct_UClass_AWorldPawn_Statics; \
@@ -50,7 +50,7 @@ public: \
 	DECLARE_SERIALIZER(AWorldPawn)
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_18_STANDARD_CONSTRUCTORS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_17_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API AWorldPawn(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(AWorldPawn) \
@@ -63,7 +63,7 @@ private: \
 public:
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_18_ENHANCED_CONSTRUCTORS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_17_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API AWorldPawn(AWorldPawn&&); \
@@ -74,28 +74,28 @@ public: \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(AWorldPawn)
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_18_PRIVATE_PROPERTY_OFFSET
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_15_PROLOG
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_18_GENERATED_BODY_LEGACY \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_17_PRIVATE_PROPERTY_OFFSET
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_14_PROLOG
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_17_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_18_PRIVATE_PROPERTY_OFFSET \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_18_SPARSE_DATA \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_18_RPC_WRAPPERS \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_18_INCLASS \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_18_STANDARD_CONSTRUCTORS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_17_PRIVATE_PROPERTY_OFFSET \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_17_SPARSE_DATA \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_17_RPC_WRAPPERS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_17_INCLASS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_17_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_18_GENERATED_BODY \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_17_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_18_PRIVATE_PROPERTY_OFFSET \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_18_SPARSE_DATA \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_18_RPC_WRAPPERS_NO_PURE_DECLS \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_18_INCLASS_NO_PURE_DECLS \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_18_ENHANCED_CONSTRUCTORS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_17_PRIVATE_PROPERTY_OFFSET \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_17_SPARSE_DATA \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_17_RPC_WRAPPERS_NO_PURE_DECLS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_17_INCLASS_NO_PURE_DECLS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_17_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

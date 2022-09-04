@@ -10,6 +10,7 @@
 class AHexagonActor;
 class ADetailActor;
 class UStaticMeshComponent;
+class AShapeMapping;
 
 //UENUM(BlueprintType)
 //enum EClimateType 
@@ -139,6 +140,11 @@ protected:
 		float OddRowHorOffset = 44.0f;
 	UPROPERTY(EditAnywhere)
 		float VerOffset = 76.0f;
+	UPROPERTY(EditAnywhere)
+	EMapType MapType = EMapType::FlatEarthIsRealDontTryToStopUsAndYesMarsIsSphericalBecauseItsBeenProvenWithPhotosThatIsNotEnoughEvidenceForTheEarthForSomeUnknownReason;
+
+	UPROPERTY(EditAnywhere)
+	AShapeMapping* ShapeMap;
 
 	UPROPERTY(EditAnywhere, Category = Tiles)
 		TSubclassOf<AHexagonActor> GrassHexTile;
@@ -179,6 +185,8 @@ protected:
 	int32 MapHeight = 100;
 	UPROPERTY(EditAnywhere)
 	int32 MapWidth = 100;
+	UPROPERTY(EditAnywhere)
+		int32 Radius = 5000;
 
 	UPROPERTY(EditAnywhere, Category = RandomFloatList)
 	TArray<float> RandomFloatList;
@@ -221,9 +229,9 @@ public:
 	bool bLandLikely = false;
 
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
-		float DefaultLandMultiplier = 0.33f;
+		float DefaultLandMultiplier = 0.15f;
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
-		float IncreasedLandMultiplier = 4.0f;
+		float IncreasedLandMultiplier = 5.0f;
 
 	UPROPERTY(EditAnywhere, Category = Random)
 		float Seed = 57;
@@ -242,13 +250,6 @@ private:
 	EHexType CurType;
 	bool bCurIsLand = false;
 
-	//3D sphere stuff
-	FVector Start = FVector(0,0,0);
-	FVector ForwardVector;
-	FVector End;
-
-	FComponentQueryParams DefaultComponentQueryParams;
-	FCollisionResponseParams DefaultResponseParams;
 
 public:	
 	// Sets default values for this component's properties
@@ -294,8 +295,4 @@ private:
 	float RandomLCG(float Min, float Max);
 	UFUNCTION()
 	TArray<float> SetRandomList();
-	UFUNCTION()
-	FVector GetEndLocation(int Height, int Width);
-	UFUNCTION()
-	void ShootLaser();
 };

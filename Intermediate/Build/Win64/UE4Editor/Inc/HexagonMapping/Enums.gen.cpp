@@ -13,13 +13,72 @@
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeEnums() {}
 // Cross Module References
-	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EResourceType();
+	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EMapType();
 	UPackage* Z_Construct_UPackage__Script_HexagonMapping();
+	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EResourceType();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EResource();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EHinder();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EClimateType();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EHexType();
 // End Cross Module References
+	static UEnum* EMapType_StaticEnum()
+	{
+		static UEnum* Singleton = nullptr;
+		if (!Singleton)
+		{
+			Singleton = GetStaticEnum(Z_Construct_UEnum_HexagonMapping_EMapType, Z_Construct_UPackage__Script_HexagonMapping(), TEXT("EMapType"));
+		}
+		return Singleton;
+	}
+	template<> HEXAGONMAPPING_API UEnum* StaticEnum<EMapType>()
+	{
+		return EMapType_StaticEnum();
+	}
+	static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EMapType(EMapType_StaticEnum, TEXT("/Script/HexagonMapping"), TEXT("EMapType"), false, nullptr, nullptr);
+	uint32 Get_Z_Construct_UEnum_HexagonMapping_EMapType_Hash() { return 1246106117U; }
+	UEnum* Z_Construct_UEnum_HexagonMapping_EMapType()
+	{
+#if WITH_HOT_RELOAD
+		UPackage* Outer = Z_Construct_UPackage__Script_HexagonMapping();
+		static UEnum* ReturnEnum = FindExistingEnumIfHotReloadOrDynamic(Outer, TEXT("EMapType"), 0, Get_Z_Construct_UEnum_HexagonMapping_EMapType_Hash(), false);
+#else
+		static UEnum* ReturnEnum = nullptr;
+#endif // WITH_HOT_RELOAD
+		if (!ReturnEnum)
+		{
+			static const UE4CodeGen_Private::FEnumeratorParam Enumerators[] = {
+				{ "EMapType::Invalid", (int64)EMapType::Invalid },
+				{ "EMapType::FlatEarthIsRealDontTryToStopUsAndYesMarsIsSphericalBecauseItsBeenProvenWithPhotosThatIsNotEnoughEvidenceForTheEarthForSomeUnknownReason", (int64)EMapType::FlatEarthIsRealDontTryToStopUsAndYesMarsIsSphericalBecauseItsBeenProvenWithPhotosThatIsNotEnoughEvidenceForTheEarthForSomeUnknownReason },
+				{ "EMapType::Cylinder", (int64)EMapType::Cylinder },
+				{ "EMapType::Sphere", (int64)EMapType::Sphere },
+			};
+#if WITH_METADATA
+			const UE4CodeGen_Private::FMetaDataPairParam Enum_MetaDataParams[] = {
+				{ "BlueprintType", "true" },
+				{ "Cylinder.Name", "EMapType::Cylinder" },
+				{ "FlatEarthIsRealDontTryToStopUsAndYesMarsIsSphericalBecauseItsBeenProvenWithPhotosThatIsNotEnoughEvidenceForTheEarthForSomeUnknownReason.Name", "EMapType::FlatEarthIsRealDontTryToStopUsAndYesMarsIsSphericalBecauseItsBeenProvenWithPhotosThatIsNotEnoughEvidenceForTheEarthForSomeUnknownReason" },
+				{ "Invalid.Name", "EMapType::Invalid" },
+				{ "ModuleRelativePath", "Public/Enums.h" },
+				{ "Sphere.Name", "EMapType::Sphere" },
+			};
+#endif
+			static const UE4CodeGen_Private::FEnumParams EnumParams = {
+				(UObject*(*)())Z_Construct_UPackage__Script_HexagonMapping,
+				nullptr,
+				"EMapType",
+				"EMapType",
+				Enumerators,
+				UE_ARRAY_COUNT(Enumerators),
+				RF_Public|RF_Transient|RF_MarkAsNative,
+				EEnumFlags::None,
+				UE4CodeGen_Private::EDynamicType::NotDynamic,
+				(uint8)UEnum::ECppForm::EnumClass,
+				METADATA_PARAMS(Enum_MetaDataParams, UE_ARRAY_COUNT(Enum_MetaDataParams))
+			};
+			UE4CodeGen_Private::ConstructUEnum(ReturnEnum, EnumParams);
+		}
+		return ReturnEnum;
+	}
 	static UEnum* EResourceType_StaticEnum()
 	{
 		static UEnum* Singleton = nullptr;

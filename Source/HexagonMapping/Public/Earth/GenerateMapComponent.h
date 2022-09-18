@@ -232,7 +232,8 @@ public:
 		float DefaultLandMultiplier = 0.15f;
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
 		float IncreasedLandMultiplier = 5.0f;
-
+	UPROPERTY(EditAnywhere, Category = ClimateInfo)
+		int32 IncreaseRadius = 1;
 	UPROPERTY(EditAnywhere, Category = Random)
 		float Seed = 57;
 	UPROPERTY(EditAnywhere, Category = Random)
@@ -278,7 +279,9 @@ public:
 	void SetShoreTilesAround(int32 X, int32 Y);
 
 	UFUNCTION()
-	bool IsLandMoreLikely(int32 X, int32 Y, bool Land);
+	bool IsLandMoreLikely(int32 X, int32 Y);
+	UFUNCTION()
+	void AddToList(int32 X, int32 Y, bool Land, int32 AddRadius);
 	UFUNCTION()
 	bool SetLikelihoodLand(AHexagonActor* Tile);
 	UFUNCTION()

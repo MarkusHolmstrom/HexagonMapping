@@ -70,7 +70,7 @@ void UGenerateMapComponent::BeginPlay()
 	}
 	// create a map
 	GenerateMap(MapHeight, MapWidth);
-	FVector Pos = ShapeMap->GetHexLocation(2, 2, MapHeight, MapWidth, Radius);
+	//FVector Pos = ShapeMap->GetHexLocation(2, 2, MapHeight, MapWidth, Radius);
 }
 
 
@@ -122,7 +122,7 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 			}
 
 			FClimateInfo FCI;
-			if (IsLandMoreLikely(x, y, bLandLikely))
+			if (IsLandMoreLikely(x, y))
 			{
 				// This arrays content give larger chance of land tiles
 				FCI = GetCorrectClimate(y, true);
@@ -345,7 +345,7 @@ TSubclassOf<AHexagonActor> UGenerateMapComponent::SetWaterTile(int32 X, int32 Y)
 	return WaterHexTile;
 }
 
-bool UGenerateMapComponent::IsLandMoreLikely(int32 X, int32 Y, bool Land)
+bool UGenerateMapComponent::IsLandMoreLikely(int32 X, int32 Y)
 {
 	if (LandLikely.Contains(FIntPoint(X, Y)))
 	{
@@ -358,32 +358,112 @@ bool UGenerateMapComponent::IsLandMoreLikely(int32 X, int32 Y, bool Land)
 		return false;
 	}
 
+	AddToList(X, Y, bLandLikely, IncreaseRadius);
+	return bLandLikely;
+	//if (bLandLikely)
+	//{
+	//	// add positive tiles (that has not been iterated) to make em 
+	//	// more likely to be land tiles
+	//	//LandLikely.Add(FIntPoint(X, Y)); 
+	//	LandLikely.Add(FIntPoint(X, Y + 1)); 
+	//	LandLikely.Add(FIntPoint(X + 1, Y));
+	//	if (X > 0)
+	//	{
+	//		LandLikely.Add(FIntPoint(X - 1, Y + 1));
+	//		//LandLikely.Add(FIntPoint(X - 1, Y + 2));
+	//	}
+	//	else
+	//	{
+	//		// Opposite side of the map
+	//		LandLikely.Add(FIntPoint(100 - 1, Y));
+	//		LandLikely.Add(FIntPoint(100 - 1, Y + 1));
+	//	}
+	//	LandLikely.Add(FIntPoint(X + 2, Y));
+	//	//LandLikely.Add(FIntPoint(X + 1, Y + 1));
+	//	LandLikely.Add(FIntPoint(X + 1, Y + 2));
+	//	if (X > 1)
+	//	{
+	//		LandLikely.Add(FIntPoint(X - 2, Y + 1));
+	//	}
+	//	return true;
+	//}
+	//else
+	//{
+	//	//OceanLikely.Add(FIntPoint(X, Y));
+	//	OceanLikely.Add(FIntPoint(X + 1, Y + 1));
+	//	//OceanLikely.Add(FIntPoint(X + 1, Y + 2));
+	//	OceanLikely.Add(FIntPoint(X, Y + 1));
+	//	if (X > 1)
+	//	{
+	//		OceanLikely.Add(FIntPoint(X - 2, Y + 1));
+	//	}
+	//	else
+	//	{
+	//		OceanLikely.Add(FIntPoint(100 - 1, Y + 1));
+	//	}
+	//	if (X > 0)
+	//	{
+	//		OceanLikely.Add(FIntPoint(X - 1, Y + 1));
+	//		//OceanLikely.Add(FIntPoint(X - 1, Y + 2));
+	//	}
+	//	OceanLikely.Add(FIntPoint(X + 1, Y));
+	//	//OceanLikely.Add(FIntPoint(X + 2, Y));
+	//	return false;
+	//}
+}
+
+void UGenerateMapComponent::AddToList(int32 X, int32 Y, bool Land, int32 AddRadius)
+{
 	if (Land)
 	{
 		// add positive tiles (that has not been iterated) to make em 
 		// more likely to be land tiles
-		//LandLikely.Add(FIntPoint(X, Y)); 
-		LandLikely.Add(FIntPoint(X, Y + 1)); 
-		LandLikely.Add(FIntPoint(X + 1, Y));
-		if (X > 0)
+		if (AddRadius == 1)
 		{
-			LandLikely.Add(FIntPoint(X - 1, Y + 1));
-			//LandLikely.Add(FIntPoint(X - 1, Y + 2));
+			LandLikely.Add(FIntPoint(X, Y + 1));
+			LandLikely.Add(FIntPoint(X + 1, Y));
+			if (X > 0)
+			{
+				LandLikely.Add(FIntPoint(X - 1, Y + 1));
+				//LandLikely.Add(FIntPoint(X - 1, Y + 2));
+			}
+			else
+			{
+				// Opposite side of the map
+				LandLikely.Add(FIntPoint(100 - 1, Y));
+				LandLikely.Add(FIntPoint(100 - 1, Y + 1));
+			}
+			LandLikely.Add(FIntPoint(X + 2, Y));
+			//LandLikely.Add(FIntPoint(X + 1, Y + 1));
+			LandLikely.Add(FIntPoint(X + 1, Y + 2));
+			if (X > 1)
+			{
+				LandLikely.Add(FIntPoint(X - 2, Y + 1));
+			}
 		}
 		else
 		{
-			// Opposite side of the map
-			LandLikely.Add(FIntPoint(100 - 1, Y));
-			LandLikely.Add(FIntPoint(100 - 1, Y + 1));
+			LandLikely.Add(FIntPoint(X, Y + 1));
+			LandLikely.Add(FIntPoint(X + 1, Y));
+			if (X > 0)
+			{
+				LandLikely.Add(FIntPoint(X - 1, Y + 1));
+				LandLikely.Add(FIntPoint(X - 1, Y + 2));
+			}
+			else
+			{
+				// Opposite side of the map
+				LandLikely.Add(FIntPoint(100 - 1, Y));
+				LandLikely.Add(FIntPoint(100 - 1, Y + 1));
+			}
+			LandLikely.Add(FIntPoint(X + 2, Y));
+			LandLikely.Add(FIntPoint(X + 1, Y + 1));
+			LandLikely.Add(FIntPoint(X + 1, Y + 2));
+			if (X > 1)
+			{
+				LandLikely.Add(FIntPoint(X - 2, Y + 1));
+			}
 		}
-		LandLikely.Add(FIntPoint(X + 2, Y));
-		//LandLikely.Add(FIntPoint(X + 1, Y + 1));
-		LandLikely.Add(FIntPoint(X + 1, Y + 2));
-		if (X > 1)
-		{
-			LandLikely.Add(FIntPoint(X - 2, Y + 1));
-		}
-		return true;
 	}
 	else
 	{
@@ -406,10 +486,8 @@ bool UGenerateMapComponent::IsLandMoreLikely(int32 X, int32 Y, bool Land)
 		}
 		OceanLikely.Add(FIntPoint(X + 1, Y));
 		//OceanLikely.Add(FIntPoint(X + 2, Y));
-		return false;
 	}
 }
-
 
 bool UGenerateMapComponent::CheckTileForCoast(int32 X, int32 Y)
 {

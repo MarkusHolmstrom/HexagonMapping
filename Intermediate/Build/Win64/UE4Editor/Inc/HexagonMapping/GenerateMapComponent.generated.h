@@ -34,6 +34,7 @@ template<> HEXAGONMAPPING_API UScriptStruct* StaticStruct<struct FClimateInfo>()
 	DECLARE_FUNCTION(execGetCorrectClimate); \
 	DECLARE_FUNCTION(execUpdateRandomIndex); \
 	DECLARE_FUNCTION(execSetLikelihoodLand); \
+	DECLARE_FUNCTION(execAddToList); \
 	DECLARE_FUNCTION(execIsLandMoreLikely); \
 	DECLARE_FUNCTION(execSetShoreTilesAround); \
 	DECLARE_FUNCTION(execGetTile); \
@@ -53,6 +54,7 @@ template<> HEXAGONMAPPING_API UScriptStruct* StaticStruct<struct FClimateInfo>()
 	DECLARE_FUNCTION(execGetCorrectClimate); \
 	DECLARE_FUNCTION(execUpdateRandomIndex); \
 	DECLARE_FUNCTION(execSetLikelihoodLand); \
+	DECLARE_FUNCTION(execAddToList); \
 	DECLARE_FUNCTION(execIsLandMoreLikely); \
 	DECLARE_FUNCTION(execSetShoreTilesAround); \
 	DECLARE_FUNCTION(execGetTile); \

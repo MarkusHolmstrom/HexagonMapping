@@ -39,10 +39,11 @@ void AShapeMapping::SetShape(bool Cylinder)
 
 FVector AShapeMapping::GetHexLocation(int32 Height, int32 Width, int32 MaxHeight, int32 MaxWidth, int32 Radius)
 {
-	float angle = GetAngle(MaxWidth * Width);
-	float x = 5; // Radius* FMath::Cos(angle);
-	float y = 6; // Radius* FMath::Sin(angle);
-	return FVector(x, y, Height);
+	/*float angle = GetAngle(MaxWidth * Width);
+	float x = Radius * FMath::Cos(angle);
+	float y = Radius * FMath::Sin(angle);
+	return FVector(x, y, Height);*/
+	return FVector(0,0,0);
 }
 
 float AShapeMapping::GetAngle(int32 MaxWidth)

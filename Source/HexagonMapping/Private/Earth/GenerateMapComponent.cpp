@@ -109,7 +109,7 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 
 			if (MapType == EMapType::Cylinder)
 			{
-				//Pos = ShapeMap->GetHexLocation(x, y, MapHeight, MapWidth, Radius);
+				Pos = ShapeMap->GetHexLocation(x, y, MapHeight, MapWidth, Radius);
 			}
 			else if (MapType == EMapType::Sphere)
 			{
@@ -524,6 +524,10 @@ AHexagonActor* UGenerateMapComponent::GetTile(int32 X, int32 Y)
 
 void UGenerateMapComponent::SetShoreTilesAround(int32 X, int32 Y)
 {
+	if (X < 0 || Y < 0)
+	{
+		return;
+	}
 	if (Y > 0)
 	{
 		if (GetTile(X, Y - 1)->Type == EHexType::Ocean)

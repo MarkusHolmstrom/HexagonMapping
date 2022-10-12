@@ -11,6 +11,7 @@ class AHexagonActor;
 class ADetailActor;
 class UStaticMeshComponent;
 class AShapeMapping;
+class AAStarPathfinding;
 
 //UENUM(BlueprintType)
 //enum EClimateType 
@@ -132,7 +133,10 @@ class HEXAGONMAPPING_API UGenerateMapComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
-protected:
+public:
+	UPROPERTY(EditAnywhere)
+	AAStarPathfinding* Pathfinding;
+
 	TArray<TArray<AHexagonActor*>> HexGrid;
 	UPROPERTY(EditAnywhere)
 		float HorOffset = 88.0f;
@@ -204,7 +208,6 @@ protected:
 	UPROPERTY(EditAnywhere, Category = RandomFloatList)
 	int32 RandomIntIndex = 0;
 
-public:
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
 	TArray<FClimateInfo> ClimateInfo;
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
@@ -229,11 +232,11 @@ public:
 	bool bLandLikely = false;
 
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
-		float DefaultLandMultiplier = 0.15f;
+		float DefaultLandMultiplier = 0.15f; // if IR -> 0.2 ish
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
-		float IncreasedLandMultiplier = 5.0f;
+		float IncreasedLandMultiplier = 5.0f; // if IR = 2 -> 4 ish
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
-		int32 IncreaseRadius = 1;
+		int32 IncreaseRadius = 1; 
 	UPROPERTY(EditAnywhere, Category = Random)
 		float Seed = 57;
 	UPROPERTY(EditAnywhere, Category = Random)

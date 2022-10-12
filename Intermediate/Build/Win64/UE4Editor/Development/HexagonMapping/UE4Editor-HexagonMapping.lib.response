@@ -7,6 +7,7 @@
 /IGNORE:4221
 /NODEFAULTLIB
 "C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\HexagonMappingEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.obj"
+"C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\AStarPathfinding.cpp.obj"
 "C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\CylinderShapeMapping.cpp.obj"
 "C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\DetailActor.cpp.obj"
 "C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\GenerateMapComponent.cpp.obj"
@@ -19,6 +20,7 @@
 "C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\HexagonMappingCharacter.cpp.obj"
 "C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\HexagonMappingGameMode.cpp.obj"
 "C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\HexagonMappingPlayerController.cpp.obj"
+"C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\AStarPathfinding.gen.cpp.obj"
 "C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\CylinderShapeMapping.gen.cpp.obj"
 "C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\DetailActor.gen.cpp.obj"
 "C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Development\HexagonMapping\Enums.gen.cpp.obj"

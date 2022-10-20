@@ -244,10 +244,10 @@ public:
 		int32 A = 1664525;
 	// Increment
 	UPROPERTY(EditAnywhere, Category = Random)
-		int32 C = 1013904223;
+		int32 C = 10139042;
 	// Modulus
 	UPROPERTY(EditAnywhere, Category = Random)
-		int32 M = 1415461031044955;
+		int32 M = 1415461035;
 	UPROPERTY(EditAnywhere, Category = Random)
 		int32 MaxRandom = 1;
 

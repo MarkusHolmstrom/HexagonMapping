@@ -1296,7 +1296,7 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_M_MetaData[];
 #endif
-		static const UE4CodeGen_Private::FInt64PropertyParams NewProp_M;
+		static const UE4CodeGen_Private::FIntPropertyParams NewProp_M;
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_MaxRandom_MetaData[];
 #endif
@@ -1690,7 +1690,7 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		{ "ToolTip", "Modulus" },
 	};
 #endif
-	const UE4CodeGen_Private::FInt64PropertyParams Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_M = { "M", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Int64, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UGenerateMapComponent, M), METADATA_PARAMS(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_M_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_M_MetaData)) };
+	const UE4CodeGen_Private::FIntPropertyParams Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_M = { "M", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UGenerateMapComponent, M), METADATA_PARAMS(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_M_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_M_MetaData)) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_MaxRandom_MetaData[] = {
 		{ "Category", "Random" },
@@ -1788,7 +1788,7 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(UGenerateMapComponent, 191304179);
+	IMPLEMENT_CLASS(UGenerateMapComponent, 2077427051);
 	template<> HEXAGONMAPPING_API UClass* StaticClass<UGenerateMapComponent>()
 	{
 		return UGenerateMapComponent::StaticClass();

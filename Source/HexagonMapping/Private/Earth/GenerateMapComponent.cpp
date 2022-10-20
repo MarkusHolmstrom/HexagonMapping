@@ -673,16 +673,23 @@ float UGenerateMapComponent::RandomLCG(int32 Min, int32 Max)
 		Max = FinMax;
 		Min = FinMin;
 	}
-	// Todo get a better seed system?
-	Seed += GetWorld()->GetTimeSeconds() * 547.7;
+	FRandomStream RS;
+	RS.GenerateNewSeed();
+	Seed = RS.GetCurrentSeed();
+
+	//Seed += GetWorld()->GetTimeSeconds() * 547.7;
 	int32 IniRand = (A * Seed + C) % M;
-	GEngine->AddOnScreenDebugMessage(-1, 4, FColor::Yellow,
-		FString::Printf(TEXT("%d"), IniRand));
-	int32 RandCent = FMath::Abs(IniRand) % Max;
-	Seed = RandCent;
-	float Rand = (float)RandCent / (float)Max;
-	GEngine->AddOnScreenDebugMessage(-1, 4, FColor::Blue, 
-		FString::Printf(TEXT("%f"), Rand));
+	//UE_LOG(LogTemp, Warning, TEXT("%d"), IniRand);
+	/*GEngine->AddOnScreenDebugMessage(-1, 4, FColor::Yellow,
+		FString::Printf(TEXT("%d"), IniRand));*/
+	// generate more decimals
+	int32 Divider = (Max * 100) + 5;
+	int32 RandCent = FMath::Abs(IniRand) % Divider;
+
+	float Rand = (float)RandCent / (float)Divider;
+	/*GEngine->AddOnScreenDebugMessage(-1, 4, FColor::Blue, 
+		FString::Printf(TEXT("%f"), Rand));*/
+	//UE_LOG(LogTemp, Warning, TEXT("Percentage: %f"), Rand);
 	return Rand;
 }
 

@@ -89,7 +89,6 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 	{
 		for (size_t y = 0; y < Width; y++)
 		{
-			//RandomLCG(0, 1);
 
 			//RandomFloatIndex = RandomIntList[Index];
 			/*if (Index < RandomIntListLength - 1)
@@ -170,7 +169,7 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 				// Check if add forest or not
 				if (newTile->Type == EHexType::Grassland || newTile->Type == EHexType::Plains || newTile->Type == EHexType::Tundra)
 				{
-					float ForestChance = FMath::RandRange(0.0f, 1.0f);
+					float ForestChance = RandomLCG(0, 100);// FMath::RandRange(0.0f, 1.0f);
 					if (ForestChance < ForestPercentage)
 					{
 						CurHinder = EHinder::Trees;
@@ -188,42 +187,43 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 TSubclassOf<AHexagonActor> UGenerateMapComponent::SetTile(FClimateInfo Info)
 {
 	bCurIsLand = true;
-	if (FMath::RandRange(0.0f, 1.0f) <= Info.GrasslandPercentage)
+	// FMath::RandRange(0.0f, 1.0f)
+	if (RandomLCG(0, 100) <= Info.GrasslandPercentage)
 	{
 		CurType = EHexType::Grassland;
 		return GrassHexTile;
 	}
-	if (FMath::RandRange(0.0f, 1.0f) <= Info.PlainsPercentage)
+	if (RandomLCG(0, 100) <= Info.PlainsPercentage)
 	{
 		CurType = EHexType::Plains;
 		return PlainsHexTile;
 	}
-	if (FMath::RandRange(0.0f, 1.0f) <= Info.DesertPercentage)
+	if (RandomLCG(0, 100) <= Info.DesertPercentage)
 	{
 		CurType = EHexType::Desert;
 		return DesertHexTile;
 	}
-	if (FMath::RandRange(0.0f, 1.0f) <= Info.MountainPercentage)
+	if (RandomLCG(0, 100) <= Info.MountainPercentage)
 	{
 		CurType = EHexType::Mountain;
 		return MountainHexTile;
 	}
-	if (FMath::RandRange(0.0f, 1.0f) <= Info.JunglePercentage)
+	if (RandomLCG(0, 100) <= Info.JunglePercentage)
 	{
 		CurType = EHexType::Jungle;
 		return JungleHexTile;
 	}
-	if (FMath::RandRange(0.0f, 1.0f) <= Info.TundraPercentage)
+	if (RandomLCG(0, 100) <= Info.TundraPercentage)
 	{
 		CurType = EHexType::Tundra;
 		return TundraHexTile;
 	}
-	if (FMath::RandRange(0.0f, 1.0f) <= Info.IcePercentage)
+	if (RandomLCG(0, 100) <= Info.IcePercentage)
 	{
 		CurType = EHexType::Ice;
 		return IceHexTile;
 	}
-	if (FMath::RandRange(0.0f, 1.0f) <= Info.SnowPercentage)
+	if (RandomLCG(0, 100) <= Info.SnowPercentage)
 	{
 		CurType = EHexType::Snow;
 		return SnowHexTile;
@@ -653,7 +653,7 @@ bool UGenerateMapComponent::GetHill(AHexagonActor* Hex)
 {
 	if (Hex->Type != EHexType::Ocean && Hex->Type != EHexType::Shore && Hex->Type != EHexType::Mountain)
 	{
-		float HillChance = FMath::RandRange(0.0f, 1.0f);
+		float HillChance = RandomLCG(0, 100);// FMath::RandRange(0.0f, 1.0f);
 		if (HillChance < HillPercentage)
 		{
 			ADetailActor* Hill = GetWorld()->SpawnActor<ADetailActor>(HillTile,
@@ -664,12 +664,26 @@ bool UGenerateMapComponent::GetHill(AHexagonActor* Hex)
 	return false;
 }
 
-float UGenerateMapComponent::RandomLCG(float Min, float Max)
+float UGenerateMapComponent::RandomLCG(int32 Min, int32 Max)
 {
-	float Rand = Max / ((A * Seed + C) / M);
-	GEngine->AddOnScreenDebugMessage(-1, 2, FColor::Blue, 
+	if (Max < Min)
+	{
+		int32 FinMax = Min;
+		int32 FinMin = Max;
+		Max = FinMax;
+		Min = FinMin;
+	}
+	// Todo get a better seed system?
+	Seed += GetWorld()->GetTimeSeconds() * 547.7;
+	int32 IniRand = (A * Seed + C) % M;
+	GEngine->AddOnScreenDebugMessage(-1, 4, FColor::Yellow,
+		FString::Printf(TEXT("%d"), IniRand));
+	int32 RandCent = FMath::Abs(IniRand) % Max;
+	Seed = RandCent;
+	float Rand = (float)RandCent / (float)Max;
+	GEngine->AddOnScreenDebugMessage(-1, 4, FColor::Blue, 
 		FString::Printf(TEXT("%f"), Rand));
-	return Rand; //funkar?
+	return Rand;
 }
 
 TArray<float> UGenerateMapComponent::SetRandomList()

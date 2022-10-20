@@ -17,15 +17,20 @@ AAStarPathfinding::AAStarPathfinding()
 void AAStarPathfinding::BeginPlay()
 {
 	Super::BeginPlay();
-	MapGenerator = Cast<UGenerateMapComponent>(
-		Planet->GetComponentByClass(UGenerateMapComponent::StaticClass()));
+	//TODO how to get this fella>?
+	MapGenerator = Cast<UGenerateMapComponent>(Planet->GetComponentByClass(UActorComponent::StaticClass()));
+
 }
 
 // Called every frame
 void AAStarPathfinding::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	/*if (!MapGenerator)
+	{
+		MapGenerator = Cast<UGenerateMapComponent>(Planet->GetComponentByClass(UActorComponent::StaticClass()));
 
+	}*/
 }
 
 void AAStarPathfinding::SetTargetCoordinates(FIntPoint NewTarget)

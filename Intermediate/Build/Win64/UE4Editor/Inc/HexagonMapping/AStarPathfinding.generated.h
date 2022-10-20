@@ -70,7 +70,12 @@ public: \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(AAStarPathfinding)
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_15_PRIVATE_PROPERTY_OFFSET
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_15_PRIVATE_PROPERTY_OFFSET \
+	FORCEINLINE static uint32 __PPO__CurrentTile() { return STRUCT_OFFSET(AAStarPathfinding, CurrentTile); } \
+	FORCEINLINE static uint32 __PPO__ParentTile() { return STRUCT_OFFSET(AAStarPathfinding, ParentTile); } \
+	FORCEINLINE static uint32 __PPO__TargetCoordinates() { return STRUCT_OFFSET(AAStarPathfinding, TargetCoordinates); }
+
+
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_12_PROLOG
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_15_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \

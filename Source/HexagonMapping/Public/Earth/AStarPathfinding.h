@@ -31,9 +31,8 @@ public:
 	UPROPERTY(VisibleAnywhere)
 		float TotalScore = 0;
 
-	UPROPERTY(VisibleAnywhere)
+private:
 	TArray<AHexagonActor*> OpenList;
-	UPROPERTY(VisibleAnywhere)
 	TArray<AHexagonActor*> ClosedList;
 
 	UPROPERTY(VisibleAnywhere)

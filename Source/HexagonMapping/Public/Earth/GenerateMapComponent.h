@@ -238,15 +238,18 @@ public:
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
 		int32 IncreaseRadius = 1; 
 	UPROPERTY(EditAnywhere, Category = Random)
-		float Seed = 57;
+		int32 Seed = 5725;
+	// Multiplier
 	UPROPERTY(EditAnywhere, Category = Random)
-		float A = 174903786;
+		int32 A = 1664525;
+	// Increment
 	UPROPERTY(EditAnywhere, Category = Random)
-		float C = 2450000450;
+		int32 C = 1013904223;
+	// Modulus
 	UPROPERTY(EditAnywhere, Category = Random)
-		float M = 1209837645;
+		int32 M = 1415461031044955;
 	UPROPERTY(EditAnywhere, Category = Random)
-		float MaxRandom = 1.0f;
+		int32 MaxRandom = 1;
 
 private:
 	int32 CurX;
@@ -298,7 +301,7 @@ public:
 private:
 
 	UFUNCTION()
-	float RandomLCG(float Min, float Max);
+	float RandomLCG(int32 Min, int32 Max);
 	UFUNCTION()
 	TArray<float> SetRandomList();
 };

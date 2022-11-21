@@ -13,14 +13,6 @@ class UStaticMeshComponent;
 class AShapeMapping;
 class AAStarPathfinding;
 
-//UENUM(BlueprintType)
-//enum EClimateType 
-//{
-//	INVALID,
-//	Cold, Timid, Normal, Warm, Hot,
-//	MAX UMETA(Hidden) // hidden in editor max enum value
-//};
-
 USTRUCT()
 struct FClimateInfo
 {
@@ -60,11 +52,12 @@ struct FClimateInfo
 
 	UPROPERTY()
 		TArray<float> MapPercentages;
-	bool CheckHor(int32 PossHit)
+
+	/*bool CheckHor(int32 PossHit)
 	{
 		return (PossHit <= MaxHor && PossHit >= MinHor) || 
 			(PossHit <= MaxHor && PossHit >= MinHor);
-	}
+	}*/
 	void SetPercentages(TArray<float> Percentages, float NewModifier)
 	{
 		Modifier = NewModifier;
@@ -190,23 +183,7 @@ public:
 	UPROPERTY(EditAnywhere)
 	int32 MapWidth = 100;
 	UPROPERTY(EditAnywhere)
-		int32 Radius = 5000;
-
-	UPROPERTY(EditAnywhere, Category = RandomFloatList)
-	TArray<float> RandomFloatList;
-	UPROPERTY(EditAnywhere, Category = RandomFloatList)
-	TArray<int32> List;
-	UPROPERTY(EditAnywhere, Category = RandomFloatList)
-	int32 RandomFloatListLength = 54;
-	UPROPERTY(EditAnywhere, Category = RandomFloatList)
-	int32 RandomFloatIndex = 0;
-
-	UPROPERTY(EditAnywhere, Category = RandomFloatList)
-	TArray<int32> RandomIntList;
-	UPROPERTY(EditAnywhere, Category = RandomFloatList)
-	int32 RandomIntListLength = 47;
-	UPROPERTY(EditAnywhere, Category = RandomFloatList)
-	int32 RandomIntIndex = 0;
+	int32 Radius = 5000;
 
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
 	TArray<FClimateInfo> ClimateInfo;
@@ -274,6 +251,12 @@ public:
 	UFUNCTION()
 	TSubclassOf<AHexagonActor> SetTile(FClimateInfo Info);
 	UFUNCTION()
+	TArray<float> GetTilePercentages(FClimateInfo Info);
+	UFUNCTION()
+	float GetTotalPercentages(FClimateInfo Info);
+	UFUNCTION()
+	float GetPercentage(float SmallFloat, float MaxFloat);
+	UFUNCTION()
 	void SetHexagonInfo(AHexagonActor* Tile, bool Land, EHinder Hinder);
 	UFUNCTION()
 	TSubclassOf<AHexagonActor> SetWaterTile(int32 X, int32 Y);
@@ -291,8 +274,6 @@ public:
 	UFUNCTION()
 	bool SetLikelihoodLand(AHexagonActor* Tile);
 	UFUNCTION()
-	int32 UpdateRandomIndex(int32 CurIndex);
-	UFUNCTION()
 	FClimateInfo GetCorrectClimate(int32 Index, bool HigherPossLand);
 	UFUNCTION()
 	TSubclassOf<ADetailActor> GetTrees(float Random);
@@ -301,7 +282,5 @@ public:
 private:
 
 	UFUNCTION()
-	float RandomLCG(int32 Min, int32 Max);
-	UFUNCTION()
-	TArray<float> SetRandomList();
+	float RandomLCGfloat(int32 Min, int32 Max);
 };

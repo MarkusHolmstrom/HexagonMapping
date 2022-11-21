@@ -13,15 +13,84 @@
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 // Cross Module References
+	HEXAGONMAPPING_API UScriptStruct* Z_Construct_UScriptStruct_FPathFindingAStar();
+	UPackage* Z_Construct_UPackage__Script_HexagonMapping();
 	HEXAGONMAPPING_API UClass* Z_Construct_UClass_AAStarPathfinding_NoRegister();
 	HEXAGONMAPPING_API UClass* Z_Construct_UClass_AAStarPathfinding();
 	ENGINE_API UClass* Z_Construct_UClass_AActor();
-	UPackage* Z_Construct_UPackage__Script_HexagonMapping();
 	HEXAGONMAPPING_API UClass* Z_Construct_UClass_AHexagonActor_NoRegister();
 	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FIntPoint();
 	ENGINE_API UClass* Z_Construct_UClass_AActor_NoRegister();
 	HEXAGONMAPPING_API UClass* Z_Construct_UClass_UGenerateMapComponent_NoRegister();
 // End Cross Module References
+class UScriptStruct* FPathFindingAStar::StaticStruct()
+{
+	static class UScriptStruct* Singleton = NULL;
+	if (!Singleton)
+	{
+		extern HEXAGONMAPPING_API uint32 Get_Z_Construct_UScriptStruct_FPathFindingAStar_Hash();
+		Singleton = GetStaticStruct(Z_Construct_UScriptStruct_FPathFindingAStar, Z_Construct_UPackage__Script_HexagonMapping(), TEXT("PathFindingAStar"), sizeof(FPathFindingAStar), Get_Z_Construct_UScriptStruct_FPathFindingAStar_Hash());
+	}
+	return Singleton;
+}
+template<> HEXAGONMAPPING_API UScriptStruct* StaticStruct<FPathFindingAStar>()
+{
+	return FPathFindingAStar::StaticStruct();
+}
+static FCompiledInDeferStruct Z_CompiledInDeferStruct_UScriptStruct_FPathFindingAStar(FPathFindingAStar::StaticStruct, TEXT("/Script/HexagonMapping"), TEXT("PathFindingAStar"), false, nullptr, nullptr);
+static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFPathFindingAStar
+{
+	FScriptStruct_HexagonMapping_StaticRegisterNativesFPathFindingAStar()
+	{
+		UScriptStruct::DeferCppStructOps<FPathFindingAStar>(FName(TEXT("PathFindingAStar")));
+	}
+} ScriptStruct_HexagonMapping_StaticRegisterNativesFPathFindingAStar;
+	struct Z_Construct_UScriptStruct_FPathFindingAStar_Statics
+	{
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam Struct_MetaDataParams[];
+#endif
+		static void* NewStructOps();
+		static const UE4CodeGen_Private::FStructParams ReturnStructParams;
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UScriptStruct_FPathFindingAStar_Statics::Struct_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/Earth/AStarPathfinding.h" },
+	};
+#endif
+	void* Z_Construct_UScriptStruct_FPathFindingAStar_Statics::NewStructOps()
+	{
+		return (UScriptStruct::ICppStructOps*)new UScriptStruct::TCppStructOps<FPathFindingAStar>();
+	}
+	const UE4CodeGen_Private::FStructParams Z_Construct_UScriptStruct_FPathFindingAStar_Statics::ReturnStructParams = {
+		(UObject* (*)())Z_Construct_UPackage__Script_HexagonMapping,
+		nullptr,
+		&NewStructOps,
+		"PathFindingAStar",
+		sizeof(FPathFindingAStar),
+		alignof(FPathFindingAStar),
+		nullptr,
+		0,
+		RF_Public|RF_Transient|RF_MarkAsNative,
+		EStructFlags(0x00000001),
+		METADATA_PARAMS(Z_Construct_UScriptStruct_FPathFindingAStar_Statics::Struct_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UScriptStruct_FPathFindingAStar_Statics::Struct_MetaDataParams))
+	};
+	UScriptStruct* Z_Construct_UScriptStruct_FPathFindingAStar()
+	{
+#if WITH_HOT_RELOAD
+		extern uint32 Get_Z_Construct_UScriptStruct_FPathFindingAStar_Hash();
+		UPackage* Outer = Z_Construct_UPackage__Script_HexagonMapping();
+		static UScriptStruct* ReturnStruct = FindExistingStructIfHotReloadOrDynamic(Outer, TEXT("PathFindingAStar"), sizeof(FPathFindingAStar), Get_Z_Construct_UScriptStruct_FPathFindingAStar_Hash(), false);
+#else
+		static UScriptStruct* ReturnStruct = nullptr;
+#endif
+		if (!ReturnStruct)
+		{
+			UE4CodeGen_Private::ConstructUScriptStruct(ReturnStruct, Z_Construct_UScriptStruct_FPathFindingAStar_Statics::ReturnStructParams);
+		}
+		return ReturnStruct;
+	}
+	uint32 Get_Z_Construct_UScriptStruct_FPathFindingAStar_Hash() { return 372950413U; }
 	DEFINE_FUNCTION(AAStarPathfinding::execGetAdjacentTiles)
 	{
 		P_GET_OBJECT(AHexagonActor,Z_Param_Hexagon);

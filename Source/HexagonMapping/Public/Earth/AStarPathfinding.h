@@ -9,6 +9,17 @@
 class AHexagonActor;
 class UGenerateMapComponent;
 
+USTRUCT()
+struct FPathFindingAStar
+{
+	GENERATED_BODY()
+
+	FPathFindingAStar()
+	{
+		
+	}
+};
+
 UCLASS()
 class HEXAGONMAPPING_API AAStarPathfinding : public AActor
 {

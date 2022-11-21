@@ -55,13 +55,6 @@ void UGenerateMapComponent::BeginPlay()
 	ClimateInfo.Add(FClimateInfo(31, 42, EClimateType::Warm, IncreasedLandMultiplier, WarmPercentages));
 	ClimateInfo.Add(FClimateInfo(43, 49, EClimateType::Hot, IncreasedLandMultiplier, HotPercentages));
 
-	// Set list with random numbers 
-	//SetRandomList();
-	// denna lista fuckar upp altting...
-	/*for (int32 i = 0; i < RandomIntListLength; i++) 
-	{
-		RandomIntList.Add(FMath::RandRange(0, RandomFloatListLength - 1));
-	}*/
 	// Set up the in script grid
 	HexGrid.SetNumZeroed(MapWidth);
 	for (int32 i = 0; i < HexGrid.Num(); i++)
@@ -73,7 +66,6 @@ void UGenerateMapComponent::BeginPlay()
 	//FVector Pos = ShapeMap->GetHexLocation(2, 2, MapHeight, MapWidth, Radius);
 }
 
-
 // Called every frame
 void UGenerateMapComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
@@ -84,23 +76,10 @@ void UGenerateMapComponent::TickComponent(float DeltaTime, ELevelTick TickType, 
 
 void UGenerateMapComponent::GenerateMap(int Height, int Width)
 {
-	int32 Index = 0;
 	for (size_t x = 0; x < Height; x++)
 	{
 		for (size_t y = 0; y < Width; y++)
 		{
-
-			//RandomFloatIndex = RandomIntList[Index];
-			/*if (Index < RandomIntListLength - 1)
-			{
-				Index++;
-			}
-			else
-			{
-				Index = 0;
-			}*/
-				//FMath::RandRange(0, RandomFloatListLength - 1);
-
 			const bool oddRow = y % 2 == 1;
 			float xPos = 0;
 			float yPos = 0;
@@ -135,7 +114,7 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 			CurX = x;
 			CurY = y;
 			TSubclassOf<AHexagonActor> tileToSpawn = SetTile(FCI);
-			//RandomFloatIndex = UpdateRandomIndex(RandomFloatIndex);
+
 			if (bCurIsLand)
 			{
 				SetShoreTilesAround(CurX, CurY);
@@ -159,7 +138,6 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 					tileToSpawn, FVector(FIntPoint(xPos, yPos)), FRotator::ZeroRotator);
 			}
 			
-			//AllHexTiles.Add(newTile);
 			EHinder CurHinder = EHinder::None;
 			if (newTile)
 			{
@@ -169,7 +147,7 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 				// Check if add forest or not
 				if (newTile->Type == EHexType::Grassland || newTile->Type == EHexType::Plains || newTile->Type == EHexType::Tundra)
 				{
-					float ForestChance = RandomLCG(0, 100);// FMath::RandRange(0.0f, 1.0f);
+					float ForestChance = RandomLCGfloat(0, 100);
 					if (ForestChance < ForestPercentage)
 					{
 						CurHinder = EHinder::Trees;
@@ -177,7 +155,6 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 					}
 				}
 				SetHexagonInfo(newTile, true, CurHinder);
-				//newTile->SetActorLabel(FString::Printf(TEXT("Tile %d, %d"), x, y));
 				HexGrid[x][y] = newTile;
 			}
 		}
@@ -187,118 +164,142 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 TSubclassOf<AHexagonActor> UGenerateMapComponent::SetTile(FClimateInfo Info)
 {
 	bCurIsLand = true;
-	// FMath::RandRange(0.0f, 1.0f)
-	if (RandomLCG(0, 100) <= Info.GrasslandPercentage)
+	float TileDecider = RandomLCGfloat(0, 100);
+	GEngine->AddOnScreenDebugMessage(-1, 20, FColor::Green,
+		FString::Printf(TEXT("%f"), TileDecider));
+	TArray<float> TilePercentages = GetTilePercentages(Info);
+	if (TileDecider <= TilePercentages[0])
 	{
 		CurType = EHexType::Grassland;
 		return GrassHexTile;
 	}
-	if (RandomLCG(0, 100) <= Info.PlainsPercentage)
+	if (TileDecider <= TilePercentages[1])
 	{
 		CurType = EHexType::Plains;
 		return PlainsHexTile;
 	}
-	if (RandomLCG(0, 100) <= Info.DesertPercentage)
+	if (TileDecider <= TilePercentages[2])
 	{
 		CurType = EHexType::Desert;
 		return DesertHexTile;
 	}
-	if (RandomLCG(0, 100) <= Info.MountainPercentage)
+	if (TileDecider <= TilePercentages[3])
 	{
 		CurType = EHexType::Mountain;
 		return MountainHexTile;
 	}
-	if (RandomLCG(0, 100) <= Info.JunglePercentage)
+	if (TileDecider <= TilePercentages[4])
 	{
 		CurType = EHexType::Jungle;
 		return JungleHexTile;
 	}
-	if (RandomLCG(0, 100) <= Info.TundraPercentage)
+	if (TileDecider <= TilePercentages[5])
 	{
 		CurType = EHexType::Tundra;
 		return TundraHexTile;
 	}
-	if (RandomLCG(0, 100) <= Info.IcePercentage)
+	if (TileDecider <= TilePercentages[6])
 	{
 		CurType = EHexType::Ice;
 		return IceHexTile;
 	}
-	if (RandomLCG(0, 100) <= Info.SnowPercentage)
+	if (TileDecider <= TilePercentages[7])
 	{
 		CurType = EHexType::Snow;
 		return SnowHexTile;
 	}
-	bCurIsLand = false;
-	/*if (RandomFloatList[RandomFloatIndex] <= Info.GrasslandPercentage)
+	/*if (RandomLCGfloat(0, 100) <= Info.GrasslandPercentage)
 	{
+		CurType = EHexType::Grassland;
 		return GrassHexTile;
 	}
-	else
+	if (RandomLCGfloat(0, 100) <= Info.PlainsPercentage)
 	{
-		RandomFloatIndex = UpdateRandomIndex(RandomFloatIndex);
-	}
-	if (RandomFloatList[RandomFloatIndex] <= Info.ShorePercentage)
-	{
-		return ShoreHexTile;
-	}
-	else
-	{
-		RandomFloatIndex = UpdateRandomIndex(RandomFloatIndex);
-	}
-	if (RandomFloatList[RandomFloatIndex] <= Info.PlainsPercentage)
-	{
+		CurType = EHexType::Plains;
 		return PlainsHexTile;
 	}
-	else
+	if (RandomLCGfloat(0, 100) <= Info.DesertPercentage)
 	{
-		RandomFloatIndex = UpdateRandomIndex(RandomFloatIndex);
-	}
-	if (RandomFloatList[RandomFloatIndex] <= Info.DesertPercentage)
-	{
+		CurType = EHexType::Desert;
 		return DesertHexTile;
 	}
-	else
+	if (RandomLCGfloat(0, 100) <= Info.MountainPercentage)
 	{
-		RandomFloatIndex = UpdateRandomIndex(RandomFloatIndex);
-	}
-	if (RandomFloatList[RandomFloatIndex] <= Info.MountainPercentage)
-	{
+		CurType = EHexType::Mountain;
 		return MountainHexTile;
 	}
-	else
+	if (RandomLCGfloat(0, 100) <= Info.JunglePercentage)
 	{
-		RandomFloatIndex = UpdateRandomIndex(RandomFloatIndex);
-	}
-	if (RandomFloatList[RandomFloatIndex] <= Info.JunglePercentage)
-	{
+		CurType = EHexType::Jungle;
 		return JungleHexTile;
 	}
-	else
+	if (RandomLCGfloat(0, 100) <= Info.TundraPercentage)
 	{
-		RandomFloatIndex = UpdateRandomIndex(RandomFloatIndex);
-	}
-	if (RandomFloatList[RandomFloatIndex] <= Info.TundraPercentage)
-	{
+		CurType = EHexType::Tundra;
 		return TundraHexTile;
 	}
-	else
+	if (RandomLCGfloat(0, 100) <= Info.IcePercentage)
 	{
-		RandomFloatIndex = UpdateRandomIndex(RandomFloatIndex);
-	}
-	if (RandomFloatList[RandomFloatIndex] <= Info.IcePercentage)
-	{
+		CurType = EHexType::Ice;
 		return IceHexTile;
 	}
-	else
+	if (RandomLCGfloat(0, 100) <= Info.SnowPercentage)
 	{
-		RandomFloatIndex = UpdateRandomIndex(RandomFloatIndex);
-	}
-	if (RandomFloatList[RandomFloatIndex] <= Info.SnowPercentage)
-	{
+		CurType = EHexType::Snow;
 		return SnowHexTile;
 	}*/
-	/*RandomIndex = FMath::RandRange(0, RandomListLength - 1);*/
+	bCurIsLand = false;
 	return SetWaterTile(CurX, CurY);
+}
+
+TArray<float> UGenerateMapComponent::GetTilePercentages(FClimateInfo Info)
+{
+	TArray<float> Percentages;
+	float Total = GetTotalPercentages(Info);
+	// grass, plains, desert, mountain, jungle, tundra, ice, snow, (water)
+	Percentages.Add(Info.GrasslandPercentage);
+	Total = GetPercentage(Info.GrasslandPercentage, Total);
+
+	Percentages.Add(Total + Info.PlainsPercentage);
+	Total += GetPercentage(Info.PlainsPercentage, Total);
+
+	Percentages.Add(Total + Info.DesertPercentage);
+	Total += GetPercentage(Info.DesertPercentage, Total);
+
+	Percentages.Add(Total + Info.MountainPercentage);
+	Total += GetPercentage(Info.MountainPercentage, Total);
+
+	Percentages.Add(Total + Info.JunglePercentage);
+	Total += GetPercentage(Info.JunglePercentage, Total);
+
+	Percentages.Add(Total + Info.TundraPercentage);
+	Total += GetPercentage(Info.TundraPercentage, Total);
+
+	Percentages.Add(Total + Info.IcePercentage);
+	Total += GetPercentage(Info.IcePercentage, Total);
+
+	Percentages.Add(Total + Info.SnowPercentage);
+	GEngine->AddOnScreenDebugMessage(-1, 20, FColor::Blue,
+		FString::Printf(TEXT("%f"), Total));
+	return Percentages;
+}
+
+float UGenerateMapComponent::GetTotalPercentages(FClimateInfo Info)
+{
+	float Total = Info.GrasslandPercentage;
+	Total += Info.PlainsPercentage;
+	Total += Info.DesertPercentage;
+	Total += Info.MountainPercentage;
+	Total += Info.JunglePercentage;
+	Total += Info.TundraPercentage;
+	Total += Info.IcePercentage;
+	Total += Info.SnowPercentage;
+	return Total;
+}
+
+float UGenerateMapComponent::GetPercentage(float Percentage, float Total)
+{
+	return Percentage / Total;
 }
 
 void UGenerateMapComponent::SetHexagonInfo(AHexagonActor* Tile, bool Land, EHinder Hinder)
@@ -567,19 +568,6 @@ bool UGenerateMapComponent::SetLikelihoodLand(AHexagonActor* Tile)
 	return true;
 }
 
-int32 UGenerateMapComponent::UpdateRandomIndex(int32 CurIndex)
-{
-	if (CurIndex < RandomFloatListLength - 1)
-	{
-		CurIndex++;
-	}
-	else
-	{
-		CurIndex = 0;
-	}
-	return CurIndex;
-}
-
 FClimateInfo UGenerateMapComponent::GetCorrectClimate(int32 Index, bool HigherPossLand)
 {
 	if (HigherPossLand)
@@ -653,7 +641,7 @@ bool UGenerateMapComponent::GetHill(AHexagonActor* Hex)
 {
 	if (Hex->Type != EHexType::Ocean && Hex->Type != EHexType::Shore && Hex->Type != EHexType::Mountain)
 	{
-		float HillChance = RandomLCG(0, 100);// FMath::RandRange(0.0f, 1.0f);
+		float HillChance = RandomLCGfloat(0, 100);
 		if (HillChance < HillPercentage)
 		{
 			ADetailActor* Hill = GetWorld()->SpawnActor<ADetailActor>(HillTile,
@@ -664,7 +652,7 @@ bool UGenerateMapComponent::GetHill(AHexagonActor* Hex)
 	return false;
 }
 
-float UGenerateMapComponent::RandomLCG(int32 Min, int32 Max)
+float UGenerateMapComponent::RandomLCGfloat(int32 Min, int32 Max)
 {
 	if (Max < Min)
 	{
@@ -677,29 +665,13 @@ float UGenerateMapComponent::RandomLCG(int32 Min, int32 Max)
 	RS.GenerateNewSeed();
 	Seed = RS.GetCurrentSeed();
 
-	//Seed += GetWorld()->GetTimeSeconds() * 547.7;
-	int32 IniRand = (A * Seed + C) % M;
-	//UE_LOG(LogTemp, Warning, TEXT("%d"), IniRand);
-	/*GEngine->AddOnScreenDebugMessage(-1, 4, FColor::Yellow,
-		FString::Printf(TEXT("%d"), IniRand));*/
+	int32 InitialRand = (A * Seed + C) % M;
 	// generate more decimals
 	int32 Divider = (Max * 100) + 5;
-	int32 RandCent = FMath::Abs(IniRand) % Divider;
+	int32 RandCent = FMath::Abs(InitialRand) % Divider;
 
-	float Rand = (float)RandCent / (float)Divider;
-	/*GEngine->AddOnScreenDebugMessage(-1, 4, FColor::Blue, 
-		FString::Printf(TEXT("%f"), Rand));*/
-	//UE_LOG(LogTemp, Warning, TEXT("Percentage: %f"), Rand);
-	return Rand;
-}
-
-TArray<float> UGenerateMapComponent::SetRandomList()
-{
-	for (int32 i = 0; i < RandomFloatListLength; i++)
-	{
-		RandomFloatList.Add(FMath::RandRange(0.0f, 0.8f));
-	}
-	return RandomFloatList;
+	float RandFloat = (float)RandCent / (float)Divider;
+	return RandFloat;
 }
 
 

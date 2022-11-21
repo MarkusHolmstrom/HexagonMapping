@@ -17,6 +17,8 @@ void EmptyLinkFunctionForGeneratedCodeHexagonActor() {}
 	HEXAGONMAPPING_API UClass* Z_Construct_UClass_AHexagonActor();
 	ENGINE_API UClass* Z_Construct_UClass_AActor();
 	UPackage* Z_Construct_UPackage__Script_HexagonMapping();
+	ENGINE_API UClass* Z_Construct_UClass_UPrimitiveComponent_NoRegister();
+	INPUTCORE_API UScriptStruct* Z_Construct_UScriptStruct_FKey();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EHexType();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EHinder();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EResource();
@@ -24,8 +26,96 @@ void EmptyLinkFunctionForGeneratedCodeHexagonActor() {}
 	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FIntPoint();
 	ENGINE_API UClass* Z_Construct_UClass_UStaticMeshComponent_NoRegister();
 // End Cross Module References
+	DEFINE_FUNCTION(AHexagonActor::execDeActivatedByClick)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->DeActivatedByClick();
+		P_NATIVE_END;
+	}
+	DEFINE_FUNCTION(AHexagonActor::execActivatedByClick)
+	{
+		P_GET_OBJECT(UPrimitiveComponent,Z_Param_pComponent);
+		P_GET_STRUCT(FKey,Z_Param_inKey);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->ActivatedByClick(Z_Param_pComponent,Z_Param_inKey);
+		P_NATIVE_END;
+	}
 	void AHexagonActor::StaticRegisterNativesAHexagonActor()
 	{
+		UClass* Class = AHexagonActor::StaticClass();
+		static const FNameNativePtrPair Funcs[] = {
+			{ "ActivatedByClick", &AHexagonActor::execActivatedByClick },
+			{ "DeActivatedByClick", &AHexagonActor::execDeActivatedByClick },
+		};
+		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
+	}
+	struct Z_Construct_UFunction_AHexagonActor_ActivatedByClick_Statics
+	{
+		struct HexagonActor_eventActivatedByClick_Parms
+		{
+			UPrimitiveComponent* pComponent;
+			FKey inKey;
+		};
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_pComponent_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_pComponent;
+		static const UE4CodeGen_Private::FStructPropertyParams NewProp_inKey;
+		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UE4CodeGen_Private::FFunctionParams FuncParams;
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AHexagonActor_ActivatedByClick_Statics::NewProp_pComponent_MetaData[] = {
+		{ "EditInline", "true" },
+	};
+#endif
+	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AHexagonActor_ActivatedByClick_Statics::NewProp_pComponent = { "pComponent", nullptr, (EPropertyFlags)0x0010000000080080, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(HexagonActor_eventActivatedByClick_Parms, pComponent), Z_Construct_UClass_UPrimitiveComponent_NoRegister, METADATA_PARAMS(Z_Construct_UFunction_AHexagonActor_ActivatedByClick_Statics::NewProp_pComponent_MetaData, UE_ARRAY_COUNT(Z_Construct_UFunction_AHexagonActor_ActivatedByClick_Statics::NewProp_pComponent_MetaData)) };
+	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AHexagonActor_ActivatedByClick_Statics::NewProp_inKey = { "inKey", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(HexagonActor_eventActivatedByClick_Parms, inKey), Z_Construct_UScriptStruct_FKey, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AHexagonActor_ActivatedByClick_Statics::PropPointers[] = {
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AHexagonActor_ActivatedByClick_Statics::NewProp_pComponent,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AHexagonActor_ActivatedByClick_Statics::NewProp_inKey,
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AHexagonActor_ActivatedByClick_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/Earth/HexagonActor.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AHexagonActor_ActivatedByClick_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AHexagonActor, nullptr, "ActivatedByClick", nullptr, nullptr, sizeof(HexagonActor_eventActivatedByClick_Parms), Z_Construct_UFunction_AHexagonActor_ActivatedByClick_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AHexagonActor_ActivatedByClick_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AHexagonActor_ActivatedByClick_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AHexagonActor_ActivatedByClick_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AHexagonActor_ActivatedByClick()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AHexagonActor_ActivatedByClick_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_AHexagonActor_DeActivatedByClick_Statics
+	{
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UE4CodeGen_Private::FFunctionParams FuncParams;
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AHexagonActor_DeActivatedByClick_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/Earth/HexagonActor.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AHexagonActor_DeActivatedByClick_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AHexagonActor, nullptr, "DeActivatedByClick", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AHexagonActor_DeActivatedByClick_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AHexagonActor_DeActivatedByClick_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AHexagonActor_DeActivatedByClick()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AHexagonActor_DeActivatedByClick_Statics::FuncParams);
+		}
+		return ReturnFunction;
 	}
 	UClass* Z_Construct_UClass_AHexagonActor_NoRegister()
 	{
@@ -34,6 +124,7 @@ void EmptyLinkFunctionForGeneratedCodeHexagonActor() {}
 	struct Z_Construct_UClass_AHexagonActor_Statics
 	{
 		static UObject* (*const DependentSingletons[])();
+		static const FClassFunctionLinkInfo FuncInfo[];
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam Class_MetaDataParams[];
 #endif
@@ -93,6 +184,10 @@ void EmptyLinkFunctionForGeneratedCodeHexagonActor() {}
 	UObject* (*const Z_Construct_UClass_AHexagonActor_Statics::DependentSingletons[])() = {
 		(UObject* (*)())Z_Construct_UClass_AActor,
 		(UObject* (*)())Z_Construct_UPackage__Script_HexagonMapping,
+	};
+	const FClassFunctionLinkInfo Z_Construct_UClass_AHexagonActor_Statics::FuncInfo[] = {
+		{ &Z_Construct_UFunction_AHexagonActor_ActivatedByClick, "ActivatedByClick" }, // 141362987
+		{ &Z_Construct_UFunction_AHexagonActor_DeActivatedByClick, "DeActivatedByClick" }, // 3987563403
 	};
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AHexagonActor_Statics::Class_MetaDataParams[] = {
@@ -229,11 +324,11 @@ void EmptyLinkFunctionForGeneratedCodeHexagonActor() {}
 		"Engine",
 		&StaticCppClassTypeInfo,
 		DependentSingletons,
-		nullptr,
+		FuncInfo,
 		Z_Construct_UClass_AHexagonActor_Statics::PropPointers,
 		nullptr,
 		UE_ARRAY_COUNT(DependentSingletons),
-		0,
+		UE_ARRAY_COUNT(FuncInfo),
 		UE_ARRAY_COUNT(Z_Construct_UClass_AHexagonActor_Statics::PropPointers),
 		0,
 		0x009000A4u,
@@ -248,7 +343,7 @@ void EmptyLinkFunctionForGeneratedCodeHexagonActor() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AHexagonActor, 617360737);
+	IMPLEMENT_CLASS(AHexagonActor, 3019783672);
 	template<> HEXAGONMAPPING_API UClass* StaticClass<AHexagonActor>()
 	{
 		return AHexagonActor::StaticClass();

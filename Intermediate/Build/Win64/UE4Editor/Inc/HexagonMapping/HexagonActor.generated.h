@@ -8,14 +8,26 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+class UPrimitiveComponent;
+struct FKey;
 #ifdef HEXAGONMAPPING_HexagonActor_generated_h
 #error "HexagonActor.generated.h already included, missing '#pragma once' in HexagonActor.h"
 #endif
 #define HEXAGONMAPPING_HexagonActor_generated_h
 
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_SPARSE_DATA
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_RPC_WRAPPERS
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_RPC_WRAPPERS_NO_PURE_DECLS
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_RPC_WRAPPERS \
+ \
+	DECLARE_FUNCTION(execDeActivatedByClick); \
+	DECLARE_FUNCTION(execActivatedByClick);
+
+
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
+ \
+	DECLARE_FUNCTION(execDeActivatedByClick); \
+	DECLARE_FUNCTION(execActivatedByClick);
+
+
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAHexagonActor(); \

@@ -51,6 +51,8 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 	UStaticMeshComponent* MeshTile;
 	
+private:
+	UInputComponent* PlayerInputComponent;
 	////HexagonInformation* HexagonInfo;
 
 	// Sets default values for this actor's properties
@@ -64,4 +66,8 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	UFUNCTION()
+		void ActivatedByClick(UPrimitiveComponent* pComponent, FKey inKey);
+	UFUNCTION()
+		void DeActivatedByClick();
 };

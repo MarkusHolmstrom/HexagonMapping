@@ -164,10 +164,12 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 TSubclassOf<AHexagonActor> UGenerateMapComponent::SetTile(FClimateInfo Info)
 {
 	bCurIsLand = true;
-	float TileDecider = RandomLCGfloat(0, 100);
+	/*float TileDecider = RandomLCGfloat(0, 100);
+
+	UE_LOG(LogTemp, Display, TEXT("Tiledecider is: %f"), TileDecider);
 	GEngine->AddOnScreenDebugMessage(-1, 20, FColor::Green,
-		FString::Printf(TEXT("%f"), TileDecider));
-	TArray<float> TilePercentages = GetTilePercentages(Info);
+		FString::Printf(TEXT("%f"), TileDecider));*/
+	/*TArray<float> TilePercentages = GetTilePercentages(Info);
 	if (TileDecider <= TilePercentages[0])
 	{
 		CurType = EHexType::Grassland;
@@ -207,8 +209,8 @@ TSubclassOf<AHexagonActor> UGenerateMapComponent::SetTile(FClimateInfo Info)
 	{
 		CurType = EHexType::Snow;
 		return SnowHexTile;
-	}
-	/*if (RandomLCGfloat(0, 100) <= Info.GrasslandPercentage)
+	}*/
+	if (RandomLCGfloat(0, 100) <= Info.GrasslandPercentage)
 	{
 		CurType = EHexType::Grassland;
 		return GrassHexTile;
@@ -247,7 +249,7 @@ TSubclassOf<AHexagonActor> UGenerateMapComponent::SetTile(FClimateInfo Info)
 	{
 		CurType = EHexType::Snow;
 		return SnowHexTile;
-	}*/
+	}
 	bCurIsLand = false;
 	return SetWaterTile(CurX, CurY);
 }
@@ -256,31 +258,37 @@ TArray<float> UGenerateMapComponent::GetTilePercentages(FClimateInfo Info)
 {
 	TArray<float> Percentages;
 	float Total = GetTotalPercentages(Info);
+	float PercentageStack = 0.0f;
 	// grass, plains, desert, mountain, jungle, tundra, ice, snow, (water)
 	Percentages.Add(Info.GrasslandPercentage);
-	Total = GetPercentage(Info.GrasslandPercentage, Total);
+	PercentageStack = GetPercentage(Info.GrasslandPercentage, Total);
+	UE_LOG(LogTemp, Warning, TEXT("Stack is: %f"), PercentageStack);
+	Percentages.Add(PercentageStack + Info.PlainsPercentage);
+	PercentageStack += GetPercentage(Info.PlainsPercentage, Total);
+	UE_LOG(LogTemp, Warning, TEXT("Stack is: %f"), PercentageStack);
 
-	Percentages.Add(Total + Info.PlainsPercentage);
-	Total += GetPercentage(Info.PlainsPercentage, Total);
+	Percentages.Add(PercentageStack + Info.DesertPercentage);
+	PercentageStack += GetPercentage(Info.DesertPercentage, Total);
+	UE_LOG(LogTemp, Warning, TEXT("Stack is: %f"), PercentageStack);
 
-	Percentages.Add(Total + Info.DesertPercentage);
-	Total += GetPercentage(Info.DesertPercentage, Total);
+	Percentages.Add(PercentageStack + Info.MountainPercentage);
+	PercentageStack += GetPercentage(Info.MountainPercentage, Total);
+	UE_LOG(LogTemp, Warning, TEXT("Stack is: %f"), PercentageStack);
 
-	Percentages.Add(Total + Info.MountainPercentage);
-	Total += GetPercentage(Info.MountainPercentage, Total);
+	Percentages.Add(PercentageStack + Info.JunglePercentage);
+	PercentageStack += GetPercentage(Info.JunglePercentage, Total);
+	UE_LOG(LogTemp, Warning, TEXT("Stack is: %f"), PercentageStack);
 
-	Percentages.Add(Total + Info.JunglePercentage);
-	Total += GetPercentage(Info.JunglePercentage, Total);
+	Percentages.Add(PercentageStack + Info.TundraPercentage);
+	PercentageStack += GetPercentage(Info.TundraPercentage, Total);
+	UE_LOG(LogTemp, Warning, TEXT("Stack is: %f"), PercentageStack);
 
-	Percentages.Add(Total + Info.TundraPercentage);
-	Total += GetPercentage(Info.TundraPercentage, Total);
+	Percentages.Add(PercentageStack + Info.IcePercentage);
+	PercentageStack += GetPercentage(Info.IcePercentage, Total);
+	UE_LOG(LogTemp, Warning, TEXT("Stack is: %f"), PercentageStack);
 
-	Percentages.Add(Total + Info.IcePercentage);
-	Total += GetPercentage(Info.IcePercentage, Total);
-
-	Percentages.Add(Total + Info.SnowPercentage);
-	GEngine->AddOnScreenDebugMessage(-1, 20, FColor::Blue,
-		FString::Printf(TEXT("%f"), Total));
+	Percentages.Add(PercentageStack + Info.SnowPercentage);
+	UE_LOG(LogTemp, Warning, TEXT("Stack is: %f"), PercentageStack);
 	return Percentages;
 }
 

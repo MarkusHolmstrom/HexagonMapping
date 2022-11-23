@@ -20,7 +20,7 @@ enum class EClimateType : uint8
 UENUM(BlueprintType)
 enum class EHinder : uint8
 {
-	None, Hill, Trees
+	None, Hill, Trees, Mountain, Water
 };
 
 UENUM(BlueprintType)

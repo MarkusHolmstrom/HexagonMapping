@@ -243,7 +243,7 @@ void EmptyLinkFunctionForGeneratedCodeEnums() {}
 		return EHinder_StaticEnum();
 	}
 	static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EHinder(EHinder_StaticEnum, TEXT("/Script/HexagonMapping"), TEXT("EHinder"), false, nullptr, nullptr);
-	uint32 Get_Z_Construct_UEnum_HexagonMapping_EHinder_Hash() { return 3667371497U; }
+	uint32 Get_Z_Construct_UEnum_HexagonMapping_EHinder_Hash() { return 2536788078U; }
 	UEnum* Z_Construct_UEnum_HexagonMapping_EHinder()
 	{
 #if WITH_HOT_RELOAD
@@ -258,14 +258,18 @@ void EmptyLinkFunctionForGeneratedCodeEnums() {}
 				{ "EHinder::None", (int64)EHinder::None },
 				{ "EHinder::Hill", (int64)EHinder::Hill },
 				{ "EHinder::Trees", (int64)EHinder::Trees },
+				{ "EHinder::Mountain", (int64)EHinder::Mountain },
+				{ "EHinder::Water", (int64)EHinder::Water },
 			};
 #if WITH_METADATA
 			const UE4CodeGen_Private::FMetaDataPairParam Enum_MetaDataParams[] = {
 				{ "BlueprintType", "true" },
 				{ "Hill.Name", "EHinder::Hill" },
 				{ "ModuleRelativePath", "Public/Enums.h" },
+				{ "Mountain.Name", "EHinder::Mountain" },
 				{ "None.Name", "EHinder::None" },
 				{ "Trees.Name", "EHinder::Trees" },
+				{ "Water.Name", "EHinder::Water" },
 			};
 #endif
 			static const UE4CodeGen_Private::FEnumParams EnumParams = {

@@ -8,7 +8,7 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
-class AHexagonActor;
+class AHexagonTile;
 class ADetailActor;
 struct FClimateInfo;
 enum class EHinder : uint8;
@@ -27,6 +27,7 @@ template<> HEXAGONMAPPING_API UScriptStruct* StaticStruct<struct FClimateInfo>()
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_127_SPARSE_DATA
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_127_RPC_WRAPPERS \
  \
+	DECLARE_FUNCTION(execOnTileClicked); \
 	DECLARE_FUNCTION(execRandomLCGfloat); \
 	DECLARE_FUNCTION(execGetHill); \
 	DECLARE_FUNCTION(execGetTrees); \
@@ -48,6 +49,7 @@ template<> HEXAGONMAPPING_API UScriptStruct* StaticStruct<struct FClimateInfo>()
 
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_127_RPC_WRAPPERS_NO_PURE_DECLS \
  \
+	DECLARE_FUNCTION(execOnTileClicked); \
 	DECLARE_FUNCTION(execRandomLCGfloat); \
 	DECLARE_FUNCTION(execGetHill); \
 	DECLARE_FUNCTION(execGetTrees); \

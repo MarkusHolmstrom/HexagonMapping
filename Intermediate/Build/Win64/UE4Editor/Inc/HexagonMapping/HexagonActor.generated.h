@@ -8,45 +8,43 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
-class UPrimitiveComponent;
-struct FKey;
 #ifdef HEXAGONMAPPING_HexagonActor_generated_h
 #error "HexagonActor.generated.h already included, missing '#pragma once' in HexagonActor.h"
 #endif
 #define HEXAGONMAPPING_HexagonActor_generated_h
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_SPARSE_DATA
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_RPC_WRAPPERS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_17_SPARSE_DATA
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_17_RPC_WRAPPERS \
  \
 	DECLARE_FUNCTION(execDeActivatedByClick); \
 	DECLARE_FUNCTION(execActivatedByClick);
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_17_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execDeActivatedByClick); \
 	DECLARE_FUNCTION(execActivatedByClick);
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_INCLASS_NO_PURE_DECLS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_17_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAHexagonActor(); \
 	friend struct Z_Construct_UClass_AHexagonActor_Statics; \
 public: \
-	DECLARE_CLASS(AHexagonActor, AActor, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/HexagonMapping"), NO_API) \
+	DECLARE_CLASS(AHexagonActor, APawn, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/HexagonMapping"), NO_API) \
 	DECLARE_SERIALIZER(AHexagonActor)
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_INCLASS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_17_INCLASS \
 private: \
 	static void StaticRegisterNativesAHexagonActor(); \
 	friend struct Z_Construct_UClass_AHexagonActor_Statics; \
 public: \
-	DECLARE_CLASS(AHexagonActor, AActor, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/HexagonMapping"), NO_API) \
+	DECLARE_CLASS(AHexagonActor, APawn, COMPILED_IN_FLAGS(0 | CLASS_Config), CASTCLASS_None, TEXT("/Script/HexagonMapping"), NO_API) \
 	DECLARE_SERIALIZER(AHexagonActor)
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_STANDARD_CONSTRUCTORS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_17_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API AHexagonActor(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(AHexagonActor) \
@@ -59,7 +57,7 @@ private: \
 public:
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_ENHANCED_CONSTRUCTORS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_17_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API AHexagonActor(AHexagonActor&&); \
@@ -70,28 +68,28 @@ public: \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(AHexagonActor)
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_PRIVATE_PROPERTY_OFFSET
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_13_PROLOG
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_GENERATED_BODY_LEGACY \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_17_PRIVATE_PROPERTY_OFFSET
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_14_PROLOG
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_17_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_PRIVATE_PROPERTY_OFFSET \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_SPARSE_DATA \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_RPC_WRAPPERS \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_INCLASS \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_STANDARD_CONSTRUCTORS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_17_PRIVATE_PROPERTY_OFFSET \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_17_SPARSE_DATA \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_17_RPC_WRAPPERS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_17_INCLASS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_17_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_GENERATED_BODY \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_17_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_PRIVATE_PROPERTY_OFFSET \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_SPARSE_DATA \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_RPC_WRAPPERS_NO_PURE_DECLS \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_INCLASS_NO_PURE_DECLS \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_16_ENHANCED_CONSTRUCTORS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_17_PRIVATE_PROPERTY_OFFSET \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_17_SPARSE_DATA \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_17_RPC_WRAPPERS_NO_PURE_DECLS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_17_INCLASS_NO_PURE_DECLS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonActor_h_17_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

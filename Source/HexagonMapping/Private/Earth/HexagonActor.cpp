@@ -14,25 +14,13 @@ AHexagonActor::AHexagonActor()
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComp"));
 	MeshTile = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshComp"));
 	MeshTile->SetupAttachment(RootComponent);
-	MeshTile->OnClicked.AddDynamic(this, &AHexagonActor::ActivatedByClick);
 }
 
 // Called when the game starts or when spawned
 void AHexagonActor::BeginPlay()
 {
 	Super::BeginPlay();
-	/*PlayerInputComponent = NewObject<UInputComponent>(this);
-	PlayerInputComponent->RegisterComponent();
-	if (PlayerInputComponent)
-	{
-		PlayerInputComponent->BindAction(TEXT("Activate"), IE_Pressed, this,
-			&AHexagonActor::ActivatedByClick);
-		PlayerInputComponent->BindAction(TEXT("DeActivate"), IE_Released, this,
-			&AHexagonActor::DeActivatedByClick);
-		EnableInput(GetWorld()->GetFirstPlayerController());
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("input activated"));
-
-	}*/
+	
 	
 }
 
@@ -43,7 +31,7 @@ void AHexagonActor::Tick(float DeltaTime)
 
 }
 
-void AHexagonActor::ActivatedByClick(UPrimitiveComponent* pComponent, FKey inKey)
+void AHexagonActor::ActivatedByClick()
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("activated"));
 

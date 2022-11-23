@@ -1,9 +1,10 @@
 // MarkusHolmstrom no rights reserved
 
 #pragma once
-//// https://www.youtube.com/watch?v=viw8QLV-lJ8
+// Tutorial for hexagon tile map
+// https://www.youtube.com/watch?v=viw8QLV-lJ8
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+#include "GameFramework/Pawn.h"
 #include "Enums.h"
 #include "HexagonActor.generated.h"
 
@@ -11,7 +12,7 @@ class HexagonInformation;
 class UStaticMeshComponent;
 
 UCLASS()
-class HEXAGONMAPPING_API AHexagonActor : public AActor
+class HEXAGONMAPPING_API AHexagonActor : public APawn
 {
 	GENERATED_BODY()
 
@@ -52,9 +53,7 @@ public:
 	UStaticMeshComponent* MeshTile;
 	
 private:
-	UInputComponent* PlayerInputComponent;
-	////HexagonInformation* HexagonInfo;
-
+	
 	// Sets default values for this actor's properties
 	AHexagonActor();
 
@@ -67,7 +66,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION()
-		void ActivatedByClick(UPrimitiveComponent* pComponent, FKey inKey);
+		void ActivatedByClick();
 	UFUNCTION()
 		void DeActivatedByClick();
 };

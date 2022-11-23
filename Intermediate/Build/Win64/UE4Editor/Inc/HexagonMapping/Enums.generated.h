@@ -61,7 +61,9 @@ template<> HEXAGONMAPPING_API UEnum* StaticEnum<EResource>();
 #define FOREACH_ENUM_EHINDER(op) \
 	op(EHinder::None) \
 	op(EHinder::Hill) \
-	op(EHinder::Trees) 
+	op(EHinder::Trees) \
+	op(EHinder::Mountain) \
+	op(EHinder::Water) 
 
 enum class EHinder : uint8;
 template<> HEXAGONMAPPING_API UEnum* StaticEnum<EHinder>();

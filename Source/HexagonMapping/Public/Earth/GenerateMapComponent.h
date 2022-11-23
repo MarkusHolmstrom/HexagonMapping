@@ -7,7 +7,7 @@
 #include "Enums.h"
 #include "GenerateMapComponent.generated.h"
 
-class AHexagonActor;
+class AHexagonTile;
 class ADetailActor;
 class UStaticMeshComponent;
 class AShapeMapping;
@@ -127,10 +127,33 @@ class HEXAGONMAPPING_API UGenerateMapComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:
+	
 	UPROPERTY(EditAnywhere)
 	AAStarPathfinding* Pathfinding;
 
-	TArray<TArray<AHexagonActor*>> HexGrid;
+	//UPROPERTY(EditAnywhere)
+	//	int counter = 0;
+	//UPROPERTY(EditAnywhere)
+	//	int check = 0;
+	//UPROPERTY(EditAnywhere)
+	//	int grass = 0;
+	//UPROPERTY(EditAnywhere)
+	//	int desert = 0;
+	//UPROPERTY(EditAnywhere)
+	//	int plains = 0;
+	//UPROPERTY(EditAnywhere)
+	//	int mountain = 0;
+	//UPROPERTY(EditAnywhere)
+	//	int jungle = 0;
+	//UPROPERTY(EditAnywhere)
+	//	int snow = 0;
+	//UPROPERTY(EditAnywhere)
+	//	int tundra = 0;
+	//UPROPERTY(EditAnywhere)
+	//	int ice = 0;
+	//UPROPERTY(EditAnywhere)
+	//	int ocean = 0;
+	TArray<TArray<AHexagonTile*>> HexGrid;
 	UPROPERTY(EditAnywhere)
 		float HorOffset = 88.0f;
 	UPROPERTY(EditAnywhere)
@@ -144,30 +167,27 @@ public:
 	AShapeMapping* ShapeMap;
 
 	UPROPERTY(EditAnywhere, Category = Tiles)
-		TSubclassOf<AHexagonActor> GrassHexTile;
+		TSubclassOf<AHexagonTile> GrassHexTile;
+	UPROPERTY(EditAnywhere, Category = Tiles)
+		TSubclassOf<AHexagonTile> WaterHexTile;
+	UPROPERTY(EditAnywhere, Category = Tiles)
+		TSubclassOf<AHexagonTile> ShoreHexTile;
 
 	UPROPERTY(EditAnywhere, Category = Tiles)
-		TSubclassOf<AHexagonActor> WaterHexTile;
+		TSubclassOf<AHexagonTile> PlainsHexTile;
 	UPROPERTY(EditAnywhere, Category = Tiles)
-		TSubclassOf<AHexagonActor> ShoreHexTile;
+		TSubclassOf<AHexagonTile> MountainHexTile;
+	UPROPERTY(EditAnywhere, Category = Tiles)
+		TSubclassOf<AHexagonTile> DesertHexTile;
 
 	UPROPERTY(EditAnywhere, Category = Tiles)
-		TSubclassOf<AHexagonActor> PlainsHexTile;
-
+		TSubclassOf<AHexagonTile> TundraHexTile;
 	UPROPERTY(EditAnywhere, Category = Tiles)
-		TSubclassOf<AHexagonActor> MountainHexTile;
-
+		TSubclassOf<AHexagonTile> JungleHexTile;
 	UPROPERTY(EditAnywhere, Category = Tiles)
-		TSubclassOf<AHexagonActor> DesertHexTile;
-
+		TSubclassOf<AHexagonTile> SnowHexTile;
 	UPROPERTY(EditAnywhere, Category = Tiles)
-		TSubclassOf<AHexagonActor> TundraHexTile;
-	UPROPERTY(EditAnywhere, Category = Tiles)
-		TSubclassOf<AHexagonActor> JungleHexTile;
-	UPROPERTY(EditAnywhere, Category = Tiles)
-		TSubclassOf<AHexagonActor> SnowHexTile;
-	UPROPERTY(EditAnywhere, Category = Tiles)
-		TSubclassOf<AHexagonActor> IceHexTile;
+		TSubclassOf<AHexagonTile> IceHexTile;
 
 	UPROPERTY(EditDefaultsOnly, Category = Details)
 		TArray<TSubclassOf<ADetailActor>> TreeTiles;
@@ -249,7 +269,7 @@ public:
 	UFUNCTION()
 	void GenerateMap(int Height, int Width);
 	UFUNCTION()
-	TSubclassOf<AHexagonActor> SetTile(FClimateInfo Info);
+	TSubclassOf<AHexagonTile> SetTile(FClimateInfo Info);
 	UFUNCTION()
 	TArray<float> GetTilePercentages(FClimateInfo Info);
 	UFUNCTION()
@@ -257,13 +277,13 @@ public:
 	UFUNCTION()
 	float GetPercentage(float SmallFloat, float MaxFloat);
 	UFUNCTION()
-	void SetHexagonInfo(AHexagonActor* Tile, bool Land, EHinder Hinder);
+	void SetHexagonInfo(AHexagonTile* Tile, bool Land, EHinder Hinder);
 	UFUNCTION()
-	TSubclassOf<AHexagonActor> SetWaterTile(int32 X, int32 Y);
+	TSubclassOf<AHexagonTile> SetWaterTile(int32 X, int32 Y);
 	UFUNCTION()
 	bool CheckTileForCoast(int32 X, int32 Y);
 	UFUNCTION()
-	AHexagonActor* GetTile(int32 X, int32 Y);
+	AHexagonTile* GetTile(int32 X, int32 Y);
 	UFUNCTION()
 	void SetShoreTilesAround(int32 X, int32 Y);
 
@@ -272,15 +292,19 @@ public:
 	UFUNCTION()
 	void AddToList(int32 X, int32 Y, bool Land, int32 AddRadius);
 	UFUNCTION()
-	bool SetLikelihoodLand(AHexagonActor* Tile);
+	bool SetLikelihoodLand(AHexagonTile* Tile);
 	UFUNCTION()
 	FClimateInfo GetCorrectClimate(int32 Index, bool HigherPossLand);
 	UFUNCTION()
 	TSubclassOf<ADetailActor> GetTrees(float Random);
 	UFUNCTION()
-	bool GetHill(AHexagonActor* Hex);
+	bool GetHill(AHexagonTile* Hex);
+
+
 private:
 
 	UFUNCTION()
 	float RandomLCGfloat(int32 Min, int32 Max);
+	UFUNCTION()
+	void OnTileClicked(AHexagonTile* Tile);
 };

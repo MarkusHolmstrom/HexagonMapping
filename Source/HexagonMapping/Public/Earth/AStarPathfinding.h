@@ -6,7 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "AStarPathfinding.generated.h"
 
-class AHexagonActor;
+class AHexagonTile;
 class UGenerateMapComponent;
 
 USTRUCT()
@@ -43,15 +43,17 @@ public:
 		float TotalScore = 0;
 
 private:
-	TArray<AHexagonActor*> OpenList;
-	TArray<AHexagonActor*> ClosedList;
+	TArray<AHexagonTile*> OpenList;
+	TArray<AHexagonTile*> ClosedList;
 
 	UPROPERTY(VisibleAnywhere)
-	AHexagonActor* CurrentTile;
+		AHexagonTile* CurrentTile;
 	UPROPERTY(VisibleAnywhere)
-	AHexagonActor* ParentTile;
+		AHexagonTile* ParentTile;
 	UPROPERTY(VisibleAnywhere)
-	FIntPoint TargetCoordinates;
+		TArray<AHexagonTile*> TargetCoordinates;
+	UPROPERTY(EditAnywhere)
+		int32 TargetCount = 2;
 
 public:	
 	// Sets default values for this actor's properties
@@ -66,11 +68,12 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION()
-	void SetTargetCoordinates(FIntPoint NewTarget);
+	void SetTargetCoordinates(AHexagonTile* NewTarget);
 	UFUNCTION()
-	TArray<AHexagonActor*> GetAdjacentTiles(AHexagonActor* Hexagon);
+	TArray<AHexagonTile*> GetAdjacentTiles(AHexagonTile* Hexagon);
 
 protected:
 	float GetManhattanDistance(FVector Start, FVector Goal);
 
+	void RemoveTilesLight(TArray<AHexagonTile*> Tiles);
 };

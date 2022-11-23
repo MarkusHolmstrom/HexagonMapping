@@ -2,7 +2,7 @@
 
 
 #include "Earth/AStarPathfinding.h"
-#include "Earth/HexagonActor.h"
+#include "Earth/HexagonTile.h"
 #include "Earth/GenerateMapComponent.h"
 
 // Sets default values
@@ -18,7 +18,7 @@ void AAStarPathfinding::BeginPlay()
 {
 	Super::BeginPlay();
 	//TODO how to get this fella>?
-	MapGenerator = Cast<UGenerateMapComponent>(Planet->GetComponentByClass(UActorComponent::StaticClass()));
+	//MapGenerator = Cast<UGenerateMapComponent>(Planet->GetComponentByClass(UActorComponent::StaticClass()));
 
 }
 
@@ -26,23 +26,30 @@ void AAStarPathfinding::BeginPlay()
 void AAStarPathfinding::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	/*if (!MapGenerator)
+}
+
+void AAStarPathfinding::SetTargetCoordinates(AHexagonTile* NewTarget)
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT("ahhhhboi"));
+	TargetCoordinates.Add(NewTarget);
+
+	if (TargetCoordinates.Num() >= TargetCount)
 	{
-		MapGenerator = Cast<UGenerateMapComponent>(Planet->GetComponentByClass(UActorComponent::StaticClass()));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("ahhhh"));
+		// Fuck manahhattan..
+		ManhattanDistance = GetManhattanDistance(TargetCoordinates[0]->TileLocation,
+			TargetCoordinates[1]->TileLocation);
+		RemoveTilesLight(TargetCoordinates);
+		TargetCoordinates.Empty();
+	}
 
-	}*/
 }
 
-void AAStarPathfinding::SetTargetCoordinates(FIntPoint NewTarget)
+TArray<AHexagonTile*> AAStarPathfinding::GetAdjacentTiles(AHexagonTile* Hexagon)
 {
-	TargetCoordinates = NewTarget;
-}
-
-TArray<AHexagonActor*> AAStarPathfinding::GetAdjacentTiles(AHexagonActor* Hexagon)
-{
-	TArray<AHexagonActor*> AdjacentTiles;
+	TArray<AHexagonTile*> AdjacentTiles;
 	FIntPoint Coord = Hexagon->TileIndex;
-	AHexagonActor* CheckTile = MapGenerator->GetTile(Coord.X - 1, Coord.Y - 1);
+	AHexagonTile* CheckTile = MapGenerator->GetTile(Coord.X - 1, Coord.Y - 1);
 	if (CheckTile)
 	{
 		AdjacentTiles.Add(CheckTile);
@@ -72,11 +79,19 @@ TArray<AHexagonActor*> AAStarPathfinding::GetAdjacentTiles(AHexagonActor* Hexago
 	{
 		AdjacentTiles.Add(CheckTile);
 	}
-	return TArray<AHexagonActor*>();
+	return TArray<AHexagonTile*>();
 }
 
 float AAStarPathfinding::GetManhattanDistance(FVector Start, FVector Goal)
 {
 	return FVector::Distance(Start, Goal);
+}
+
+void AAStarPathfinding::RemoveTilesLight(TArray<AHexagonTile*> Tiles)
+{
+	for (size_t i = 0; i < Tiles.Num(); i++)
+	{
+		Tiles[i]->RemoveLight();
+	}
 }
 

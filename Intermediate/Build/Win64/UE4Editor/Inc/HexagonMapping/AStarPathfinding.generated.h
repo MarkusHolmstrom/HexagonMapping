@@ -8,8 +8,7 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
-class AHexagonActor;
-struct FIntPoint;
+class AHexagonTile;
 #ifdef HEXAGONMAPPING_AStarPathfinding_generated_h
 #error "AStarPathfinding.generated.h already included, missing '#pragma once' in AStarPathfinding.h"
 #endif
@@ -80,7 +79,8 @@ public: \
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_26_PRIVATE_PROPERTY_OFFSET \
 	FORCEINLINE static uint32 __PPO__CurrentTile() { return STRUCT_OFFSET(AAStarPathfinding, CurrentTile); } \
 	FORCEINLINE static uint32 __PPO__ParentTile() { return STRUCT_OFFSET(AAStarPathfinding, ParentTile); } \
-	FORCEINLINE static uint32 __PPO__TargetCoordinates() { return STRUCT_OFFSET(AAStarPathfinding, TargetCoordinates); }
+	FORCEINLINE static uint32 __PPO__TargetCoordinates() { return STRUCT_OFFSET(AAStarPathfinding, TargetCoordinates); } \
+	FORCEINLINE static uint32 __PPO__TargetCount() { return STRUCT_OFFSET(AAStarPathfinding, TargetCount); }
 
 
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_23_PROLOG

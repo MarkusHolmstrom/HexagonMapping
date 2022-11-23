@@ -17,7 +17,7 @@ AWorldPawn::AWorldPawn()
 	RootComponent = Surface;
 	SphereMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshSurface"));
 	SphereMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
-	SphereMesh->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
+	//SphereMesh->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
 }
 
 // Called when the game starts or when spawned
@@ -91,9 +91,9 @@ void AWorldPawn::Tick(float DeltaTime)
 void AWorldPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	PlayerInputComponent->BindAction(TEXT("ActivateRot"), IE_Pressed, this, 
+	PlayerInputComponent->BindAction(TEXT("Activate"), IE_Pressed, this, 
 		&AWorldPawn::ActivateRotation);
-	PlayerInputComponent->BindAction(TEXT("DeActivateRot"), IE_Released, this,
+	PlayerInputComponent->BindAction(TEXT("DeActivate"), IE_Released, this,
 		&AWorldPawn::DeActivateRotation);
 
 	PlayerInputComponent->BindAxis(TEXT("RotateX"), this, 

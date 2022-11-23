@@ -3,9 +3,10 @@
 
 #include "Earth/GenerateMapComponent.h"
 #include "DrawDebugHelpers.h"
-#include "Earth/HexagonActor.h"
+#include "Earth/HexagonTile.h"
 #include "Earth/DetailActor.h"
 #include "Earth/CylinderShapeMapping.h"
+#include "Earth/AStarPathFinding.h"
 #include "Enums.h"
 #include "Components/StaticMeshComponent.h"
 
@@ -61,6 +62,10 @@ void UGenerateMapComponent::BeginPlay()
 	{
 		HexGrid[i].SetNumZeroed(MapHeight);
 	}
+	if (Pathfinding)
+	{
+		Pathfinding->MapGenerator = this;
+	}
 	// create a map
 	GenerateMap(MapHeight, MapWidth);
 	//FVector Pos = ShapeMap->GetHexLocation(2, 2, MapHeight, MapWidth, Radius);
@@ -113,20 +118,24 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 
 			CurX = x;
 			CurY = y;
-			TSubclassOf<AHexagonActor> tileToSpawn = SetTile(FCI);
-
+			TSubclassOf<AHexagonTile> tileToSpawn = SetTile(FCI);
 			if (bCurIsLand)
 			{
+				// Checks if adjacent tiles are ocean tiles, instead of shores:
 				SetShoreTilesAround(CurX, CurY);
 			}
 
-			AHexagonActor* newTile = nullptr;
+			AHexagonTile* newTile = nullptr;
 
+			FActorSpawnParameters SpawnInfo;
+			// Spawn failure is not an option!
+			SpawnInfo.bNoFail = true;
+			SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+			
 			if (MapType == EMapType::Cylinder)
 			{
-				newTile = GetWorld()->SpawnActor<AHexagonActor>(
-					tileToSpawn, Pos, FRotator::ZeroRotator);
-
+				newTile = GetWorld()->SpawnActor<AHexagonTile>(
+					tileToSpawn, Pos, FRotator::ZeroRotator, SpawnInfo);
 			}
 			else if (MapType == EMapType::Sphere)
 			{
@@ -134,8 +143,9 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 			}
 			else // Create flat surface map
 			{
-				newTile = GetWorld()->SpawnActor<AHexagonActor>(
-					tileToSpawn, FVector(FIntPoint(xPos, yPos)), FRotator::ZeroRotator);
+				newTile = GetWorld()->SpawnActor<AHexagonTile>(
+					tileToSpawn, FVector(FIntPoint(xPos, yPos)), 
+					FRotator::ZeroRotator, SpawnInfo);
 			}
 			
 			EHinder CurHinder = EHinder::None;
@@ -155,13 +165,14 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 					}
 				}
 				SetHexagonInfo(newTile, true, CurHinder);
+				newTile->TileLocation = FVector(FIntPoint(xPos, yPos));
 				HexGrid[x][y] = newTile;
 			}
 		}
 	}
 }
 
-TSubclassOf<AHexagonActor> UGenerateMapComponent::SetTile(FClimateInfo Info)
+TSubclassOf<AHexagonTile> UGenerateMapComponent::SetTile(FClimateInfo Info)
 {
 	bCurIsLand = true;
 	/*float TileDecider = RandomLCGfloat(0, 100);
@@ -263,6 +274,7 @@ TArray<float> UGenerateMapComponent::GetTilePercentages(FClimateInfo Info)
 	Percentages.Add(Info.GrasslandPercentage);
 	PercentageStack = GetPercentage(Info.GrasslandPercentage, Total);
 	UE_LOG(LogTemp, Warning, TEXT("Stack is: %f"), PercentageStack);
+	//TODO fundera ut dessa
 	Percentages.Add(PercentageStack + Info.PlainsPercentage);
 	PercentageStack += GetPercentage(Info.PlainsPercentage, Total);
 	UE_LOG(LogTemp, Warning, TEXT("Stack is: %f"), PercentageStack);
@@ -310,11 +322,22 @@ float UGenerateMapComponent::GetPercentage(float Percentage, float Total)
 	return Percentage / Total;
 }
 
-void UGenerateMapComponent::SetHexagonInfo(AHexagonActor* Tile, bool Land, EHinder Hinder)
+void UGenerateMapComponent::SetHexagonInfo(AHexagonTile* Tile, bool Land, EHinder Hinder)
 {
+	Tile->MapComponent = this;
+	Tile->OnTileClicked.AddDynamic(this, &UGenerateMapComponent::OnTileClicked);
+
 	if (Land)
 	{
 		Tile->Type = CurType;
+		if (Tile->Type == EHexType::Mountain)
+		{
+			Tile->Hinder = EHinder::Mountain;
+			Tile->Appeal = 5;
+			Tile->Continent = "Your continent name here, plz...";
+			Tile->TileIndex = FIntPoint(CurX, CurY);
+			return;
+		}
 		if (Tile->bHasHill)
 		{
 			// Hills overrides trees, because trees can be removed
@@ -332,16 +355,22 @@ void UGenerateMapComponent::SetHexagonInfo(AHexagonActor* Tile, bool Land, EHind
 		{
 			Tile->MoveCost = 1.0f;
 		}
-		//Tile->Resource =
-		//Tile->ResourceType =
 		Tile->DefModifier = 1.5f;
 		Tile->Appeal = 2;
-		Tile->Continent = "Your continent name here, plz...";
-		Tile->TileIndex = FIntPoint(CurX, CurY);
 	}
+	else
+	{
+		Tile->Hinder = EHinder::Water;
+		Tile->MoveCost = 1.0f;
+	}
+
+	//Tile->Resource =
+	//Tile->ResourceType =
+	Tile->Continent = "Your continent name here, plz...";
+	Tile->TileIndex = FIntPoint(CurX, CurY);
 }
 
-TSubclassOf<AHexagonActor> UGenerateMapComponent::SetWaterTile(int32 X, int32 Y)
+TSubclassOf<AHexagonTile> UGenerateMapComponent::SetWaterTile(int32 X, int32 Y)
 {
 	if (CheckTileForCoast(X - 1, Y - 1) || 
 		CheckTileForCoast(X, Y - 1) || 
@@ -522,7 +551,7 @@ bool UGenerateMapComponent::CheckTileForCoast(int32 X, int32 Y)
 	}
 }
 
-AHexagonActor* UGenerateMapComponent::GetTile(int32 X, int32 Y)
+AHexagonTile* UGenerateMapComponent::GetTile(int32 X, int32 Y)
 {
 	if (HexGrid.IsValidIndex(X) && HexGrid.IsValidIndex(Y))
 	{
@@ -530,7 +559,7 @@ AHexagonActor* UGenerateMapComponent::GetTile(int32 X, int32 Y)
 	}
 	return nullptr;
 }
-
+// Replace coast lines with shore tiles
 void UGenerateMapComponent::SetShoreTilesAround(int32 X, int32 Y)
 {
 	if (X < 0 || Y < 0)
@@ -539,35 +568,46 @@ void UGenerateMapComponent::SetShoreTilesAround(int32 X, int32 Y)
 	}
 	if (Y > 0)
 	{
+		if (!GetTile(X, Y - 1))
+		{
+			return;
+		}
 		if (GetTile(X, Y - 1)->Type == EHexType::Ocean)
 		{
 			GetTile(X, Y - 1)->Type = EHexType::Shore;
 			HexGrid[X][Y - 1]->Destroy();
-			HexGrid[X][Y - 1] = GetWorld()->SpawnActor<AHexagonActor>(ShoreHexTile,
+			HexGrid[X][Y - 1] = GetWorld()->SpawnActor<AHexagonTile>(ShoreHexTile,
 				HexGrid[X][Y - 1]->GetActorLocation(), FRotator::ZeroRotator);
+			return;
+		}
+		else if (!GetTile(X - 1, Y - 1))
+		{
 			return;
 		}
 		else if (X > 0 && GetTile(X - 1, Y - 1)->Type == EHexType::Ocean)
 		{
 			GetTile(X - 1, Y - 1)->Type = EHexType::Shore;
 			HexGrid[X - 1][Y - 1]->Destroy();
-			HexGrid[X - 1][Y - 1] = GetWorld()->SpawnActor<AHexagonActor>(ShoreHexTile,
+			HexGrid[X - 1][Y - 1] = GetWorld()->SpawnActor<AHexagonTile>(ShoreHexTile,
 				HexGrid[X - 1][Y - 1]->GetActorLocation(), FRotator::ZeroRotator);
 			return;
 		}
+	}
+	if (!GetTile(X - 1, Y))
+	{
+		return;
 	}
 	if (X > 0 && GetTile(X - 1, Y)->Type == EHexType::Ocean)
 	{
 		GetTile(X - 1, Y)->Type = EHexType::Shore;
 		HexGrid[X - 1][Y]->Destroy();
-		HexGrid[X - 1][Y] = GetWorld()->SpawnActor<AHexagonActor>(ShoreHexTile,
+		HexGrid[X - 1][Y] = GetWorld()->SpawnActor<AHexagonTile>(ShoreHexTile,
 			HexGrid[X - 1][Y]->GetActorLocation(), FRotator::ZeroRotator);
-		return;
 	}
 
 }
 
-bool UGenerateMapComponent::SetLikelihoodLand(AHexagonActor* Tile)
+bool UGenerateMapComponent::SetLikelihoodLand(AHexagonTile* Tile)
 {
 	if (Tile->Type == EHexType::Ocean || Tile->Type == EHexType::Shore)
 	{
@@ -645,7 +685,7 @@ TSubclassOf<ADetailActor> UGenerateMapComponent::GetTrees(float Random)
 	}
 }
 
-bool UGenerateMapComponent::GetHill(AHexagonActor* Hex)
+bool UGenerateMapComponent::GetHill(AHexagonTile* Hex)
 {
 	if (Hex->Type != EHexType::Ocean && Hex->Type != EHexType::Shore && Hex->Type != EHexType::Mountain)
 	{
@@ -680,6 +720,20 @@ float UGenerateMapComponent::RandomLCGfloat(int32 Min, int32 Max)
 
 	float RandFloat = (float)RandCent / (float)Divider;
 	return RandFloat;
+}
+
+void UGenerateMapComponent::OnTileClicked(AHexagonTile* Tile)
+{
+	if (Pathfinding)
+	{
+		Pathfinding->SetTargetCoordinates(Tile);
+
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, TEXT("map comp got a message"));
+
+	}
 }
 
 

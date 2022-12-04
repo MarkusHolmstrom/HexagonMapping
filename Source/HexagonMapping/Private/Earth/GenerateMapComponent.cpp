@@ -325,7 +325,7 @@ float UGenerateMapComponent::GetPercentage(float Percentage, float Total)
 void UGenerateMapComponent::SetHexagonInfo(AHexagonTile* Tile, bool Land, EHinder Hinder)
 {
 	Tile->MapComponent = this;
-	Tile->OnTileClicked.AddDynamic(this, &UGenerateMapComponent::OnTileClicked);
+	//Tile->OnTileClicked.AddDynamic(this, &UGenerateMapComponent::OnTileClicked);
 
 	if (Land)
 	{
@@ -722,11 +722,11 @@ float UGenerateMapComponent::RandomLCGfloat(int32 Min, int32 Max)
 	return RandFloat;
 }
 
-void UGenerateMapComponent::OnTileClicked(AHexagonTile* Tile)
+void UGenerateMapComponent::OnTileClicked(FVector TilePosition)
 {
 	if (Pathfinding)
 	{
-		Pathfinding->SetTargetCoordinates(Tile);
+		Pathfinding->SetTargetCoordinates(TilePosition);
 
 	}
 	else

@@ -11,6 +11,8 @@ class UStaticMeshComponent;
 class ACameraActor;
 class UCameraComponent;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTileClicked, FVector, TilePosition);
+
 UCLASS()
 class HEXAGONMAPPING_API AWorldPawn : public APawn
 {
@@ -44,9 +46,14 @@ public:
 	float ZoomSpeed = 5;
 
 
+	UPROPERTY(BlueprintAssignable)
+		FOnTileClicked OnTileClicked;
+
 	// Sets default values for this pawn's properties
 	AWorldPawn();
 
+	UFUNCTION()
+		void GetTile();
 	UFUNCTION()
 	void ActivateRotation();
 	UFUNCTION()

@@ -51,7 +51,7 @@ private:
 	UPROPERTY(VisibleAnywhere)
 		AHexagonTile* ParentTile;
 	UPROPERTY(VisibleAnywhere)
-		TArray<AHexagonTile*> TargetCoordinates;
+		TArray<AActor*> TargetCoordinates;
 	UPROPERTY(EditAnywhere)
 		int32 TargetCount = 2;
 
@@ -68,12 +68,12 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION()
-	void SetTargetCoordinates(AHexagonTile* NewTarget);
+	void SetTargetCoordinates(FVector Position);
 	UFUNCTION()
 	TArray<AHexagonTile*> GetAdjacentTiles(AHexagonTile* Hexagon);
 
 protected:
 	float GetManhattanDistance(FVector Start, FVector Goal);
 
-	void RemoveTilesLight(TArray<AHexagonTile*> Tiles);
+	void RemoveTilesLight(TArray<AActor*> Tiles);
 };

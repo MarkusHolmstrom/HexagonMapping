@@ -6,6 +6,8 @@
 #include "Components/StaticMeshComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Camera/CameraActor.h"
+#include "Runtime/Engine/Classes/Kismet/GameplayStatics.h"
+//#include "Runtime/Engine/Classes/GameFramework/PlayerController.h"
 
 // Sets default values
 AWorldPawn::AWorldPawn()
@@ -31,6 +33,26 @@ void AWorldPawn::BeginPlay()
 		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("cam comp found"));
 
 	}
+}
+
+void AWorldPawn::GetTile()
+{
+	// Trace to see what is under the mouse cursor
+	FHitResult Hit;
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->
+		GetHitResultUnderCursor(ECC_Visibility, false, Hit);
+
+	if (Hit.bBlockingHit) 
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Magenta, Hit.GetActor()->GetName());
+		
+	}
+	float mouseX;
+	float mouseY;
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetMousePosition(mouseX, mouseY);
+	
+	FVector TilePosition = FVector(mouseX, mouseY, 0);
+	OnTileClicked.Broadcast(TilePosition);
 }
 
 void AWorldPawn::ActivateRotation()
@@ -93,6 +115,8 @@ void AWorldPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	PlayerInputComponent->BindAction(TEXT("Activate"), IE_Pressed, this, 
 		&AWorldPawn::ActivateRotation);
+	PlayerInputComponent->BindAction(TEXT("Activate"), IE_DoubleClick, this,
+		&AWorldPawn::GetTile);
 	PlayerInputComponent->BindAction(TEXT("DeActivate"), IE_Released, this,
 		&AWorldPawn::DeActivateRotation);
 

@@ -28,17 +28,17 @@ void AAStarPathfinding::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void AAStarPathfinding::SetTargetCoordinates(AHexagonTile* NewTarget)
+void AAStarPathfinding::SetTargetCoordinates(FVector Position)
 {
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald, TEXT("ahhhhboi"));
-	TargetCoordinates.Add(NewTarget);
+	//TargetCoordinates.Add(NewTarget);
 
 	if (TargetCoordinates.Num() >= TargetCount)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("ahhhh"));
 		// Fuck manahhattan..
-		ManhattanDistance = GetManhattanDistance(TargetCoordinates[0]->TileLocation,
-			TargetCoordinates[1]->TileLocation);
+		ManhattanDistance = GetManhattanDistance(TargetCoordinates[0]->GetActorLocation(),
+			TargetCoordinates[1]->GetActorLocation());
 		RemoveTilesLight(TargetCoordinates);
 		TargetCoordinates.Empty();
 	}
@@ -87,11 +87,18 @@ float AAStarPathfinding::GetManhattanDistance(FVector Start, FVector Goal)
 	return FVector::Distance(Start, Goal);
 }
 
-void AAStarPathfinding::RemoveTilesLight(TArray<AHexagonTile*> Tiles)
+void AAStarPathfinding::RemoveTilesLight(TArray<AActor*> Tiles)
 {
 	for (size_t i = 0; i < Tiles.Num(); i++)
 	{
-		Tiles[i]->RemoveLight();
+		AHexagonTile* Tile = Cast<AHexagonTile>(Tiles[i]->GetComponentByClass(AHexagonTile::StaticClass()));
+		if (!Tile)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("tile  miss!!"));
+
+		}
+		
+		//Tile->RemoveLight();
 	}
 }
 

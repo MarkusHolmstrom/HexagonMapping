@@ -9,6 +9,7 @@
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 class AHexagonTile;
+struct FVector;
 #ifdef HEXAGONMAPPING_AStarPathfinding_generated_h
 #error "AStarPathfinding.generated.h already included, missing '#pragma once' in AStarPathfinding.h"
 #endif

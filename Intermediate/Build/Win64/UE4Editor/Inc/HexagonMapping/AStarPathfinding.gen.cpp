@@ -19,6 +19,7 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 	HEXAGONMAPPING_API UClass* Z_Construct_UClass_AAStarPathfinding();
 	ENGINE_API UClass* Z_Construct_UClass_AActor();
 	HEXAGONMAPPING_API UClass* Z_Construct_UClass_AHexagonTile_NoRegister();
+	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector();
 	ENGINE_API UClass* Z_Construct_UClass_AActor_NoRegister();
 	HEXAGONMAPPING_API UClass* Z_Construct_UClass_UGenerateMapComponent_NoRegister();
 // End Cross Module References
@@ -100,10 +101,10 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFPathFindingASta
 	}
 	DEFINE_FUNCTION(AAStarPathfinding::execSetTargetCoordinates)
 	{
-		P_GET_OBJECT(AHexagonTile,Z_Param_NewTarget);
+		P_GET_STRUCT(FVector,Z_Param_Position);
 		P_FINISH;
 		P_NATIVE_BEGIN;
-		P_THIS->SetTargetCoordinates(Z_Param_NewTarget);
+		P_THIS->SetTargetCoordinates(Z_Param_Position);
 		P_NATIVE_END;
 	}
 	void AAStarPathfinding::StaticRegisterNativesAAStarPathfinding()
@@ -158,25 +159,25 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFPathFindingASta
 	{
 		struct AStarPathfinding_eventSetTargetCoordinates_Parms
 		{
-			AHexagonTile* NewTarget;
+			FVector Position;
 		};
-		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_NewTarget;
+		static const UE4CodeGen_Private::FStructPropertyParams NewProp_Position;
 		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
 #endif
 		static const UE4CodeGen_Private::FFunctionParams FuncParams;
 	};
-	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AAStarPathfinding_SetTargetCoordinates_Statics::NewProp_NewTarget = { "NewTarget", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AStarPathfinding_eventSetTargetCoordinates_Parms, NewTarget), Z_Construct_UClass_AHexagonTile_NoRegister, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AAStarPathfinding_SetTargetCoordinates_Statics::NewProp_Position = { "Position", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AStarPathfinding_eventSetTargetCoordinates_Parms, Position), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(nullptr, 0) };
 	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AAStarPathfinding_SetTargetCoordinates_Statics::PropPointers[] = {
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AAStarPathfinding_SetTargetCoordinates_Statics::NewProp_NewTarget,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AAStarPathfinding_SetTargetCoordinates_Statics::NewProp_Position,
 	};
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AAStarPathfinding_SetTargetCoordinates_Statics::Function_MetaDataParams[] = {
 		{ "ModuleRelativePath", "Public/Earth/AStarPathfinding.h" },
 	};
 #endif
-	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AAStarPathfinding_SetTargetCoordinates_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AAStarPathfinding, nullptr, "SetTargetCoordinates", nullptr, nullptr, sizeof(AStarPathfinding_eventSetTargetCoordinates_Parms), Z_Construct_UFunction_AAStarPathfinding_SetTargetCoordinates_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AAStarPathfinding_SetTargetCoordinates_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AAStarPathfinding_SetTargetCoordinates_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AAStarPathfinding_SetTargetCoordinates_Statics::Function_MetaDataParams)) };
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AAStarPathfinding_SetTargetCoordinates_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AAStarPathfinding, nullptr, "SetTargetCoordinates", nullptr, nullptr, sizeof(AStarPathfinding_eventSetTargetCoordinates_Parms), Z_Construct_UFunction_AAStarPathfinding_SetTargetCoordinates_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AAStarPathfinding_SetTargetCoordinates_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00820401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AAStarPathfinding_SetTargetCoordinates_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AAStarPathfinding_SetTargetCoordinates_Statics::Function_MetaDataParams)) };
 	UFunction* Z_Construct_UFunction_AAStarPathfinding_SetTargetCoordinates()
 	{
 		static UFunction* ReturnFunction = nullptr;
@@ -249,7 +250,7 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFPathFindingASta
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_AAStarPathfinding_Statics::FuncInfo[] = {
 		{ &Z_Construct_UFunction_AAStarPathfinding_GetAdjacentTiles, "GetAdjacentTiles" }, // 2892158110
-		{ &Z_Construct_UFunction_AAStarPathfinding_SetTargetCoordinates, "SetTargetCoordinates" }, // 2400373209
+		{ &Z_Construct_UFunction_AAStarPathfinding_SetTargetCoordinates, "SetTargetCoordinates" }, // 886535756
 	};
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AAStarPathfinding_Statics::Class_MetaDataParams[] = {
@@ -326,7 +327,7 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFPathFindingASta
 	};
 #endif
 	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_ParentTile = { "ParentTile", nullptr, (EPropertyFlags)0x0040000000020001, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AAStarPathfinding, ParentTile), Z_Construct_UClass_AHexagonTile_NoRegister, METADATA_PARAMS(Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_ParentTile_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_ParentTile_MetaData)) };
-	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_TargetCoordinates_Inner = { "TargetCoordinates", nullptr, (EPropertyFlags)0x0000000000020000, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, Z_Construct_UClass_AHexagonTile_NoRegister, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_TargetCoordinates_Inner = { "TargetCoordinates", nullptr, (EPropertyFlags)0x0000000000020000, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, Z_Construct_UClass_AActor_NoRegister, METADATA_PARAMS(nullptr, 0) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_TargetCoordinates_MetaData[] = {
 		{ "Category", "AStarPathfinding" },
@@ -381,7 +382,7 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFPathFindingASta
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AAStarPathfinding, 3392462780);
+	IMPLEMENT_CLASS(AAStarPathfinding, 410446125);
 	template<> HEXAGONMAPPING_API UClass* StaticClass<AAStarPathfinding>()
 	{
 		return AAStarPathfinding::StaticClass();

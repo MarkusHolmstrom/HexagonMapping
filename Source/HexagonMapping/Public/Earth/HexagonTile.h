@@ -11,7 +11,7 @@
 class UStaticMeshComponent;
 class UGenerateMapComponent;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTileClicked, AHexagonTile*, Tile);
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTileClicked, AActor*, Tile);
 
 UCLASS()
 class HEXAGONMAPPING_API AHexagonTile : public APawn
@@ -19,8 +19,8 @@ class HEXAGONMAPPING_API AHexagonTile : public APawn
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(BlueprintAssignable)
-		FOnTileClicked OnTileClicked;
+	/*UPROPERTY(BlueprintAssignable)
+		FOnTileClicked OnTileClicked;*/
 	UPROPERTY(EditAnywhere)
 		UGenerateMapComponent* MapComponent;
 

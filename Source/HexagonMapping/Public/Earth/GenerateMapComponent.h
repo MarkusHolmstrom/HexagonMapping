@@ -306,5 +306,5 @@ private:
 	UFUNCTION()
 	float RandomLCGfloat(int32 Min, int32 Max);
 	UFUNCTION()
-	void OnTileClicked(AHexagonTile* Tile);
+	void OnTileClicked(FVector TilePosition);
 };

@@ -8,24 +8,10 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
-class AHexagonTile;
 #ifdef HEXAGONMAPPING_HexagonTile_generated_h
 #error "HexagonTile.generated.h already included, missing '#pragma once' in HexagonTile.h"
 #endif
 #define HEXAGONMAPPING_HexagonTile_generated_h
-
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonTile_h_14_DELEGATE \
-struct _Script_HexagonMapping_eventOnTileClicked_Parms \
-{ \
-	AHexagonTile* Tile; \
-}; \
-static inline void FOnTileClicked_DelegateWrapper(const FMulticastScriptDelegate& OnTileClicked, AHexagonTile* Tile) \
-{ \
-	_Script_HexagonMapping_eventOnTileClicked_Parms Parms; \
-	Parms.Tile=Tile; \
-	OnTileClicked.ProcessMulticastDelegate<UObject>(&Parms); \
-}
-
 
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonTile_h_19_SPARSE_DATA
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_HexagonTile_h_19_RPC_WRAPPERS \

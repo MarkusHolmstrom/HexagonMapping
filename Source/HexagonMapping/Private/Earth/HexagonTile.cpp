@@ -31,18 +31,18 @@ void AHexagonTile::Tick(float DeltaTime)
 void AHexagonTile::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	PlayerInputComponent->BindAction(TEXT("Activate"), IE_Pressed, this,
+	/*PlayerInputComponent->BindAction(TEXT("Activate"), IE_Pressed, this,
 		&AHexagonTile::ActivatedByClick);
-	/*PlayerInputComponent->BindAction(TEXT("DeActivate"), IE_Released, this,
+	PlayerInputComponent->BindAction(TEXT("DeActivate"), IE_Released, this,
 		&AHexagonTile::DeActivatedByClick);*/
 
 }
 
 void AHexagonTile::ActivatedByClick()
 {
-	OnTileClicked.Broadcast(this);
-	ShowLight = GetWorld()->SpawnActor<AActor>(ShowLightBP, TileLocation, FRotator::ZeroRotator);
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("activated"));
+	//OnTileClicked.Broadcast(this);
+	ShowLight = GetWorld()->SpawnActor<AActor>(ShowLightBP, GetActorLocation(), FRotator::ZeroRotator);
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, GetFName().ToString());
 }
 
 void AHexagonTile::DeActivatedByClick()

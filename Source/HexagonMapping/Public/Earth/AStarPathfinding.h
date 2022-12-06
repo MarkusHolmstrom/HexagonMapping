@@ -33,12 +33,16 @@ public:
 		bool bSearchingForPath = true;
 	UPROPERTY(VisibleAnywhere)
 		int Tries = 0;
+	// This adds some kind of limit in case the patfinding 
+	// gets stuck in a never ending loop
+	UPROPERTY(VisibleAnywhere)
+	int MaxTries = 150;
 	// H:
 	UPROPERTY(VisibleAnywhere)
 		float ManhattanDistance = 0;
 	// G:
 	UPROPERTY(VisibleAnywhere)
-		float TotalMovementCost = 0;
+		int TotalMovementCost = 0;
 	// F:
 	UPROPERTY(VisibleAnywhere)
 		float TotalScore = 0;
@@ -96,9 +100,17 @@ private:
 	UFUNCTION()
 	TArray<AHexagonTile*> GetAdjacentTilesBasedOnDirections(AHexagonTile* Tile, TArray<EDirection> Directions);
 
+	UFUNCTION()
 	float GetManhattanDistance(FVector Start, FVector Goal);
+	UFUNCTION()
+	int GetGScore(AHexagonTile* Start, AHexagonTile* Goal);
 
-	void RemoveTilesLight(TArray<AActor*> Tiles);
-
+	UFUNCTION()
+		void CleanUp();
+	UFUNCTION()
+	void ClearClosedList();
+	UFUNCTION()
+	void RemoveTilesLight();
+	UFUNCTION()
 	EDirection GetDirection(FVector Start, FVector Goal);
 };

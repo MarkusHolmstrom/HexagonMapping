@@ -77,7 +77,10 @@ public:
 	{
 		for (size_t i = 0; i < ShowLights.Num(); i++)
 		{
-			ShowLights[i]->Destroy();
+			if (ShowLights[i])
+			{
+				ShowLights[i]->Destroy();
+			}
 		}
 		ShowLights.Empty();
 	}

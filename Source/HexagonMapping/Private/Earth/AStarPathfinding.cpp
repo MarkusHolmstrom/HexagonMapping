@@ -30,12 +30,16 @@ void AAStarPathfinding::Tick(float DeltaTime)
 
 void AAStarPathfinding::SetTargetCoordinates(AActor* Tile)
 {
+	if (!bSearchingForPath)
+	{
+		
+	}
+
 	TargetCoordinates.Add(Tile);
 
 	if (TargetCoordinates.Num() >= TargetCount)
 	{
 		StartCalculatePath();
-
 	}
 }
 
@@ -46,7 +50,11 @@ void AAStarPathfinding::StartCalculatePath()
 	GoalTile = Cast<AHexagonTile>(TargetCoordinates[1]); // TODO or max of list num()
 	FVector Start = TargetCoordinates[0]->GetActorLocation();
 	FVector Goal = TargetCoordinates[1]->GetActorLocation();
+
 	ManhattanDistance = GetManhattanDistance(Start, Goal);
+	TotalMovementCost = GetGScore(StartTile, GoalTile);
+	GEngine->AddOnScreenDebugMessage(-1, 20, FColor::Blue,
+		FString::Printf(TEXT("%d"), TotalMovementCost));
 	GoalDirection = GetDirection(Start, Goal);
 	PathfindingLoop();
 }
@@ -59,15 +67,29 @@ void AAStarPathfinding::PathfindingLoop()
 		Tries++;
 
 		TArray<AHexagonTile*> AdjTiles = GetAdjacentTiles(CurrentTile, GoalDirection);
-		//CurrentTile = GetBestScore(AdjTiles, 10.0f);
-		if (CurrentTile == GoalTile || !CurrentTile || Tries > 3)
+		CurrentTile = GetBestScore(AdjTiles, 1000000.0f);
+		if (CurrentTile->TileIndex == GoalTile->TileIndex)
 		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("target found, sire!"));
+			bSearchingForPath = false;
+		}
+		else if (!CurrentTile || Tries > MaxTries)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("error or maxtries reached"));
 			bSearchingForPath = false;
 		}
 	}
+	// Clears up varaibles and removes stuff to reset for a new path finding!
+	// Is this comment not spefic enough for ya? Then go and doo... something then!
+	Tries = 0;
 	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, TEXT("nu ere slut!!"));
-		/*RemoveTilesLight(TargetCoordinates);
-		TargetCoordinates.Empty();*/
+	// Remove gameobjects, lights and path tiles after some seconds
+	FTimerHandle UnusedHandle;
+	GetWorldTimerManager().SetTimer(
+		UnusedHandle, this, &AAStarPathfinding::CleanUp, 6.0f, false);
+	
+	TargetCoordinates.Empty();
+	bSearchingForPath = true;
 }
 
 AHexagonTile* AAStarPathfinding::GetBestScore(TArray<AHexagonTile*> Tiles, float TopScore)
@@ -75,11 +97,25 @@ AHexagonTile* AAStarPathfinding::GetBestScore(TArray<AHexagonTile*> Tiles, float
 	AHexagonTile* BestTile = nullptr;
 	for (size_t i = 0; i < Tiles.Num(); i++)
 	{
-		if (Tiles[i]->MoveCost < TopScore)
+		if (!Tiles[i])
 		{
-			TopScore = Tiles[i]->MoveCost;
+			break;
+		}
+		float TileScore = Tiles[i]->MoveCost;
+		if (GoalTile)
+		{
+			TileScore += GetGScore(Tiles[i], GoalTile);
+				//GetManhattanDistance(Tiles[i]->GetActorLocation(), GoalTile->GetActorLocation());
+		}
+		if (TileScore < TopScore)
+		{
+			TopScore = TileScore;
 			BestTile = Tiles[i];
 		}
+	}
+	if (BestTile)
+	{
+		BestTile->ChangeHighlight(true);
 	}
 	return BestTile;
 }
@@ -134,7 +170,11 @@ TArray<AHexagonTile*> AAStarPathfinding::GetAdjacentTiles(AHexagonTile* Tile, ED
 
 	for (size_t i = 0; i < AdjacentTiles.Num(); i++)
 	{
-		AdjacentTiles[i]->ChangeHighlight(true);
+		if (AdjacentTiles[i])
+		{
+			//AdjacentTiles[i]->ChangeHighlight(true);
+			ClosedList.Add(AdjacentTiles[i]);
+		}
 	}
 	return AdjacentTiles;
 }
@@ -297,7 +337,36 @@ float AAStarPathfinding::GetManhattanDistance(FVector Start, FVector Goal)
 	return FVector::Distance(Start, Goal);
 }
 
-void AAStarPathfinding::RemoveTilesLight(TArray<AActor*> Tiles)
+int AAStarPathfinding::GetGScore(AHexagonTile* Start, AHexagonTile* Goal)
+{
+	int XDiff = FMath::Abs(Start->TileIndex.X - Goal->TileIndex.X);
+	int YDiff = FMath::Abs(Start->TileIndex.Y - Goal->TileIndex.Y);
+	// The minus one is because we disregard the starting tile
+	int TotalDiff = XDiff + YDiff - 1;
+	// In case it checks adjacent tiles in some directions, the score can be zero
+	if (TotalDiff < 1)
+	{
+		return 1;
+	}
+	return TotalDiff;
+}
+
+void AAStarPathfinding::CleanUp()
+{
+	ClearClosedList();
+	RemoveTilesLight();
+}
+
+void AAStarPathfinding::ClearClosedList()
+{
+	for (size_t i = 0; i < ClosedList.Num(); i++)
+	{
+		ClosedList[i]->ChangeHighlight(false);
+	}
+	ClosedList.Empty();
+}
+
+void AAStarPathfinding::RemoveTilesLight()
 {
 	// TODO Remove highlighted hexagonirinos aswell
 	if (World)

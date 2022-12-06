@@ -25,8 +25,8 @@ void EmptyLinkFunctionForGeneratedCodeHexagonMapping_init() {}
 				SingletonFuncArray,
 				UE_ARRAY_COUNT(SingletonFuncArray),
 				PKG_CompiledIn | 0x00000000,
-				0x3D49F774,
-				0x8E8F3B2A,
+				0xE5757D77,
+				0xF1386356,
 				METADATA_PARAMS(nullptr, 0)
 			};
 			UE4CodeGen_Private::ConstructUPackage(ReturnPackage, PackageParams);

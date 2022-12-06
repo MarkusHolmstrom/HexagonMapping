@@ -4,6 +4,7 @@
 #include "Earth/GenerateMapComponent.h"
 #include "DrawDebugHelpers.h"
 #include "Earth/HexagonTile.h"
+#include "Earth/WorldPawn.h"
 #include "Earth/DetailActor.h"
 #include "Earth/CylinderShapeMapping.h"
 #include "Earth/AStarPathFinding.h"
@@ -16,7 +17,6 @@ UGenerateMapComponent::UGenerateMapComponent()
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
 	//PrimaryComponentTick.bCanEverTick = true;
-
 	// ...DrawDebugLine(
 	/*GetWorld(),
 		traceStart,
@@ -41,6 +41,12 @@ void UGenerateMapComponent::BeginPlay()
 	else if (MapType == EMapType::Sphere)
 	{
 		ShapeMap->SetShape(false);
+	}
+
+	if (WorldPawn)
+	{
+		// https://www.youtube.com/watch?v=MwqgmhOL8gs
+		WorldPawn->OnTileClicked.AddDynamic(this, &UGenerateMapComponent::OnTileClicked);
 	}
 
 	//Adding climates manually
@@ -85,9 +91,9 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 	{
 		for (size_t y = 0; y < Width; y++)
 		{
-			const bool oddRow = y % 2 == 1;
-			float xPos = 0;
-			float yPos = 0;
+			const bool OddRow = y % 2 == 1;
+			float XPos = 0;
+			float YPos = 0;
 			FVector Pos = FVector::ZeroVector;
 
 			if (MapType == EMapType::Cylinder)
@@ -100,8 +106,8 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 			}
 			else // Create flat surface map
 			{
-				xPos = oddRow ? (x * HorOffset) + OddRowHorOffset : x * HorOffset;
-				yPos = y * VerOffset;
+				XPos = OddRow ? (x * HorOffset) + OddRowHorOffset : x * HorOffset;
+				YPos = y * VerOffset;
 			}
 
 			FClimateInfo FCI;
@@ -144,7 +150,7 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 			else // Create flat surface map
 			{
 				newTile = GetWorld()->SpawnActor<AHexagonTile>(
-					tileToSpawn, FVector(FIntPoint(xPos, yPos)), 
+					tileToSpawn, FVector(FIntPoint(XPos, YPos)), 
 					FRotator::ZeroRotator, SpawnInfo);
 			}
 			
@@ -161,11 +167,11 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 					if (ForestChance < ForestPercentage)
 					{
 						CurHinder = EHinder::Trees;
-						GetWorld()->SpawnActor<ADetailActor>(GetTrees(ForestChance), FVector(FIntPoint(xPos, yPos)), FRotator::ZeroRotator);
+						GetWorld()->SpawnActor<ADetailActor>(GetTrees(ForestChance), FVector(FIntPoint(XPos, YPos)), FRotator::ZeroRotator);
 					}
 				}
 				SetHexagonInfo(newTile, true, CurHinder);
-				newTile->TileLocation = FVector(FIntPoint(xPos, yPos));
+				newTile->TileLocation = FVector(FIntPoint(XPos, YPos));
 				HexGrid[x][y] = newTile;
 			}
 		}
@@ -722,11 +728,12 @@ float UGenerateMapComponent::RandomLCGfloat(int32 Min, int32 Max)
 	return RandFloat;
 }
 
-void UGenerateMapComponent::OnTileClicked(FVector TilePosition)
+void UGenerateMapComponent::OnTileClicked(AActor* Tile)
 {
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, TEXT("map comp got a message"));
 	if (Pathfinding)
 	{
-		Pathfinding->SetTargetCoordinates(TilePosition);
+		Pathfinding->SetTargetCoordinates(Tile);
 
 	}
 	else

@@ -15,7 +15,7 @@ void EmptyLinkFunctionForGeneratedCodeWorldPawn() {}
 // Cross Module References
 	HEXAGONMAPPING_API UFunction* Z_Construct_UDelegateFunction_HexagonMapping_OnTileClicked__DelegateSignature();
 	UPackage* Z_Construct_UPackage__Script_HexagonMapping();
-	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector();
+	ENGINE_API UClass* Z_Construct_UClass_AActor_NoRegister();
 	HEXAGONMAPPING_API UClass* Z_Construct_UClass_AWorldPawn_NoRegister();
 	HEXAGONMAPPING_API UClass* Z_Construct_UClass_AWorldPawn();
 	ENGINE_API UClass* Z_Construct_UClass_APawn();
@@ -23,23 +23,24 @@ void EmptyLinkFunctionForGeneratedCodeWorldPawn() {}
 	ENGINE_API UClass* Z_Construct_UClass_UStaticMeshComponent_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_ACameraActor_NoRegister();
 	ENGINE_API UClass* Z_Construct_UClass_UCameraComponent_NoRegister();
+	COREUOBJECT_API UClass* Z_Construct_UClass_UClass();
 // End Cross Module References
 	struct Z_Construct_UDelegateFunction_HexagonMapping_OnTileClicked__DelegateSignature_Statics
 	{
 		struct _Script_HexagonMapping_eventOnTileClicked_Parms
 		{
-			FVector TilePosition;
+			AActor* Tile;
 		};
-		static const UE4CodeGen_Private::FStructPropertyParams NewProp_TilePosition;
+		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_Tile;
 		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
 #endif
 		static const UE4CodeGen_Private::FFunctionParams FuncParams;
 	};
-	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UDelegateFunction_HexagonMapping_OnTileClicked__DelegateSignature_Statics::NewProp_TilePosition = { "TilePosition", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(_Script_HexagonMapping_eventOnTileClicked_Parms, TilePosition), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UDelegateFunction_HexagonMapping_OnTileClicked__DelegateSignature_Statics::NewProp_Tile = { "Tile", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(_Script_HexagonMapping_eventOnTileClicked_Parms, Tile), Z_Construct_UClass_AActor_NoRegister, METADATA_PARAMS(nullptr, 0) };
 	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UDelegateFunction_HexagonMapping_OnTileClicked__DelegateSignature_Statics::PropPointers[] = {
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_HexagonMapping_OnTileClicked__DelegateSignature_Statics::NewProp_TilePosition,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UDelegateFunction_HexagonMapping_OnTileClicked__DelegateSignature_Statics::NewProp_Tile,
 	};
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UDelegateFunction_HexagonMapping_OnTileClicked__DelegateSignature_Statics::Function_MetaDataParams[] = {
@@ -55,6 +56,13 @@ void EmptyLinkFunctionForGeneratedCodeWorldPawn() {}
 			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UDelegateFunction_HexagonMapping_OnTileClicked__DelegateSignature_Statics::FuncParams);
 		}
 		return ReturnFunction;
+	}
+	DEFINE_FUNCTION(AWorldPawn::execRemoveLights)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->RemoveLights();
+		P_NATIVE_END;
 	}
 	DEFINE_FUNCTION(AWorldPawn::execSetZooming)
 	{
@@ -94,6 +102,14 @@ void EmptyLinkFunctionForGeneratedCodeWorldPawn() {}
 		P_THIS->ActivateRotation();
 		P_NATIVE_END;
 	}
+	DEFINE_FUNCTION(AWorldPawn::execOnTileChosen)
+	{
+		P_GET_OBJECT(AActor,Z_Param_Tile);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->OnTileChosen(Z_Param_Tile);
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(AWorldPawn::execGetTile)
 	{
 		P_FINISH;
@@ -110,6 +126,8 @@ void EmptyLinkFunctionForGeneratedCodeWorldPawn() {}
 			{ "AddYawInput", &AWorldPawn::execAddYawInput },
 			{ "DeActivateRotation", &AWorldPawn::execDeActivateRotation },
 			{ "GetTile", &AWorldPawn::execGetTile },
+			{ "OnTileChosen", &AWorldPawn::execOnTileChosen },
+			{ "RemoveLights", &AWorldPawn::execRemoveLights },
 			{ "SetZooming", &AWorldPawn::execSetZooming },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
@@ -244,6 +262,60 @@ void EmptyLinkFunctionForGeneratedCodeWorldPawn() {}
 		}
 		return ReturnFunction;
 	}
+	struct Z_Construct_UFunction_AWorldPawn_OnTileChosen_Statics
+	{
+		struct WorldPawn_eventOnTileChosen_Parms
+		{
+			AActor* Tile;
+		};
+		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_Tile;
+		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UE4CodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AWorldPawn_OnTileChosen_Statics::NewProp_Tile = { "Tile", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(WorldPawn_eventOnTileChosen_Parms, Tile), Z_Construct_UClass_AActor_NoRegister, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AWorldPawn_OnTileChosen_Statics::PropPointers[] = {
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AWorldPawn_OnTileChosen_Statics::NewProp_Tile,
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AWorldPawn_OnTileChosen_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/Earth/WorldPawn.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AWorldPawn_OnTileChosen_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWorldPawn, nullptr, "OnTileChosen", nullptr, nullptr, sizeof(WorldPawn_eventOnTileChosen_Parms), Z_Construct_UFunction_AWorldPawn_OnTileChosen_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AWorldPawn_OnTileChosen_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AWorldPawn_OnTileChosen_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AWorldPawn_OnTileChosen_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AWorldPawn_OnTileChosen()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AWorldPawn_OnTileChosen_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_AWorldPawn_RemoveLights_Statics
+	{
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UE4CodeGen_Private::FFunctionParams FuncParams;
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AWorldPawn_RemoveLights_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/Earth/WorldPawn.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AWorldPawn_RemoveLights_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AWorldPawn, nullptr, "RemoveLights", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AWorldPawn_RemoveLights_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AWorldPawn_RemoveLights_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AWorldPawn_RemoveLights()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AWorldPawn_RemoveLights_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
 	struct Z_Construct_UFunction_AWorldPawn_SetZooming_Statics
 	{
 		struct WorldPawn_eventSetZooming_Parms
@@ -333,6 +405,15 @@ void EmptyLinkFunctionForGeneratedCodeWorldPawn() {}
 #endif
 		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_ZoomSpeed;
 #if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_ShowLightBP_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FClassPropertyParams NewProp_ShowLightBP;
+		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_ShowLights_Inner;
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_ShowLights_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FArrayPropertyParams NewProp_ShowLights;
+#if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_OnTileClicked_MetaData[];
 #endif
 		static const UE4CodeGen_Private::FMulticastDelegatePropertyParams NewProp_OnTileClicked;
@@ -350,6 +431,8 @@ void EmptyLinkFunctionForGeneratedCodeWorldPawn() {}
 		{ &Z_Construct_UFunction_AWorldPawn_AddYawInput, "AddYawInput" }, // 2956730874
 		{ &Z_Construct_UFunction_AWorldPawn_DeActivateRotation, "DeActivateRotation" }, // 2909452471
 		{ &Z_Construct_UFunction_AWorldPawn_GetTile, "GetTile" }, // 1125233047
+		{ &Z_Construct_UFunction_AWorldPawn_OnTileChosen, "OnTileChosen" }, // 993267634
+		{ &Z_Construct_UFunction_AWorldPawn_RemoveLights, "RemoveLights" }, // 1917634154
 		{ &Z_Construct_UFunction_AWorldPawn_SetZooming, "SetZooming" }, // 2506267318
 	};
 #if WITH_METADATA
@@ -444,6 +527,21 @@ void EmptyLinkFunctionForGeneratedCodeWorldPawn() {}
 #endif
 	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UClass_AWorldPawn_Statics::NewProp_ZoomSpeed = { "ZoomSpeed", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AWorldPawn, ZoomSpeed), METADATA_PARAMS(Z_Construct_UClass_AWorldPawn_Statics::NewProp_ZoomSpeed_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AWorldPawn_Statics::NewProp_ZoomSpeed_MetaData)) };
 #if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AWorldPawn_Statics::NewProp_ShowLightBP_MetaData[] = {
+		{ "Category", "ShowLight" },
+		{ "ModuleRelativePath", "Public/Earth/WorldPawn.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UClass_AWorldPawn_Statics::NewProp_ShowLightBP = { "ShowLightBP", nullptr, (EPropertyFlags)0x0014000000000001, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AWorldPawn, ShowLightBP), Z_Construct_UClass_AActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_AWorldPawn_Statics::NewProp_ShowLightBP_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AWorldPawn_Statics::NewProp_ShowLightBP_MetaData)) };
+	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AWorldPawn_Statics::NewProp_ShowLights_Inner = { "ShowLights", nullptr, (EPropertyFlags)0x0000000000000000, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, Z_Construct_UClass_AActor_NoRegister, METADATA_PARAMS(nullptr, 0) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AWorldPawn_Statics::NewProp_ShowLights_MetaData[] = {
+		{ "Category", "ShowLight" },
+		{ "ModuleRelativePath", "Public/Earth/WorldPawn.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FArrayPropertyParams Z_Construct_UClass_AWorldPawn_Statics::NewProp_ShowLights = { "ShowLights", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AWorldPawn, ShowLights), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UClass_AWorldPawn_Statics::NewProp_ShowLights_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AWorldPawn_Statics::NewProp_ShowLights_MetaData)) };
+#if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AWorldPawn_Statics::NewProp_OnTileClicked_MetaData[] = {
 		{ "ModuleRelativePath", "Public/Earth/WorldPawn.h" },
 	};
@@ -461,6 +559,9 @@ void EmptyLinkFunctionForGeneratedCodeWorldPawn() {}
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWorldPawn_Statics::NewProp_MAXFOV,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWorldPawn_Statics::NewProp_MINFOV,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWorldPawn_Statics::NewProp_ZoomSpeed,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWorldPawn_Statics::NewProp_ShowLightBP,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWorldPawn_Statics::NewProp_ShowLights_Inner,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWorldPawn_Statics::NewProp_ShowLights,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AWorldPawn_Statics::NewProp_OnTileClicked,
 	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_AWorldPawn_Statics::StaticCppClassTypeInfo = {
@@ -490,7 +591,7 @@ void EmptyLinkFunctionForGeneratedCodeWorldPawn() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AWorldPawn, 1541406980);
+	IMPLEMENT_CLASS(AWorldPawn, 1502666671);
 	template<> HEXAGONMAPPING_API UClass* StaticClass<AWorldPawn>()
 	{
 		return AWorldPawn::StaticClass();

@@ -48,6 +48,12 @@ enum class EMapType : uint8
 	Cylinder, Sphere
 };
 
+UENUM(BlueprintType)
+enum class EDirection : uint8
+{
+	North, NorthEast, East, SouthEast, South, SouthWest, West, NorthWest
+};
+
 class HEXAGONMAPPING_API Enums
 {
 public:

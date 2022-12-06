@@ -5,6 +5,8 @@ C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Bui
 C:\UE_4.27\Engine\Source\Runtime\Engine\Public\DrawDebugHelpers.h
 C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Source\HexagonMapping\Public\Earth/HexagonTile.h
 C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Inc\HexagonMapping\HexagonTile.generated.h
+C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Source\HexagonMapping\Public\Earth/WorldPawn.h
+C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Inc\HexagonMapping\WorldPawn.generated.h
 C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Source\HexagonMapping\Public\Earth/DetailActor.h
 C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Inc\HexagonMapping\DetailActor.generated.h
 C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Source\HexagonMapping\Public\Earth/CylinderShapeMapping.h

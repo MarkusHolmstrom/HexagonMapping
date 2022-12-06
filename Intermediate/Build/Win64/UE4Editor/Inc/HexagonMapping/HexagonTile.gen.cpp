@@ -18,8 +18,6 @@ void EmptyLinkFunctionForGeneratedCodeHexagonTile() {}
 	ENGINE_API UClass* Z_Construct_UClass_APawn();
 	UPackage* Z_Construct_UPackage__Script_HexagonMapping();
 	HEXAGONMAPPING_API UClass* Z_Construct_UClass_UGenerateMapComponent_NoRegister();
-	COREUOBJECT_API UClass* Z_Construct_UClass_UClass();
-	ENGINE_API UClass* Z_Construct_UClass_AActor_NoRegister();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EHexType();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EHinder();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EResource();
@@ -28,100 +26,56 @@ void EmptyLinkFunctionForGeneratedCodeHexagonTile() {}
 	COREUOBJECT_API UScriptStruct* Z_Construct_UScriptStruct_FVector();
 	ENGINE_API UClass* Z_Construct_UClass_UStaticMeshComponent_NoRegister();
 // End Cross Module References
-	DEFINE_FUNCTION(AHexagonTile::execRemoveLight)
+	DEFINE_FUNCTION(AHexagonTile::execChangeHighlight)
 	{
+		P_GET_UBOOL(Z_Param_HideMesh);
 		P_FINISH;
 		P_NATIVE_BEGIN;
-		P_THIS->RemoveLight();
-		P_NATIVE_END;
-	}
-	DEFINE_FUNCTION(AHexagonTile::execDeActivatedByClick)
-	{
-		P_FINISH;
-		P_NATIVE_BEGIN;
-		P_THIS->DeActivatedByClick();
-		P_NATIVE_END;
-	}
-	DEFINE_FUNCTION(AHexagonTile::execActivatedByClick)
-	{
-		P_FINISH;
-		P_NATIVE_BEGIN;
-		P_THIS->ActivatedByClick();
+		P_THIS->ChangeHighlight(Z_Param_HideMesh);
 		P_NATIVE_END;
 	}
 	void AHexagonTile::StaticRegisterNativesAHexagonTile()
 	{
 		UClass* Class = AHexagonTile::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
-			{ "ActivatedByClick", &AHexagonTile::execActivatedByClick },
-			{ "DeActivatedByClick", &AHexagonTile::execDeActivatedByClick },
-			{ "RemoveLight", &AHexagonTile::execRemoveLight },
+			{ "ChangeHighlight", &AHexagonTile::execChangeHighlight },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 	}
-	struct Z_Construct_UFunction_AHexagonTile_ActivatedByClick_Statics
+	struct Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics
 	{
+		struct HexagonTile_eventChangeHighlight_Parms
+		{
+			bool HideMesh;
+		};
+		static void NewProp_HideMesh_SetBit(void* Obj);
+		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_HideMesh;
+		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
 #endif
 		static const UE4CodeGen_Private::FFunctionParams FuncParams;
 	};
-#if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AHexagonTile_ActivatedByClick_Statics::Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "Public/Earth/HexagonTile.h" },
-	};
-#endif
-	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AHexagonTile_ActivatedByClick_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AHexagonTile, nullptr, "ActivatedByClick", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AHexagonTile_ActivatedByClick_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AHexagonTile_ActivatedByClick_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_AHexagonTile_ActivatedByClick()
+	void Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::NewProp_HideMesh_SetBit(void* Obj)
 	{
-		static UFunction* ReturnFunction = nullptr;
-		if (!ReturnFunction)
-		{
-			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AHexagonTile_ActivatedByClick_Statics::FuncParams);
-		}
-		return ReturnFunction;
+		((HexagonTile_eventChangeHighlight_Parms*)Obj)->HideMesh = 1;
 	}
-	struct Z_Construct_UFunction_AHexagonTile_DeActivatedByClick_Statics
-	{
-#if WITH_METADATA
-		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
-#endif
-		static const UE4CodeGen_Private::FFunctionParams FuncParams;
+	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::NewProp_HideMesh = { "HideMesh", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(HexagonTile_eventChangeHighlight_Parms), &Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::NewProp_HideMesh_SetBit, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::PropPointers[] = {
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::NewProp_HideMesh,
 	};
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AHexagonTile_DeActivatedByClick_Statics::Function_MetaDataParams[] = {
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::Function_MetaDataParams[] = {
 		{ "ModuleRelativePath", "Public/Earth/HexagonTile.h" },
 	};
 #endif
-	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AHexagonTile_DeActivatedByClick_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AHexagonTile, nullptr, "DeActivatedByClick", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AHexagonTile_DeActivatedByClick_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AHexagonTile_DeActivatedByClick_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_AHexagonTile_DeActivatedByClick()
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AHexagonTile, nullptr, "ChangeHighlight", nullptr, nullptr, sizeof(HexagonTile_eventChangeHighlight_Parms), Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AHexagonTile_ChangeHighlight()
 	{
 		static UFunction* ReturnFunction = nullptr;
 		if (!ReturnFunction)
 		{
-			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AHexagonTile_DeActivatedByClick_Statics::FuncParams);
-		}
-		return ReturnFunction;
-	}
-	struct Z_Construct_UFunction_AHexagonTile_RemoveLight_Statics
-	{
-#if WITH_METADATA
-		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
-#endif
-		static const UE4CodeGen_Private::FFunctionParams FuncParams;
-	};
-#if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AHexagonTile_RemoveLight_Statics::Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "Public/Earth/HexagonTile.h" },
-	};
-#endif
-	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AHexagonTile_RemoveLight_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AHexagonTile, nullptr, "RemoveLight", nullptr, nullptr, 0, nullptr, 0, RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AHexagonTile_RemoveLight_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AHexagonTile_RemoveLight_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_AHexagonTile_RemoveLight()
-	{
-		static UFunction* ReturnFunction = nullptr;
-		if (!ReturnFunction)
-		{
-			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AHexagonTile_RemoveLight_Statics::FuncParams);
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -140,14 +94,6 @@ void EmptyLinkFunctionForGeneratedCodeHexagonTile() {}
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_MapComponent_MetaData[];
 #endif
 		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_MapComponent;
-#if WITH_METADATA
-		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_ShowLightBP_MetaData[];
-#endif
-		static const UE4CodeGen_Private::FClassPropertyParams NewProp_ShowLightBP;
-#if WITH_METADATA
-		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_ShowLight_MetaData[];
-#endif
-		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_ShowLight;
 		static const UE4CodeGen_Private::FBytePropertyParams NewProp_Type_Underlying;
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_Type_MetaData[];
@@ -201,6 +147,10 @@ void EmptyLinkFunctionForGeneratedCodeHexagonTile() {}
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_MeshTile_MetaData[];
 #endif
 		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_MeshTile;
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_HighlightMesh_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_HighlightMesh;
 		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const FCppClassTypeInfoStatic StaticCppClassTypeInfo;
 		static const UE4CodeGen_Private::FClassParams ClassParams;
@@ -210,43 +160,23 @@ void EmptyLinkFunctionForGeneratedCodeHexagonTile() {}
 		(UObject* (*)())Z_Construct_UPackage__Script_HexagonMapping,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_AHexagonTile_Statics::FuncInfo[] = {
-		{ &Z_Construct_UFunction_AHexagonTile_ActivatedByClick, "ActivatedByClick" }, // 305681495
-		{ &Z_Construct_UFunction_AHexagonTile_DeActivatedByClick, "DeActivatedByClick" }, // 3972938440
-		{ &Z_Construct_UFunction_AHexagonTile_RemoveLight, "RemoveLight" }, // 2180535533
+		{ &Z_Construct_UFunction_AHexagonTile_ChangeHighlight, "ChangeHighlight" }, // 2233306008
 	};
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AHexagonTile_Statics::Class_MetaDataParams[] = {
-		{ "Comment", "//DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTileClicked, AActor*, Tile);\n" },
 		{ "HideCategories", "Navigation" },
 		{ "IncludePath", "Earth/HexagonTile.h" },
 		{ "ModuleRelativePath", "Public/Earth/HexagonTile.h" },
-		{ "ToolTip", "DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTileClicked, AActor*, Tile);" },
 	};
 #endif
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AHexagonTile_Statics::NewProp_MapComponent_MetaData[] = {
 		{ "Category", "HexagonTile" },
-		{ "Comment", "/*UPROPERTY(BlueprintAssignable)\n\x09\x09""FOnTileClicked OnTileClicked;*/" },
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "Public/Earth/HexagonTile.h" },
-		{ "ToolTip", "UPROPERTY(BlueprintAssignable)\n               FOnTileClicked OnTileClicked;" },
 	};
 #endif
 	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AHexagonTile_Statics::NewProp_MapComponent = { "MapComponent", nullptr, (EPropertyFlags)0x0010000000080009, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AHexagonTile, MapComponent), Z_Construct_UClass_UGenerateMapComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_AHexagonTile_Statics::NewProp_MapComponent_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AHexagonTile_Statics::NewProp_MapComponent_MetaData)) };
-#if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AHexagonTile_Statics::NewProp_ShowLightBP_MetaData[] = {
-		{ "Category", "HexagonTile" },
-		{ "ModuleRelativePath", "Public/Earth/HexagonTile.h" },
-	};
-#endif
-	const UE4CodeGen_Private::FClassPropertyParams Z_Construct_UClass_AHexagonTile_Statics::NewProp_ShowLightBP = { "ShowLightBP", nullptr, (EPropertyFlags)0x0014000000000001, UE4CodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AHexagonTile, ShowLightBP), Z_Construct_UClass_AActor_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_AHexagonTile_Statics::NewProp_ShowLightBP_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AHexagonTile_Statics::NewProp_ShowLightBP_MetaData)) };
-#if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AHexagonTile_Statics::NewProp_ShowLight_MetaData[] = {
-		{ "Category", "HexagonTile" },
-		{ "ModuleRelativePath", "Public/Earth/HexagonTile.h" },
-	};
-#endif
-	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AHexagonTile_Statics::NewProp_ShowLight = { "ShowLight", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AHexagonTile, ShowLight), Z_Construct_UClass_AActor_NoRegister, METADATA_PARAMS(Z_Construct_UClass_AHexagonTile_Statics::NewProp_ShowLight_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AHexagonTile_Statics::NewProp_ShowLight_MetaData)) };
 	const UE4CodeGen_Private::FBytePropertyParams Z_Construct_UClass_AHexagonTile_Statics::NewProp_Type_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UE4CodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, nullptr, METADATA_PARAMS(nullptr, 0) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AHexagonTile_Statics::NewProp_Type_MetaData[] = {
@@ -358,10 +288,16 @@ void EmptyLinkFunctionForGeneratedCodeHexagonTile() {}
 	};
 #endif
 	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AHexagonTile_Statics::NewProp_MeshTile = { "MeshTile", nullptr, (EPropertyFlags)0x001000000009000d, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AHexagonTile, MeshTile), Z_Construct_UClass_UStaticMeshComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_AHexagonTile_Statics::NewProp_MeshTile_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AHexagonTile_Statics::NewProp_MeshTile_MetaData)) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AHexagonTile_Statics::NewProp_HighlightMesh_MetaData[] = {
+		{ "Category", "HexagonTile" },
+		{ "EditInline", "true" },
+		{ "ModuleRelativePath", "Public/Earth/HexagonTile.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AHexagonTile_Statics::NewProp_HighlightMesh = { "HighlightMesh", nullptr, (EPropertyFlags)0x001000000008000d, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AHexagonTile, HighlightMesh), Z_Construct_UClass_UStaticMeshComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_AHexagonTile_Statics::NewProp_HighlightMesh_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AHexagonTile_Statics::NewProp_HighlightMesh_MetaData)) };
 	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_AHexagonTile_Statics::PropPointers[] = {
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AHexagonTile_Statics::NewProp_MapComponent,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AHexagonTile_Statics::NewProp_ShowLightBP,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AHexagonTile_Statics::NewProp_ShowLight,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AHexagonTile_Statics::NewProp_Type_Underlying,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AHexagonTile_Statics::NewProp_Type,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AHexagonTile_Statics::NewProp_Hinder_Underlying,
@@ -378,6 +314,7 @@ void EmptyLinkFunctionForGeneratedCodeHexagonTile() {}
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AHexagonTile_Statics::NewProp_TileIndex,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AHexagonTile_Statics::NewProp_TileLocation,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AHexagonTile_Statics::NewProp_MeshTile,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AHexagonTile_Statics::NewProp_HighlightMesh,
 	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_AHexagonTile_Statics::StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<AHexagonTile>::IsAbstract,
@@ -406,7 +343,7 @@ void EmptyLinkFunctionForGeneratedCodeHexagonTile() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AHexagonTile, 600530931);
+	IMPLEMENT_CLASS(AHexagonTile, 3312583371);
 	template<> HEXAGONMAPPING_API UClass* StaticClass<AHexagonTile>()
 	{
 		return AHexagonTile::StaticClass();

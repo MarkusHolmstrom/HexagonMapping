@@ -11,13 +11,21 @@ AHexagonTile::AHexagonTile()
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComp"));
 	MeshTile = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshComp"));
 	MeshTile->SetupAttachment(RootComponent);
+
+	HighlightMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Highlight"));
+	HighlightMesh->SetupAttachment(RootComponent);
+}
+
+void AHexagonTile::ChangeHighlight(bool HideMesh)
+{
+	HighlightMesh->SetVisibility(HideMesh);
 }
 
 // Called when the game starts or when spawned
 void AHexagonTile::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	ChangeHighlight(false);
 }
 
 // Called every frame
@@ -27,35 +35,16 @@ void AHexagonTile::Tick(float DeltaTime)
 
 }
 
-// Called to bind functionality to input
-void AHexagonTile::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
-{
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
-	/*PlayerInputComponent->BindAction(TEXT("Activate"), IE_Pressed, this,
-		&AHexagonTile::ActivatedByClick);
-	PlayerInputComponent->BindAction(TEXT("DeActivate"), IE_Released, this,
-		&AHexagonTile::DeActivatedByClick);*/
-
-}
-
-void AHexagonTile::ActivatedByClick()
-{
-	//OnTileClicked.Broadcast(this);
-	ShowLight = GetWorld()->SpawnActor<AActor>(ShowLightBP, GetActorLocation(), FRotator::ZeroRotator);
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, GetFName().ToString());
-}
-
-void AHexagonTile::DeActivatedByClick()
-{
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("deactivated"));
-
-}
-
-void AHexagonTile::RemoveLight()
-{
-	if (ShowLight)
-	{
-		ShowLight->Destroy();
-	}
-}
+//void AHexagonTile::ActivatedByClick()
+//{
+//	//OnTileClicked.Broadcast(this);
+//	ShowLight = GetWorld()->SpawnActor<AActor>(ShowLightBP, GetActorLocation(), FRotator::ZeroRotator);
+//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, GetFName().ToString());
+//}
+//
+//void AHexagonTile::DeActivatedByClick()
+//{
+//	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("deactivated"));
+//
+//}
 

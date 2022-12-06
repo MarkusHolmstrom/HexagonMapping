@@ -11,24 +11,14 @@
 class UStaticMeshComponent;
 class UGenerateMapComponent;
 
-//DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTileClicked, AActor*, Tile);
-
 UCLASS()
 class HEXAGONMAPPING_API AHexagonTile : public APawn
 {
 	GENERATED_BODY()
 
 public:
-	/*UPROPERTY(BlueprintAssignable)
-		FOnTileClicked OnTileClicked;*/
 	UPROPERTY(EditAnywhere)
 		UGenerateMapComponent* MapComponent;
-
-	UPROPERTY(EditAnywhere)
-		TSubclassOf<AActor> ShowLightBP;
-
-	UPROPERTY(EditAnywhere)
-	AActor* ShowLight;
 
 	// nsort: desert, tundra, plains, grassland, mountain, jungle, snow, ice, ocean, shore
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = TileInformation)
@@ -38,7 +28,7 @@ public:
 		EHinder Hinder = EHinder::None;
 	// movement cost, float 1-3?
 	UPROPERTY(EditAnywhere, Category = TileInformation)
-		float MoveCost = 1;
+		float MoveCost = 1.0f;
 	// resource - bonus or luxury - Enum
 	UPROPERTY(EditAnywhere, Category = TileInformation)
 		EResource Resource = EResource::None;
@@ -66,10 +56,16 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
 		UStaticMeshComponent* MeshTile;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		UStaticMeshComponent* HighlightMesh;
 private:
 
 	// Sets default values for this actor's properties
 	AHexagonTile();
+
+public: 
+	UFUNCTION()
+		void ChangeHighlight(bool HideMesh);
 
 protected:
 	// Called when the game starts or when spawned
@@ -78,14 +74,4 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	UFUNCTION()
-		void ActivatedByClick();
-	UFUNCTION()
-		void DeActivatedByClick();
-	UFUNCTION()
-		void RemoveLight();
 };

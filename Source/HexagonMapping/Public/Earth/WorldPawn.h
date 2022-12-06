@@ -11,7 +11,7 @@ class UStaticMeshComponent;
 class ACameraActor;
 class UCameraComponent;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTileClicked, FVector, TilePosition);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnTileClicked, AActor*, Tile);
 
 UCLASS()
 class HEXAGONMAPPING_API AWorldPawn : public APawn
@@ -46,6 +46,11 @@ public:
 	float ZoomSpeed = 5;
 
 
+	UPROPERTY(EditAnywhere, Category = ShowLight)
+		TSubclassOf<AActor> ShowLightBP;
+	UPROPERTY(EditAnywhere, Category = ShowLight)
+		TArray<AActor*> ShowLights;
+
 	UPROPERTY(BlueprintAssignable)
 		FOnTileClicked OnTileClicked;
 
@@ -54,6 +59,8 @@ public:
 
 	UFUNCTION()
 		void GetTile();
+	UFUNCTION()
+	void OnTileChosen(AActor* Tile);
 	UFUNCTION()
 	void ActivateRotation();
 	UFUNCTION()
@@ -64,6 +71,16 @@ public:
 	void AddPitchInput(float Val);
 	UFUNCTION()
 	void SetZooming(float Val);
+
+	UFUNCTION()
+	void RemoveLights()
+	{
+		for (size_t i = 0; i < ShowLights.Num(); i++)
+		{
+			ShowLights[i]->Destroy();
+		}
+		ShowLights.Empty();
+	}
 
 protected:
 	// Called when the game starts or when spawned

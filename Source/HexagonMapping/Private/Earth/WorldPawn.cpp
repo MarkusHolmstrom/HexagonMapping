@@ -2,6 +2,7 @@
 
 
 #include "Earth/WorldPawn.h"
+#include "Earth/GenerateMapComponent.h"
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Camera/CameraComponent.h"
@@ -20,6 +21,7 @@ AWorldPawn::AWorldPawn()
 	SphereMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("MeshSurface"));
 	SphereMesh->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepWorldTransform);
 	//SphereMesh->SetRelativeLocation(FVector(0.0f, 0.0f, 0.0f));
+
 }
 
 // Called when the game starts or when spawned
@@ -44,15 +46,16 @@ void AWorldPawn::GetTile()
 
 	if (Hit.bBlockingHit) 
 	{
+		OnTileChosen(Hit.GetActor());
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Magenta, Hit.GetActor()->GetName());
-		
 	}
-	float mouseX;
-	float mouseY;
-	UGameplayStatics::GetPlayerController(GetWorld(), 0)->GetMousePosition(mouseX, mouseY);
-	
-	FVector TilePosition = FVector(mouseX, mouseY, 0);
-	OnTileClicked.Broadcast(TilePosition);
+}
+
+void AWorldPawn::OnTileChosen(AActor* Tile)
+{
+	AActor* ShowLight = GetWorld()->SpawnActor<AActor>(ShowLightBP, Tile->GetActorLocation(), FRotator::ZeroRotator);
+	ShowLights.Add(ShowLight);
+	OnTileClicked.Broadcast(Tile);
 }
 
 void AWorldPawn::ActivateRotation()

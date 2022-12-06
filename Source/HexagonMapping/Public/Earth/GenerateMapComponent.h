@@ -127,32 +127,12 @@ class HEXAGONMAPPING_API UGenerateMapComponent : public UActorComponent
 	GENERATED_BODY()
 
 public:
+	UPROPERTY(EditAnywhere)
+		class AWorldPawn* WorldPawn;
 	
 	UPROPERTY(EditAnywhere)
 	AAStarPathfinding* Pathfinding;
 
-	//UPROPERTY(EditAnywhere)
-	//	int counter = 0;
-	//UPROPERTY(EditAnywhere)
-	//	int check = 0;
-	//UPROPERTY(EditAnywhere)
-	//	int grass = 0;
-	//UPROPERTY(EditAnywhere)
-	//	int desert = 0;
-	//UPROPERTY(EditAnywhere)
-	//	int plains = 0;
-	//UPROPERTY(EditAnywhere)
-	//	int mountain = 0;
-	//UPROPERTY(EditAnywhere)
-	//	int jungle = 0;
-	//UPROPERTY(EditAnywhere)
-	//	int snow = 0;
-	//UPROPERTY(EditAnywhere)
-	//	int tundra = 0;
-	//UPROPERTY(EditAnywhere)
-	//	int ice = 0;
-	//UPROPERTY(EditAnywhere)
-	//	int ocean = 0;
 	TArray<TArray<AHexagonTile*>> HexGrid;
 	UPROPERTY(EditAnywhere)
 		float HorOffset = 88.0f;
@@ -300,11 +280,11 @@ public:
 	UFUNCTION()
 	bool GetHill(AHexagonTile* Hex);
 
+	UFUNCTION()
+	void OnTileClicked(AActor* Tile);
 
 private:
 
 	UFUNCTION()
 	float RandomLCGfloat(int32 Min, int32 Max);
-	UFUNCTION()
-	void OnTileClicked(FVector TilePosition);
 };

@@ -8,7 +8,7 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
-struct FVector;
+class AActor;
 #ifdef HEXAGONMAPPING_WorldPawn_generated_h
 #error "WorldPawn.generated.h already included, missing '#pragma once' in WorldPawn.h"
 #endif
@@ -17,12 +17,12 @@ struct FVector;
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_14_DELEGATE \
 struct _Script_HexagonMapping_eventOnTileClicked_Parms \
 { \
-	FVector TilePosition; \
+	AActor* Tile; \
 }; \
-static inline void FOnTileClicked_DelegateWrapper(const FMulticastScriptDelegate& OnTileClicked, FVector TilePosition) \
+static inline void FOnTileClicked_DelegateWrapper(const FMulticastScriptDelegate& OnTileClicked, AActor* Tile) \
 { \
 	_Script_HexagonMapping_eventOnTileClicked_Parms Parms; \
-	Parms.TilePosition=TilePosition; \
+	Parms.Tile=Tile; \
 	OnTileClicked.ProcessMulticastDelegate<UObject>(&Parms); \
 }
 
@@ -30,21 +30,25 @@ static inline void FOnTileClicked_DelegateWrapper(const FMulticastScriptDelegate
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_19_SPARSE_DATA
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_19_RPC_WRAPPERS \
  \
+	DECLARE_FUNCTION(execRemoveLights); \
 	DECLARE_FUNCTION(execSetZooming); \
 	DECLARE_FUNCTION(execAddPitchInput); \
 	DECLARE_FUNCTION(execAddYawInput); \
 	DECLARE_FUNCTION(execDeActivateRotation); \
 	DECLARE_FUNCTION(execActivateRotation); \
+	DECLARE_FUNCTION(execOnTileChosen); \
 	DECLARE_FUNCTION(execGetTile);
 
 
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_WorldPawn_h_19_RPC_WRAPPERS_NO_PURE_DECLS \
  \
+	DECLARE_FUNCTION(execRemoveLights); \
 	DECLARE_FUNCTION(execSetZooming); \
 	DECLARE_FUNCTION(execAddPitchInput); \
 	DECLARE_FUNCTION(execAddYawInput); \
 	DECLARE_FUNCTION(execDeActivateRotation); \
 	DECLARE_FUNCTION(execActivateRotation); \
+	DECLARE_FUNCTION(execOnTileChosen); \
 	DECLARE_FUNCTION(execGetTile);
 
 

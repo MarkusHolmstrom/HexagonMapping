@@ -13,14 +13,81 @@
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeEnums() {}
 // Cross Module References
-	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EMapType();
+	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EDirection();
 	UPackage* Z_Construct_UPackage__Script_HexagonMapping();
+	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EMapType();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EResourceType();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EResource();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EHinder();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EClimateType();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EHexType();
 // End Cross Module References
+	static UEnum* EDirection_StaticEnum()
+	{
+		static UEnum* Singleton = nullptr;
+		if (!Singleton)
+		{
+			Singleton = GetStaticEnum(Z_Construct_UEnum_HexagonMapping_EDirection, Z_Construct_UPackage__Script_HexagonMapping(), TEXT("EDirection"));
+		}
+		return Singleton;
+	}
+	template<> HEXAGONMAPPING_API UEnum* StaticEnum<EDirection>()
+	{
+		return EDirection_StaticEnum();
+	}
+	static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_EDirection(EDirection_StaticEnum, TEXT("/Script/HexagonMapping"), TEXT("EDirection"), false, nullptr, nullptr);
+	uint32 Get_Z_Construct_UEnum_HexagonMapping_EDirection_Hash() { return 1009709651U; }
+	UEnum* Z_Construct_UEnum_HexagonMapping_EDirection()
+	{
+#if WITH_HOT_RELOAD
+		UPackage* Outer = Z_Construct_UPackage__Script_HexagonMapping();
+		static UEnum* ReturnEnum = FindExistingEnumIfHotReloadOrDynamic(Outer, TEXT("EDirection"), 0, Get_Z_Construct_UEnum_HexagonMapping_EDirection_Hash(), false);
+#else
+		static UEnum* ReturnEnum = nullptr;
+#endif // WITH_HOT_RELOAD
+		if (!ReturnEnum)
+		{
+			static const UE4CodeGen_Private::FEnumeratorParam Enumerators[] = {
+				{ "EDirection::North", (int64)EDirection::North },
+				{ "EDirection::NorthEast", (int64)EDirection::NorthEast },
+				{ "EDirection::East", (int64)EDirection::East },
+				{ "EDirection::SouthEast", (int64)EDirection::SouthEast },
+				{ "EDirection::South", (int64)EDirection::South },
+				{ "EDirection::SouthWest", (int64)EDirection::SouthWest },
+				{ "EDirection::West", (int64)EDirection::West },
+				{ "EDirection::NorthWest", (int64)EDirection::NorthWest },
+			};
+#if WITH_METADATA
+			const UE4CodeGen_Private::FMetaDataPairParam Enum_MetaDataParams[] = {
+				{ "BlueprintType", "true" },
+				{ "East.Name", "EDirection::East" },
+				{ "ModuleRelativePath", "Public/Enums.h" },
+				{ "North.Name", "EDirection::North" },
+				{ "NorthEast.Name", "EDirection::NorthEast" },
+				{ "NorthWest.Name", "EDirection::NorthWest" },
+				{ "South.Name", "EDirection::South" },
+				{ "SouthEast.Name", "EDirection::SouthEast" },
+				{ "SouthWest.Name", "EDirection::SouthWest" },
+				{ "West.Name", "EDirection::West" },
+			};
+#endif
+			static const UE4CodeGen_Private::FEnumParams EnumParams = {
+				(UObject*(*)())Z_Construct_UPackage__Script_HexagonMapping,
+				nullptr,
+				"EDirection",
+				"EDirection",
+				Enumerators,
+				UE_ARRAY_COUNT(Enumerators),
+				RF_Public|RF_Transient|RF_MarkAsNative,
+				EEnumFlags::None,
+				UE4CodeGen_Private::EDynamicType::NotDynamic,
+				(uint8)UEnum::ECppForm::EnumClass,
+				METADATA_PARAMS(Enum_MetaDataParams, UE_ARRAY_COUNT(Enum_MetaDataParams))
+			};
+			UE4CodeGen_Private::ConstructUEnum(ReturnEnum, EnumParams);
+		}
+		return ReturnEnum;
+	}
 	static UEnum* EMapType_StaticEnum()
 	{
 		static UEnum* Singleton = nullptr;

@@ -99,27 +99,28 @@ void AAStarPathfinding::PathfindingLoop()
 
 AHexagonTile* AAStarPathfinding::GetBestScore(TArray<AHexagonTile*> Tiles, float TopScore)
 {
-	AHexagonTile* BestTile = Tiles[0]; // test to avoid nullptr
-	for (size_t i = 0; i < Tiles.Num(); i++)
+	TArray<AHexagonTile*> ViableTiles = GetViableTiles(Tiles);
+	AHexagonTile* BestTile = ViableTiles[0]; // test to avoid nullptr
+	for (size_t i = 0; i < ViableTiles.Num(); i++)
 	{
-		if (!Tiles[i])
+		if (!ViableTiles[i])
 		{
 			break;
 		}
-		if (Tiles[i]->Hinder == EHinder::Mountain)
+		if (ViableTiles[i]->Hinder == EHinder::Mountain)
 		{
 			break;
 		}
-		float TileScore = Tiles[i]->MoveCost;
+		float TileScore = ViableTiles[i]->MoveCost;
 		if (GoalTile)
 		{
-			TileScore += GetGScore(Tiles[i], GoalTile);
-			TileScore += GetManhattanDistance(Tiles[i]->GetActorLocation(), GoalTile->GetActorLocation());
+			TileScore += GetGScore(ViableTiles[i], GoalTile);
+			TileScore += GetManhattanDistance(ViableTiles[i]->GetActorLocation(), GoalTile->GetActorLocation());
 		}
 		if (TileScore < TopScore)
 		{
 			TopScore = TileScore;
-			BestTile = Tiles[i];
+			BestTile = ViableTiles[i];
 		}
 	}
 	if (BestTile)
@@ -129,17 +130,18 @@ AHexagonTile* AAStarPathfinding::GetBestScore(TArray<AHexagonTile*> Tiles, float
 	return BestTile;
 }
 
-AHexagonTile* AAStarPathfinding::GetFirstViableTile(TArray<AHexagonTile*> Tiles)
+TArray<AHexagonTile*> AAStarPathfinding::GetViableTiles(TArray<AHexagonTile*> Tiles)
 {
+	TArray<AHexagonTile*> NewTiles;
 	for (size_t i = 0; i < Tiles.Num(); i++)
 	{
 		if (Tiles[i]->Hinder != EHinder::Mountain)
 		{
-			return Tiles[i];
+			NewTiles.Add(Tiles[i]);
 		}
 	}
 	// TODO fix this in case tile is surrounded by mountains
-	return nullptr;
+	return NewTiles;
 }
 
 float AAStarPathfinding::GetScore(AHexagonTile* Start, AHexagonTile* Goal)

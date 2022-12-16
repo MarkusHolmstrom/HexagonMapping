@@ -89,6 +89,8 @@ private:
 	UFUNCTION()
 		AHexagonTile* GetBestScore(TArray<AHexagonTile*> Tiles, float TopScore);
 	UFUNCTION()
+		AHexagonTile* GetFirstViableTile(TArray<AHexagonTile*> Tiles);
+	UFUNCTION()
 		float GetScore(AHexagonTile* Start, AHexagonTile* Goal);
 	/*UFUNCTION()
 	TArray<AHexagonTile*> GetAdjacentTiles(AHexagonTile* Tile);*/

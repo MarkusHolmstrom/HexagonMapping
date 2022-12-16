@@ -53,7 +53,7 @@ void AAStarPathfinding::StartCalculatePath()
 
 	ManhattanDistance = GetManhattanDistance(Start, Goal);
 	TotalMovementCost = GetGScore(StartTile, GoalTile);
-	GEngine->AddOnScreenDebugMessage(-1, 20, FColor::Blue,
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue,
 		FString::Printf(TEXT("%d"), TotalMovementCost));
 	GoalDirection = GetDirection(Start, Goal);
 	PathfindingLoop();
@@ -68,21 +68,26 @@ void AAStarPathfinding::PathfindingLoop()
 
 		TArray<AHexagonTile*> AdjTiles = GetAdjacentTiles(CurrentTile, GoalDirection);
 		CurrentTile = GetBestScore(AdjTiles, 1000000.0f);
+		if (!CurrentTile)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("error: np cur tile found!"));
+			return;
+		}
 		if (CurrentTile->TileIndex == GoalTile->TileIndex)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("target found, sire!"));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("target found, sire!"));
 			bSearchingForPath = false;
 		}
 		else if (!CurrentTile || Tries > MaxTries)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("error or maxtries reached"));
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("error or max tries reached"));
 			bSearchingForPath = false;
 		}
 	}
 	// Clears up varaibles and removes stuff to reset for a new path finding!
 	// Is this comment not spefic enough for ya? Then go and doo... something then!
 	Tries = 0;
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, TEXT("nu ere slut!!"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, TEXT("nu ere slut!!"));
 	// Remove gameobjects, lights and path tiles after some seconds
 	FTimerHandle UnusedHandle;
 	GetWorldTimerManager().SetTimer(
@@ -94,10 +99,14 @@ void AAStarPathfinding::PathfindingLoop()
 
 AHexagonTile* AAStarPathfinding::GetBestScore(TArray<AHexagonTile*> Tiles, float TopScore)
 {
-	AHexagonTile* BestTile = nullptr;
+	AHexagonTile* BestTile = Tiles[0]; // test to avoid nullptr
 	for (size_t i = 0; i < Tiles.Num(); i++)
 	{
 		if (!Tiles[i])
+		{
+			break;
+		}
+		if (Tiles[i]->Hinder == EHinder::Mountain)
 		{
 			break;
 		}
@@ -105,7 +114,7 @@ AHexagonTile* AAStarPathfinding::GetBestScore(TArray<AHexagonTile*> Tiles, float
 		if (GoalTile)
 		{
 			TileScore += GetGScore(Tiles[i], GoalTile);
-				//GetManhattanDistance(Tiles[i]->GetActorLocation(), GoalTile->GetActorLocation());
+			TileScore += GetManhattanDistance(Tiles[i]->GetActorLocation(), GoalTile->GetActorLocation());
 		}
 		if (TileScore < TopScore)
 		{
@@ -118,6 +127,19 @@ AHexagonTile* AAStarPathfinding::GetBestScore(TArray<AHexagonTile*> Tiles, float
 		BestTile->ChangeHighlight(true);
 	}
 	return BestTile;
+}
+
+AHexagonTile* AAStarPathfinding::GetFirstViableTile(TArray<AHexagonTile*> Tiles)
+{
+	for (size_t i = 0; i < Tiles.Num(); i++)
+	{
+		if (Tiles[i]->Hinder != EHinder::Mountain)
+		{
+			return Tiles[i];
+		}
+	}
+	// TODO fix this in case tile is surrounded by mountains
+	return nullptr;
 }
 
 float AAStarPathfinding::GetScore(AHexagonTile* Start, AHexagonTile* Goal)
@@ -328,6 +350,11 @@ TArray<AHexagonTile*> AAStarPathfinding::GetAdjacentTilesBasedOnDirections(AHexa
 		Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y));
 		Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y - 1));
 		Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y - 1));
+	}
+	if (Tiles.Num() == 0)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("error: cant find neigboring tiles"));
+		// TODO figure out why currenttile is null sometimes at starting attempts, this never gets called?
 	}
 	return Tiles;
 }

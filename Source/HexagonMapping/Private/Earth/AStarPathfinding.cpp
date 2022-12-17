@@ -30,17 +30,40 @@ void AAStarPathfinding::Tick(float DeltaTime)
 
 void AAStarPathfinding::SetTargetCoordinates(AActor* Tile)
 {
-	if (!bSearchingForPath)
+	AHexagonTile* CheckValidTile = Cast<AHexagonTile>(Tile);
+	if (!IsValidTile(CheckValidTile))
 	{
-		
+		return;
 	}
-
 	TargetCoordinates.Add(Tile);
 
 	if (TargetCoordinates.Num() >= TargetCount)
 	{
 		StartCalculatePath();
 	}
+}
+
+bool AAStarPathfinding::IsValidTile(AHexagonTile* Tile)
+{
+	if (!Tile)
+	{
+		return false;
+	}
+	if (Tile->Hinder == EHinder::Mountain)
+	{
+		return false;
+	}
+	// if Unit can travel over water
+	else if (!bCanTravelWater && !bWaterVessel && Tile->Hinder == EHinder::Water)
+	{
+		return false;
+	}
+	// If boat, that needs water, because it is boat:
+	else if (bWaterVessel && Tile->Hinder != EHinder::Water)
+	{
+		return false;
+	}
+	return true;
 }
 
 void AAStarPathfinding::StartCalculatePath()
@@ -91,7 +114,7 @@ void AAStarPathfinding::PathfindingLoop()
 	// Remove gameobjects, lights and path tiles after some seconds
 	FTimerHandle UnusedHandle;
 	GetWorldTimerManager().SetTimer(
-		UnusedHandle, this, &AAStarPathfinding::CleanUp, 6.0f, false);
+		UnusedHandle, this, &AAStarPathfinding::CleanUp, 5.0f, false);
 	
 	TargetCoordinates.Empty();
 	bSearchingForPath = true;
@@ -109,6 +132,7 @@ AHexagonTile* AAStarPathfinding::GetBestScore(TArray<AHexagonTile*> Tiles, float
 		}
 		if (ViableTiles[i]->Hinder == EHinder::Mountain)
 		{
+			ViableTiles.Remove(ViableTiles[i]);
 			break;
 		}
 		float TileScore = ViableTiles[i]->MoveCost;
@@ -135,7 +159,7 @@ TArray<AHexagonTile*> AAStarPathfinding::GetViableTiles(TArray<AHexagonTile*> Ti
 	TArray<AHexagonTile*> NewTiles;
 	for (size_t i = 0; i < Tiles.Num(); i++)
 	{
-		if (Tiles[i]->Hinder != EHinder::Mountain)
+		if (Tiles[i] && Tiles[i]->Hinder != EHinder::Mountain)
 		{
 			NewTiles.Add(Tiles[i]);
 		}

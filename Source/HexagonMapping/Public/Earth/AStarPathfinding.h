@@ -82,6 +82,8 @@ public:
 	UFUNCTION()
 	void SetTargetCoordinates(AActor* Tile);
 	UFUNCTION()
+		bool IsValidTile(AHexagonTile* Tile);
+	UFUNCTION()
 	void StartCalculatePath();
 private:
 	UFUNCTION()

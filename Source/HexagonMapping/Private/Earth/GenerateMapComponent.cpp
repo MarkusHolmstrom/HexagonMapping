@@ -125,7 +125,7 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 			CurX = x;
 			CurY = y;
 			TSubclassOf<AHexagonTile> tileToSpawn = SetTile(FCI);
-			if (bCurIsLand)
+			if (bIsTileLand)
 			{
 				// Checks if adjacent tiles are ocean tiles, instead of shores:
 				SetShoreTilesAround(CurX, CurY);
@@ -170,7 +170,7 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 						GetWorld()->SpawnActor<ADetailActor>(GetTrees(ForestChance), FVector(FIntPoint(XPos, YPos)), FRotator::ZeroRotator);
 					}
 				}
-				SetHexagonInfo(newTile, true, CurHinder);
+				SetHexagonInfo(newTile, bIsTileLand, CurHinder);
 				newTile->TileLocation = FVector(FIntPoint(XPos, YPos));
 				HexGrid[x][y] = newTile;
 			}
@@ -180,7 +180,7 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 
 TSubclassOf<AHexagonTile> UGenerateMapComponent::SetTile(FClimateInfo Info)
 {
-	bCurIsLand = true;
+	bIsTileLand = true;
 	/*float TileDecider = RandomLCGfloat(0, 100);
 
 	UE_LOG(LogTemp, Display, TEXT("Tiledecider is: %f"), TileDecider);
@@ -267,7 +267,7 @@ TSubclassOf<AHexagonTile> UGenerateMapComponent::SetTile(FClimateInfo Info)
 		CurType = EHexType::Snow;
 		return SnowHexTile;
 	}
-	bCurIsLand = false;
+	bIsTileLand = false;
 	return SetWaterTile(CurX, CurY);
 }
 

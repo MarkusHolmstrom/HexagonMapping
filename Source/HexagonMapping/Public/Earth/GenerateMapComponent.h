@@ -232,7 +232,7 @@ private:
 	int32 CurX;
 	int32 CurY;
 	EHexType CurType;
-	bool bCurIsLand = false;
+	bool bIsTileLand = false;
 
 
 public:	

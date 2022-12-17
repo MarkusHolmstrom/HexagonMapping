@@ -11,7 +11,7 @@
 AAStarPathfinding::AAStarPathfinding()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	//PrimaryActorTick.bCanEverTick = true;
 
 }
 
@@ -33,6 +33,12 @@ void AAStarPathfinding::SetTargetCoordinates(AActor* Tile)
 	AHexagonTile* CheckValidTile = Cast<AHexagonTile>(Tile);
 	if (!IsValidTile(CheckValidTile))
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, 
+			TEXT("Warning: invalid tile chosen!! reseting values"));
+
+		TargetCoordinates.Empty();
+		bSearchingForPath = true;
+		CleanUp();
 		return;
 	}
 	TargetCoordinates.Add(Tile);
@@ -76,8 +82,8 @@ void AAStarPathfinding::StartCalculatePath()
 
 	ManhattanDistance = GetManhattanDistance(Start, Goal);
 	TotalMovementCost = GetGScore(StartTile, GoalTile);
-	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue,
-		FString::Printf(TEXT("%d"), TotalMovementCost));
+	/*GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue,
+		FString::Printf(TEXT("%d"), TotalMovementCost));*/
 	GoalDirection = GetDirection(Start, Goal);
 	PathfindingLoop();
 }
@@ -123,7 +129,14 @@ void AAStarPathfinding::PathfindingLoop()
 AHexagonTile* AAStarPathfinding::GetBestScore(TArray<AHexagonTile*> Tiles, float TopScore)
 {
 	TArray<AHexagonTile*> ViableTiles = GetViableTiles(Tiles);
+	if (ViableTiles.Num() == 0)
+	{
+		return nullptr;
+	}
 	AHexagonTile* BestTile = ViableTiles[0]; // test to avoid nullptr
+	// TODO fix this so it iteraties more options, rather than the best by step by step
+	// and add new options if the easy tiles is not viable. add stop as well when the
+	// path is not possible for some reason along the way
 	for (size_t i = 0; i < ViableTiles.Num(); i++)
 	{
 		if (!ViableTiles[i])
@@ -159,7 +172,7 @@ TArray<AHexagonTile*> AAStarPathfinding::GetViableTiles(TArray<AHexagonTile*> Ti
 	TArray<AHexagonTile*> NewTiles;
 	for (size_t i = 0; i < Tiles.Num(); i++)
 	{
-		if (Tiles[i] && Tiles[i]->Hinder != EHinder::Mountain)
+		if (Tiles[i] && IsValidTile(Tiles[i]))
 		{
 			NewTiles.Add(Tiles[i]);
 		}
@@ -421,7 +434,6 @@ void AAStarPathfinding::ClearClosedList()
 
 void AAStarPathfinding::RemoveTilesLight()
 {
-	// TODO Remove highlighted hexagonirinos aswell
 	if (World)
 	{
 		World->RemoveLights();

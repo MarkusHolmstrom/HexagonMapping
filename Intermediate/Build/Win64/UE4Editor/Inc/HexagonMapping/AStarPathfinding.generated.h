@@ -34,6 +34,7 @@ class AActor;
 	DECLARE_FUNCTION(execGetBestScore); \
 	DECLARE_FUNCTION(execPathfindingLoop); \
 	DECLARE_FUNCTION(execStartCalculatePath); \
+	DECLARE_FUNCTION(execIsValidTile); \
 	DECLARE_FUNCTION(execSetTargetCoordinates);
 
 
@@ -53,6 +54,7 @@ class AActor;
 	DECLARE_FUNCTION(execGetBestScore); \
 	DECLARE_FUNCTION(execPathfindingLoop); \
 	DECLARE_FUNCTION(execStartCalculatePath); \
+	DECLARE_FUNCTION(execIsValidTile); \
 	DECLARE_FUNCTION(execSetTargetCoordinates);
 
 

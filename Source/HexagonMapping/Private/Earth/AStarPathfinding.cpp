@@ -6,6 +6,7 @@
 #include "Earth/GenerateMapComponent.h"
 #include "Enums.h"
 #include "Earth/WorldPawn.h"
+#include "Earth/Path.h"
 
 // Sets default values
 AAStarPathfinding::AAStarPathfinding()
@@ -34,7 +35,7 @@ void AAStarPathfinding::SetTargetCoordinates(AActor* Tile)
 	if (!IsValidTile(CheckValidTile))
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Yellow, 
-			TEXT("Warning: invalid tile chosen!! reseting values"));
+			TEXT("Warning: invalid tile chosen!! reseting values..."));
 
 		TargetCoordinates.Empty();
 		bSearchingForPath = true;
@@ -88,6 +89,19 @@ void AAStarPathfinding::StartCalculatePath()
 	PathfindingLoop();
 }
 
+void AAStarPathfinding::LookForMoreOptions()
+{
+	// Test a new path
+	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Emerald, TEXT("test a new path now!"));
+
+	// Add checked tile in CheckedTile list
+
+	// if (canfindgoaltile) save high score
+
+	// repeat til enought tries checked, or add more paths to search
+
+}
+
 void AAStarPathfinding::PathfindingLoop()
 {
 	while (bSearchingForPath)
@@ -96,7 +110,14 @@ void AAStarPathfinding::PathfindingLoop()
 		Tries++;
 
 		TArray<AHexagonTile*> AdjTiles = GetAdjacentTiles(CurrentTile, GoalDirection);
+		
 		CurrentTile = GetBestScore(AdjTiles, 1000000.0f);
+		CheckedList.Add(CurrentTile);
+
+		if (bNeedPathFinding) //|| !CurrentTile might add this aswell?
+		{
+			LookForMoreOptions();
+		}
 		if (!CurrentTile)
 		{
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("error: np cur tile found!"));
@@ -107,9 +128,9 @@ void AAStarPathfinding::PathfindingLoop()
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("target found, sire!"));
 			bSearchingForPath = false;
 		}
-		else if (!CurrentTile || Tries > MaxTries)
+		else if (Tries >= MaxTries)
 		{
-			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("error or max tries reached"));
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("max tries reached"));
 			bSearchingForPath = false;
 		}
 	}
@@ -121,7 +142,7 @@ void AAStarPathfinding::PathfindingLoop()
 	FTimerHandle UnusedHandle;
 	GetWorldTimerManager().SetTimer(
 		UnusedHandle, this, &AAStarPathfinding::CleanUp, 5.0f, false);
-	
+
 	TargetCoordinates.Empty();
 	bSearchingForPath = true;
 }
@@ -131,6 +152,7 @@ AHexagonTile* AAStarPathfinding::GetBestScore(TArray<AHexagonTile*> Tiles, float
 	TArray<AHexagonTile*> ViableTiles = GetViableTiles(Tiles);
 	if (ViableTiles.Num() == 0)
 	{
+		bNeedPathFinding = true;
 		return nullptr;
 	}
 	AHexagonTile* BestTile = ViableTiles[0]; // test to avoid nullptr

@@ -25,7 +25,7 @@ void EmptyLinkFunctionForGeneratedCodeHexagonMapping_init() {}
 				SingletonFuncArray,
 				UE_ARRAY_COUNT(SingletonFuncArray),
 				PKG_CompiledIn | 0x00000000,
-				0xBF7E65DC,
+				0x0F60049A,
 				0xF1386356,
 				METADATA_PARAMS(nullptr, 0)
 			};

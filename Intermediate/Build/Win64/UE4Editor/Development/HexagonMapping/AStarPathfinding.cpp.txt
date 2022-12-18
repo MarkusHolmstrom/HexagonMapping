@@ -8,3 +8,4 @@ C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Source\HexagonMa
 C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Inc\HexagonMapping\GenerateMapComponent.generated.h
 C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Source\HexagonMapping\Public\Earth/WorldPawn.h
 C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Inc\HexagonMapping\WorldPawn.generated.h
+C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Source\HexagonMapping\Public\Earth/Path.h

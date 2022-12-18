@@ -17,8 +17,8 @@ class AActor;
 #endif
 #define HEXAGONMAPPING_AStarPathfinding_generated_h
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_17_SPARSE_DATA
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_17_RPC_WRAPPERS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_SPARSE_DATA
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_RPC_WRAPPERS \
  \
 	DECLARE_FUNCTION(execGetDirection); \
 	DECLARE_FUNCTION(execRemoveTilesLight); \
@@ -33,12 +33,13 @@ class AActor;
 	DECLARE_FUNCTION(execGetViableTiles); \
 	DECLARE_FUNCTION(execGetBestScore); \
 	DECLARE_FUNCTION(execPathfindingLoop); \
+	DECLARE_FUNCTION(execLookForMoreOptions); \
 	DECLARE_FUNCTION(execStartCalculatePath); \
 	DECLARE_FUNCTION(execIsValidTile); \
 	DECLARE_FUNCTION(execSetTargetCoordinates);
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_17_RPC_WRAPPERS_NO_PURE_DECLS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execGetDirection); \
 	DECLARE_FUNCTION(execRemoveTilesLight); \
@@ -53,12 +54,13 @@ class AActor;
 	DECLARE_FUNCTION(execGetViableTiles); \
 	DECLARE_FUNCTION(execGetBestScore); \
 	DECLARE_FUNCTION(execPathfindingLoop); \
+	DECLARE_FUNCTION(execLookForMoreOptions); \
 	DECLARE_FUNCTION(execStartCalculatePath); \
 	DECLARE_FUNCTION(execIsValidTile); \
 	DECLARE_FUNCTION(execSetTargetCoordinates);
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_17_INCLASS_NO_PURE_DECLS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAAStarPathfinding(); \
 	friend struct Z_Construct_UClass_AAStarPathfinding_Statics; \
@@ -67,7 +69,7 @@ public: \
 	DECLARE_SERIALIZER(AAStarPathfinding)
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_17_INCLASS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_INCLASS \
 private: \
 	static void StaticRegisterNativesAAStarPathfinding(); \
 	friend struct Z_Construct_UClass_AAStarPathfinding_Statics; \
@@ -76,7 +78,7 @@ public: \
 	DECLARE_SERIALIZER(AAStarPathfinding)
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_17_STANDARD_CONSTRUCTORS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API AAStarPathfinding(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(AAStarPathfinding) \
@@ -89,7 +91,7 @@ private: \
 public:
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_17_ENHANCED_CONSTRUCTORS \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API AAStarPathfinding(AAStarPathfinding&&); \
@@ -100,7 +102,8 @@ public: \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(AAStarPathfinding)
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_17_PRIVATE_PROPERTY_OFFSET \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_PRIVATE_PROPERTY_OFFSET \
+	FORCEINLINE static uint32 __PPO__bNeedPathFinding() { return STRUCT_OFFSET(AAStarPathfinding, bNeedPathFinding); } \
 	FORCEINLINE static uint32 __PPO__StartTile() { return STRUCT_OFFSET(AAStarPathfinding, StartTile); } \
 	FORCEINLINE static uint32 __PPO__GoalTile() { return STRUCT_OFFSET(AAStarPathfinding, GoalTile); } \
 	FORCEINLINE static uint32 __PPO__CurrentTile() { return STRUCT_OFFSET(AAStarPathfinding, CurrentTile); } \
@@ -110,27 +113,27 @@ public: \
 	FORCEINLINE static uint32 __PPO__GoalDirection() { return STRUCT_OFFSET(AAStarPathfinding, GoalDirection); }
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_14_PROLOG
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_17_GENERATED_BODY_LEGACY \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_15_PROLOG
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_17_PRIVATE_PROPERTY_OFFSET \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_17_SPARSE_DATA \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_17_RPC_WRAPPERS \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_17_INCLASS \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_17_STANDARD_CONSTRUCTORS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_PRIVATE_PROPERTY_OFFSET \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_SPARSE_DATA \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_RPC_WRAPPERS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_INCLASS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_17_GENERATED_BODY \
+#define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_17_PRIVATE_PROPERTY_OFFSET \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_17_SPARSE_DATA \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_17_RPC_WRAPPERS_NO_PURE_DECLS \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_17_INCLASS_NO_PURE_DECLS \
-	HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_17_ENHANCED_CONSTRUCTORS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_PRIVATE_PROPERTY_OFFSET \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_SPARSE_DATA \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_RPC_WRAPPERS_NO_PURE_DECLS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_INCLASS_NO_PURE_DECLS \
+	HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

@@ -10,6 +10,7 @@
 class AHexagonTile;
 class UGenerateMapComponent;
 class AWorldPawn;
+class Path;
 
 UCLASS()
 class HEXAGONMAPPING_API AAStarPathfinding : public AActor
@@ -48,8 +49,12 @@ public:
 		float TotalScore = 0;
 
 private:
+	Path* BestPath;
 	TArray<AHexagonTile*> OpenList;
 	TArray<AHexagonTile*> ClosedList;
+	TArray<AHexagonTile*> CheckedList;
+	UPROPERTY(VisibleAnywhere)
+		bool bNeedPathFinding = false;
 
 	UPROPERTY(VisibleAnywhere)
 		AHexagonTile* StartTile;
@@ -86,6 +91,8 @@ public:
 	UFUNCTION()
 	void StartCalculatePath();
 private:
+	UFUNCTION()
+	void LookForMoreOptions();
 	UFUNCTION()
 	void PathfindingLoop();
 	UFUNCTION()

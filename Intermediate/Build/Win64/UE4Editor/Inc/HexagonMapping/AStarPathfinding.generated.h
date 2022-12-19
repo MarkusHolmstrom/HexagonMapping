@@ -33,6 +33,7 @@ class AActor;
 	DECLARE_FUNCTION(execGetViableTiles); \
 	DECLARE_FUNCTION(execGetBestScore); \
 	DECLARE_FUNCTION(execPathfindingLoop); \
+	DECLARE_FUNCTION(execGetChildren); \
 	DECLARE_FUNCTION(execLookForMoreOptions); \
 	DECLARE_FUNCTION(execStartCalculatePath); \
 	DECLARE_FUNCTION(execIsValidTile); \
@@ -54,6 +55,7 @@ class AActor;
 	DECLARE_FUNCTION(execGetViableTiles); \
 	DECLARE_FUNCTION(execGetBestScore); \
 	DECLARE_FUNCTION(execPathfindingLoop); \
+	DECLARE_FUNCTION(execGetChildren); \
 	DECLARE_FUNCTION(execLookForMoreOptions); \
 	DECLARE_FUNCTION(execStartCalculatePath); \
 	DECLARE_FUNCTION(execIsValidTile); \

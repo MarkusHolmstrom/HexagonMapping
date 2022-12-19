@@ -17,6 +17,15 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define CURRENT_FILE_ID HexagonMapping_Source_HexagonMapping_Public_Enums_h
 
 
+#define FOREACH_ENUM_ENODEINDEX(op) \
+	op(ENodeIndex::None) \
+	op(ENodeIndex::Left) \
+	op(ENodeIndex::Middle) \
+	op(ENodeIndex::Right) 
+
+enum class ENodeIndex : uint8;
+template<> HEXAGONMAPPING_API UEnum* StaticEnum<ENodeIndex>();
+
 #define FOREACH_ENUM_EDIRECTION(op) \
 	op(EDirection::North) \
 	op(EDirection::NorthEast) \

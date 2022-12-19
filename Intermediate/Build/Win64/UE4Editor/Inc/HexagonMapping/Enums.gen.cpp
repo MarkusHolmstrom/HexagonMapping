@@ -13,8 +13,9 @@
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
 void EmptyLinkFunctionForGeneratedCodeEnums() {}
 // Cross Module References
-	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EDirection();
+	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_ENodeIndex();
 	UPackage* Z_Construct_UPackage__Script_HexagonMapping();
+	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EDirection();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EMapType();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EResourceType();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EResource();
@@ -22,6 +23,64 @@ void EmptyLinkFunctionForGeneratedCodeEnums() {}
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EClimateType();
 	HEXAGONMAPPING_API UEnum* Z_Construct_UEnum_HexagonMapping_EHexType();
 // End Cross Module References
+	static UEnum* ENodeIndex_StaticEnum()
+	{
+		static UEnum* Singleton = nullptr;
+		if (!Singleton)
+		{
+			Singleton = GetStaticEnum(Z_Construct_UEnum_HexagonMapping_ENodeIndex, Z_Construct_UPackage__Script_HexagonMapping(), TEXT("ENodeIndex"));
+		}
+		return Singleton;
+	}
+	template<> HEXAGONMAPPING_API UEnum* StaticEnum<ENodeIndex>()
+	{
+		return ENodeIndex_StaticEnum();
+	}
+	static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_ENodeIndex(ENodeIndex_StaticEnum, TEXT("/Script/HexagonMapping"), TEXT("ENodeIndex"), false, nullptr, nullptr);
+	uint32 Get_Z_Construct_UEnum_HexagonMapping_ENodeIndex_Hash() { return 3898415556U; }
+	UEnum* Z_Construct_UEnum_HexagonMapping_ENodeIndex()
+	{
+#if WITH_HOT_RELOAD
+		UPackage* Outer = Z_Construct_UPackage__Script_HexagonMapping();
+		static UEnum* ReturnEnum = FindExistingEnumIfHotReloadOrDynamic(Outer, TEXT("ENodeIndex"), 0, Get_Z_Construct_UEnum_HexagonMapping_ENodeIndex_Hash(), false);
+#else
+		static UEnum* ReturnEnum = nullptr;
+#endif // WITH_HOT_RELOAD
+		if (!ReturnEnum)
+		{
+			static const UE4CodeGen_Private::FEnumeratorParam Enumerators[] = {
+				{ "ENodeIndex::None", (int64)ENodeIndex::None },
+				{ "ENodeIndex::Left", (int64)ENodeIndex::Left },
+				{ "ENodeIndex::Middle", (int64)ENodeIndex::Middle },
+				{ "ENodeIndex::Right", (int64)ENodeIndex::Right },
+			};
+#if WITH_METADATA
+			const UE4CodeGen_Private::FMetaDataPairParam Enum_MetaDataParams[] = {
+				{ "BlueprintType", "true" },
+				{ "Left.Name", "ENodeIndex::Left" },
+				{ "Middle.Name", "ENodeIndex::Middle" },
+				{ "ModuleRelativePath", "Public/Enums.h" },
+				{ "None.Name", "ENodeIndex::None" },
+				{ "Right.Name", "ENodeIndex::Right" },
+			};
+#endif
+			static const UE4CodeGen_Private::FEnumParams EnumParams = {
+				(UObject*(*)())Z_Construct_UPackage__Script_HexagonMapping,
+				nullptr,
+				"ENodeIndex",
+				"ENodeIndex",
+				Enumerators,
+				UE_ARRAY_COUNT(Enumerators),
+				RF_Public|RF_Transient|RF_MarkAsNative,
+				EEnumFlags::None,
+				UE4CodeGen_Private::EDynamicType::NotDynamic,
+				(uint8)UEnum::ECppForm::EnumClass,
+				METADATA_PARAMS(Enum_MetaDataParams, UE_ARRAY_COUNT(Enum_MetaDataParams))
+			};
+			UE4CodeGen_Private::ConstructUEnum(ReturnEnum, EnumParams);
+		}
+		return ReturnEnum;
+	}
 	static UEnum* EDirection_StaticEnum()
 	{
 		static UEnum* Singleton = nullptr;

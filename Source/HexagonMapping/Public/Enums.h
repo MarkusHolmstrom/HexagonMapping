@@ -54,6 +54,13 @@ enum class EDirection : uint8
 	North, NorthEast, East, SouthEast, South, SouthWest, West, NorthWest
 };
 
+UENUM(BlueprintType)
+enum class ENodeIndex : uint8
+{
+	None, Left, Middle, Right
+};
+
+
 class HEXAGONMAPPING_API Enums
 {
 public:

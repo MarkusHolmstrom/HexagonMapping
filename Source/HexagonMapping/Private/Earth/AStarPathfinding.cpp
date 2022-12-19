@@ -91,22 +91,65 @@ void AAStarPathfinding::StartCalculatePath()
 
 void AAStarPathfinding::LookForMoreOptions()
 {
-	// Test a new path
+	// Create a new path
+	NewPath->Nodes.Empty();
+	NewPath = new Path(StartTile, GoalTile);
+	// Depth = 0 is parent node/tile
+	Depth = 1;
+	bool bAStarPathFinding = true;
+	CurrentTile = StartTile;
+	ChildTiles.Add(CurrentTile);
 	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Emerald, TEXT("test a new path now!"));
-
-	// Add checked tile in CheckedTile list
-
-	// if (canfindgoaltile) save high score
-
+	if (bAStarPathFinding)
+	{
+		if (ChildTiles.Num() == 0 || Tries >= MaxTries)
+		{
+			bAStarPathFinding = false;
+		}
+		TArray<AHexagonTile*> NextDepthTiles = GetChildren(ChildTiles);
+		// Add checked tile in CheckedTile list
+		ChildTiles = NextDepthTiles;
+		// if (canfindgoaltile) save high score
+		Depth++;
+		Tries++;
+		// update direction - behovs?
+		/*FVector Start = CurrentTile->GetActorLocation();
+		FVector Goal = TargetCoordinates[1]->GetActorLocation();
+		GoalDirection = GetDirection(Start, Goal);*/
+	}
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue,
+		FString::Printf(TEXT("%d"), NewPath->Nodes.Num()));
 	// repeat til enought tries checked, or add more paths to search
 
 }
 
+TArray<AHexagonTile*> AAStarPathfinding::GetChildren(TArray<AHexagonTile*> Tiles)
+{
+	TArray<AHexagonTile*> ReturnChildren;
+	for (size_t i = 0; i < Tiles.Num(); i++)
+	{
+		TArray<AHexagonTile*> AdjTiles = GetAdjacentTiles(Tiles[i], GoalDirection);
+		for (size_t j = 0; j < AdjTiles.Num(); j++)
+		{
+			if (AdjTiles[j])
+			{
+				ReturnChildren.Add(AdjTiles[j]);
+				// add left, middle and right nodes for the parent "node" current tile
+				NewPath->AddChild(Tiles[i], AdjTiles[j], j, Depth); // cur tile or tiles[i] as parent?
+			}
+
+		}
+	}
+
+	return ReturnChildren;
+}
+
 void AAStarPathfinding::PathfindingLoop()
 {
+	bNeedPathFinding = false;
 	while (bSearchingForPath)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("on emore time:"));
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("on emore time:"));
 		Tries++;
 
 		TArray<AHexagonTile*> AdjTiles = GetAdjacentTiles(CurrentTile, GoalDirection);
@@ -116,16 +159,18 @@ void AAStarPathfinding::PathfindingLoop()
 
 		if (bNeedPathFinding) //|| !CurrentTile might add this aswell?
 		{
+			Tries = 0;
 			LookForMoreOptions();
+			bSearchingForPath = false;
 		}
 		if (!CurrentTile)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("error: np cur tile found!"));
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("error: np cur tile found!"));
 			return;
 		}
 		if (CurrentTile->TileIndex == GoalTile->TileIndex)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("target found, sire!"));
+			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("target found, sire!"));
 			bSearchingForPath = false;
 		}
 		else if (Tries >= MaxTries)
@@ -199,7 +244,6 @@ TArray<AHexagonTile*> AAStarPathfinding::GetViableTiles(TArray<AHexagonTile*> Ti
 			NewTiles.Add(Tiles[i]);
 		}
 	}
-	// TODO fix this in case tile is surrounded by mountains
 	return NewTiles;
 }
 
@@ -253,7 +297,7 @@ TArray<AHexagonTile*> AAStarPathfinding::GetAdjacentTiles(AHexagonTile* Tile, ED
 
 	for (size_t i = 0; i < AdjacentTiles.Num(); i++)
 	{
-		if (AdjacentTiles[i])
+		if (AdjacentTiles[i] && !CheckedList.Contains(AdjacentTiles[i]))
 		{
 			//AdjacentTiles[i]->ChangeHighlight(true);
 			ClosedList.Add(AdjacentTiles[i]);

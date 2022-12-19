@@ -47,7 +47,7 @@ void AWorldPawn::GetTile()
 	if (Hit.bBlockingHit) 
 	{
 		OnTileChosen(Hit.GetActor());
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Magenta, Hit.GetActor()->GetName());
+		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Magenta, Hit.GetActor()->GetName());
 	}
 }
 

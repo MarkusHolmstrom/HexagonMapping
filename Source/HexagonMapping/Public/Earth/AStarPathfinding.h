@@ -37,7 +37,7 @@ public:
 	// This adds some kind of limit in case the patfinding 
 	// gets stuck in a never ending loop
 	UPROPERTY(VisibleAnywhere)
-	int MaxTries = 150;
+	int MaxTries = 10;
 	// H:
 	UPROPERTY(VisibleAnywhere)
 		float ManhattanDistance = 0;
@@ -49,6 +49,9 @@ public:
 		float TotalScore = 0;
 
 private:
+	Path* NewPath;
+	int Depth;
+	TArray<AHexagonTile*> ChildTiles;
 	Path* BestPath;
 	TArray<AHexagonTile*> OpenList;
 	TArray<AHexagonTile*> ClosedList;
@@ -93,6 +96,8 @@ public:
 private:
 	UFUNCTION()
 	void LookForMoreOptions();
+	UFUNCTION()
+		TArray<AHexagonTile*> GetChildren(TArray<AHexagonTile*> Tiles);
 	UFUNCTION()
 	void PathfindingLoop();
 	UFUNCTION()

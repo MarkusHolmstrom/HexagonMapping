@@ -37,7 +37,7 @@ public:
 	// This adds some kind of limit in case the patfinding 
 	// gets stuck in a never ending loop
 	UPROPERTY(VisibleAnywhere)
-	int MaxTries = 10;
+	int MaxTries = 5;
 	// H:
 	UPROPERTY(VisibleAnywhere)
 		float ManhattanDistance = 0;
@@ -123,6 +123,8 @@ private:
 
 	UFUNCTION()
 		void CleanUp();
+	UFUNCTION()
+		void DelayedCleanUp(float Delay);
 	UFUNCTION()
 	void ClearClosedList();
 	UFUNCTION()

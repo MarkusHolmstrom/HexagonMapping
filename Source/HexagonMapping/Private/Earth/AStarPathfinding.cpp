@@ -1,6 +1,5 @@
 // MarkusHolmstrom no rights reserved
 
-
 #include "Earth/AStarPathfinding.h"
 #include "Earth/HexagonTile.h"
 #include "Earth/GenerateMapComponent.h"
@@ -91,16 +90,22 @@ void AAStarPathfinding::StartCalculatePath()
 
 void AAStarPathfinding::LookForMoreOptions()
 {
+	// Clear prev nodes if NewPath exists:
+	/*if (NewPath && NewPath->Nodes.Num() > 0)
+	{
+		NewPath->Nodes.Empty();
+	}*/
 	// Create a new path
-	NewPath->Nodes.Empty();
 	NewPath = new Path(StartTile, GoalTile);
 	// Depth = 0 is parent node/tile
 	Depth = 1;
 	bool bAStarPathFinding = true;
 	CurrentTile = StartTile;
+
+	ChildTiles.Empty();
 	ChildTiles.Add(CurrentTile);
 	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Emerald, TEXT("test a new path now!"));
-	if (bAStarPathFinding)
+	while (bAStarPathFinding)
 	{
 		if (ChildTiles.Num() == 0 || Tries >= MaxTries)
 		{
@@ -111,14 +116,29 @@ void AAStarPathfinding::LookForMoreOptions()
 		ChildTiles = NextDepthTiles;
 		// if (canfindgoaltile) save high score
 		Depth++;
+		NewPath->SetTreeDepth(Depth);
 		Tries++;
 		// update direction - behovs?
 		/*FVector Start = CurrentTile->GetActorLocation();
 		FVector Goal = TargetCoordinates[1]->GetActorLocation();
 		GoalDirection = GetDirection(Start, Goal);*/
 	}
-	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue,
+	NewPath->CalculatePathsLoop();
+	TArray<AHexagonTile*> PathTiles;
+	for (size_t i = 0; i < NewPath->PathNodes.Num(); i++)
+	{
+		PathTiles.Add(NewPath->PathNodes[i]->Tile);
+		PathTiles[i]->ChangeHighlight(true);
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald,
+			TEXT("Another light added"));
+	}
+	DelayedCleanUp(5.0f);
+
+	// y do thesese be so big??
+	/*GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue,
 		FString::Printf(TEXT("%d"), NewPath->Nodes.Num()));
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Purple,
+		FString::Printf(TEXT("%d"), ChildTiles.Num()));*/ // = ReturnChildren
 	// repeat til enought tries checked, or add more paths to search
 
 }
@@ -134,19 +154,46 @@ TArray<AHexagonTile*> AAStarPathfinding::GetChildren(TArray<AHexagonTile*> Tiles
 			if (AdjTiles[j])
 			{
 				ReturnChildren.Add(AdjTiles[j]);
+				// TODO make a method for this
 				// add left, middle and right nodes for the parent "node" current tile
-				NewPath->AddChild(Tiles[i], AdjTiles[j], j, Depth); // cur tile or tiles[i] as parent?
+				Node* NewNode = new Node();
+				NewNode->X = AdjTiles[j]->TileIndex.X;
+				NewNode->Y = AdjTiles[j]->TileIndex.Y;
+				NewNode->XParent = Tiles[i]->TileIndex.X;
+				NewNode->YParent = Tiles[i]->TileIndex.Y;
+				ENodeIndex NodeIndex = ENodeIndex::None;
+				if (j == 0)
+				{
+					NodeIndex = ENodeIndex::Left;
+				}
+				else if (j == 1)
+				{
+					NodeIndex = ENodeIndex::Middle;
+				}
+				else if (j == 2)
+				{
+					NodeIndex = ENodeIndex::Right;
+				}
+				NewNode->Index = NodeIndex;
+				NewNode->Depth = Depth;
+				NewNode->Score = GetGScore(AdjTiles[j], GoalTile);
+				NewNode->Tile = AdjTiles[j];
+				NewPath->AddChildNode(NewNode);
+				//NewPath->AddChild(Tiles[i], AdjTiles[j], j, Depth); // cur tile or tiles[i] as parent?
 			}
 
 		}
 	}
 
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Cyan,
+		FString::Printf(TEXT("%d"), ReturnChildren.Num()));
 	return ReturnChildren;
 }
 
 void AAStarPathfinding::PathfindingLoop()
 {
 	bNeedPathFinding = false;
+	bool bFoundGoal = false;
 	while (bSearchingForPath)
 	{
 		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("on emore time:"));
@@ -157,11 +204,12 @@ void AAStarPathfinding::PathfindingLoop()
 		CurrentTile = GetBestScore(AdjTiles, 1000000.0f);
 		CheckedList.Add(CurrentTile);
 
-		if (bNeedPathFinding) //|| !CurrentTile might add this aswell?
+		if (bNeedPathFinding || !CurrentTile)// might add this aswell?
 		{
 			Tries = 0;
 			LookForMoreOptions();
-			bSearchingForPath = false;
+			bSearchingForPath = false; 
+			return;
 		}
 		if (!CurrentTile)
 		{
@@ -170,6 +218,7 @@ void AAStarPathfinding::PathfindingLoop()
 		}
 		if (CurrentTile->TileIndex == GoalTile->TileIndex)
 		{
+			bFoundGoal = true;
 			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("target found, sire!"));
 			bSearchingForPath = false;
 		}
@@ -179,17 +228,18 @@ void AAStarPathfinding::PathfindingLoop()
 			bSearchingForPath = false;
 		}
 	}
-	// Clears up varaibles and removes stuff to reset for a new path finding!
-	// Is this comment not spefic enough for ya? Then go and doo... something then!
+
 	Tries = 0;
+	// if bird path couldnt find a way to the goal tile
+	if (!bFoundGoal)
+	{
+		LookForMoreOptions();
+		return;
+	}
+
 	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, TEXT("nu ere slut!!"));
 	// Remove gameobjects, lights and path tiles after some seconds
-	FTimerHandle UnusedHandle;
-	GetWorldTimerManager().SetTimer(
-		UnusedHandle, this, &AAStarPathfinding::CleanUp, 5.0f, false);
-
-	TargetCoordinates.Empty();
-	bSearchingForPath = true;
+	DelayedCleanUp(5.0f);
 }
 
 AHexagonTile* AAStarPathfinding::GetBestScore(TArray<AHexagonTile*> Tiles, float TopScore)
@@ -487,6 +537,16 @@ void AAStarPathfinding::CleanUp()
 {
 	ClearClosedList();
 	RemoveTilesLight();
+}
+
+void AAStarPathfinding::DelayedCleanUp(float Delay)
+{
+	FTimerHandle UnusedHandle;
+	GetWorldTimerManager().SetTimer(
+		UnusedHandle, this, &AAStarPathfinding::CleanUp, Delay, false);
+
+	TargetCoordinates.Empty();
+	bSearchingForPath = true;
 }
 
 void AAStarPathfinding::ClearClosedList()

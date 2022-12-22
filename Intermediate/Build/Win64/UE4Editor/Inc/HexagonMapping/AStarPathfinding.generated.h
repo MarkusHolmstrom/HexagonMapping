@@ -23,6 +23,7 @@ class AActor;
 	DECLARE_FUNCTION(execGetDirection); \
 	DECLARE_FUNCTION(execRemoveTilesLight); \
 	DECLARE_FUNCTION(execClearClosedList); \
+	DECLARE_FUNCTION(execDelayedCleanUp); \
 	DECLARE_FUNCTION(execCleanUp); \
 	DECLARE_FUNCTION(execGetGScore); \
 	DECLARE_FUNCTION(execGetManhattanDistance); \
@@ -45,6 +46,7 @@ class AActor;
 	DECLARE_FUNCTION(execGetDirection); \
 	DECLARE_FUNCTION(execRemoveTilesLight); \
 	DECLARE_FUNCTION(execClearClosedList); \
+	DECLARE_FUNCTION(execDelayedCleanUp); \
 	DECLARE_FUNCTION(execCleanUp); \
 	DECLARE_FUNCTION(execGetGScore); \
 	DECLARE_FUNCTION(execGetManhattanDistance); \

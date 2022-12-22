@@ -7,22 +7,25 @@
 
 class AHexagonTile;
 
-struct Node 
+class Node 
 {
+public:
 	int X;
 	int Y;
 	int XParent;
 	int YParent;
-	float Score;
+	float Score = 1000000.0f; // Set a default just in case 
 	ENodeIndex Index;
 	int Depth;
+	bool IsParent(int XPar, int YPar) {
+		if (XPar == XParent && YPar == YParent)
+		{
+			return true;
+		}
+		return false;
+	}
+	AHexagonTile* Tile;
 };
-
-inline bool operator < (const Node& lhs, const Node& rhs)
-{
-	//We need to overload "<" to put our struct into a set
-	return lhs.Score < rhs.Score;
-}
 
 class HEXAGONMAPPING_API Path
 {
@@ -34,8 +37,11 @@ public:
 	UPROPERTY()
 	float Score;
 	UPROPERTY()
-	bool Stuck = false;
-
+	bool bStuck = false;
+	UPROPERTY()
+		bool bFoundPath = false;
+	UPROPERTY()
+		TArray<Node*> PathNodes;
 	UPROPERTY()
 	TArray<Node*> Nodes;
 private:
@@ -46,17 +52,46 @@ private:
 	UPROPERTY()
 	Node* StartNode;
 
+	UPROPERTY()
+	Node* ParentNode;
+	UPROPERTY()
+		int TreeDepth = 0;
+
 public:
 	Path(AHexagonTile* StartTile, AHexagonTile* GoalTile);
 
 	UFUNCTION()
 	bool CanAddToPath(AHexagonTile* Tile);
 	UFUNCTION()
+	void AddChildNode(Node* ChildNode);
+	UFUNCTION()
 	void AddScore(float AddScore);
 	UFUNCTION()
 	void AddChild(AHexagonTile* Parent, AHexagonTile* AddTile, int Index, int Depth);
 
+	UFUNCTION()
+		void SetTreeDepth(int Depth);
+	UFUNCTION()
+		void CalculatePathsLoop();
+
 private:
 	UFUNCTION()
 		void AddNode(AHexagonTile* Parent, AHexagonTile* AddNode, ENodeIndex Index, int Depth);
+
+	UFUNCTION()
+		TArray<AHexagonTile*> GetPath(TArray<Node*> NodePaths);
+	UFUNCTION()
+		TArray<Node*> GetChildrenNodes(Node* Parent, int ChildDepth);
+	UFUNCTION()
+		TArray<Node*> GetNodesViaDepth(int Depth);
+	UFUNCTION()
+		void SetupTreeNodes();
+	UFUNCTION()
+		TArray<Node*> GetBestPath();
+	UFUNCTION()
+		Node* GetBestNode(TArray<Node*> CompNodes);
+
+	UFUNCTION()
+		void RemoveNodes(TArray<Node*> RemNodes);
+
 };

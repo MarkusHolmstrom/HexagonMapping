@@ -36,6 +36,11 @@ void Path::AddScore(float AddScore)
 	this->Score += AddScore;
 }
 
+void Path::AddChildNode(Node* ChildNode)
+{
+	Nodes.Add(ChildNode);
+}
+
 void Path::AddChild(AHexagonTile* Parent, AHexagonTile* AddTile, int Index, int Depth)
 {
 	ENodeIndex NodeIndex = ENodeIndex::None;
@@ -51,7 +56,58 @@ void Path::AddChild(AHexagonTile* Parent, AHexagonTile* AddTile, int Index, int 
 	{
 		NodeIndex = ENodeIndex::Right;
 	}
+	if (Index > 2)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red,
+			FString::Printf(TEXT("Error index to high: %d"), Index));
+	}
 	AddNode(Parent, AddTile, NodeIndex, Depth);
+}
+
+void Path::SetTreeDepth(int Depth)
+{
+	TreeDepth = Depth;
+}
+
+void Path::CalculatePathsLoop()
+{
+	bool Searching = true;
+	int Tries = 0;
+	int test = 0;
+	int Maxtest = 10000;
+	while (Searching && !bFoundPath)
+	{
+		Tries++;
+		test++;
+		SetupTreeNodes();
+		TArray<Node*> NodePath = GetBestPath();
+		if (NodePath.Num() == TreeDepth)
+		{
+			bFoundPath = true;
+			GEngine->AddOnScreenDebugMessage(-1, 9.f, FColor::Green, 
+				TEXT("astar path found!!"));
+			PathNodes = NodePath; // ge thtis to starpathfind to highlight path
+		}
+		else if (Tries >= TreeDepth)
+		{
+			//Searching = false;
+			GEngine->AddOnScreenDebugMessage(-1, 9.f, FColor::Orange, 
+				TEXT("max tries reached"));
+			// remove nodes for failed attempt
+			RemoveNodes(NodePath);
+			Tries = 0;
+		}
+		else if (NodePath.Num() == 0)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 9.f, FColor::Blue,
+				TEXT("no more node path")); return;
+		}
+		else if (test >= Maxtest)
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 9.f, FColor::Red,
+				TEXT("max test tries reached ")); return;
+		}
+	}
 }
 
 void Path::AddNode(AHexagonTile* Parent, AHexagonTile* AddNode, ENodeIndex Index, int Depth)
@@ -64,5 +120,92 @@ void Path::AddNode(AHexagonTile* Parent, AHexagonTile* AddNode, ENodeIndex Index
 	NewNode->Index = Index;
 	NewNode->Depth = Depth;
 	Nodes.Add(NewNode);
+}
+
+TArray<AHexagonTile*> Path::GetPath(TArray<Node*> NodePaths)
+{
+	TArray<AHexagonTile*> HexPath;
+	for (size_t i = 0; i < NodePaths.Num(); i++)
+	{
+
+	}
+	return HexPath;
+}
+
+TArray<Node*> Path::GetChildrenNodes(Node* Parent, int ChildDepth)
+{
+	TArray<Node*> ChildNodes;
+	for (size_t i = 0; i < Nodes.Num(); i++)
+	{
+		if (Nodes[i]->IsParent(Parent->X, Parent->Y) && Nodes[i]->Depth == ChildDepth)
+		{
+			ChildNodes.Add(Nodes[i]);
+		}
+	}
+	return ChildNodes;
+}
+
+TArray<Node*> Path::GetNodesViaDepth(int Depth)
+{
+	TArray<Node*> DepthNodes;
+	for (size_t i = 0; i < Nodes.Num(); i++)
+	{
+		if (Nodes[i]->Depth == Depth)
+		{
+			DepthNodes.Add(Nodes[i]);
+		}
+	}
+	return DepthNodes;
+}
+
+void Path::SetupTreeNodes()
+{
+	TArray<Node*> TempNodes = GetNodesViaDepth(1);
+	ParentNode = GetBestNode(TempNodes);
+}
+// get the best path of nodes from the top of tree
+TArray<Node*> Path::GetBestPath()
+{
+	TArray<Node*> BestPath;
+	// loop through the tree, i = 0 is for the start node that is not needed here
+	for (size_t i = 2; i < TreeDepth; i++)
+	{ 
+		TArray<Node*> TempNodes = GetChildrenNodes(ParentNode, i);
+		if (TempNodes.Num() == 0)
+		{
+			BestPath.Empty();
+			break;
+		}
+
+		ParentNode = GetBestNode(TempNodes);
+		BestPath.Add(ParentNode);
+	}
+	return BestPath;
+}
+
+Node* Path::GetBestNode(TArray<Node*> CompNodes)
+{
+	Node* BestNode = nullptr; 
+	float BestScore = 1000000000.0f;
+	for (size_t i = 0; i < CompNodes.Num(); i++)
+	{
+		if (CompNodes[i]->Score < BestScore)
+		{
+			BestScore = CompNodes[i]->Score;
+			BestNode = CompNodes[i];
+		}
+	}
+	return BestNode;
+}
+
+void Path::RemoveNodes(TArray<Node*> RemNodes)
+{
+	for (size_t i = 0; i < RemNodes.Num(); i++)
+	{
+		if (Nodes.Contains(RemNodes[i]))
+		{
+			Nodes.Remove(RemNodes[i]);
+		}
+	}
 }
 

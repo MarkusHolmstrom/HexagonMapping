@@ -730,7 +730,6 @@ float UGenerateMapComponent::RandomLCGfloat(int32 Min, int32 Max)
 
 void UGenerateMapComponent::OnTileClicked(AActor* Tile)
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Cyan, TEXT("map comp got a message"));
 	if (Pathfinding)
 	{
 		Pathfinding->SetTargetCoordinates(Tile);

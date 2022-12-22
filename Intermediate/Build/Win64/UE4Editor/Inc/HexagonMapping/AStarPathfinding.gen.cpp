@@ -47,6 +47,14 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 		P_THIS->ClearClosedList();
 		P_NATIVE_END;
 	}
+	DEFINE_FUNCTION(AAStarPathfinding::execDelayedCleanUp)
+	{
+		P_GET_PROPERTY(FFloatProperty,Z_Param_Delay);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		P_THIS->DelayedCleanUp(Z_Param_Delay);
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(AAStarPathfinding::execCleanUp)
 	{
 		P_FINISH;
@@ -175,6 +183,7 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 		static const FNameNativePtrPair Funcs[] = {
 			{ "CleanUp", &AAStarPathfinding::execCleanUp },
 			{ "ClearClosedList", &AAStarPathfinding::execClearClosedList },
+			{ "DelayedCleanUp", &AAStarPathfinding::execDelayedCleanUp },
 			{ "GetAdjacentTiles", &AAStarPathfinding::execGetAdjacentTiles },
 			{ "GetAdjacentTilesBasedOnDirections", &AAStarPathfinding::execGetAdjacentTilesBasedOnDirections },
 			{ "GetBestScore", &AAStarPathfinding::execGetBestScore },
@@ -235,6 +244,38 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 		if (!ReturnFunction)
 		{
 			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AAStarPathfinding_ClearClosedList_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_AAStarPathfinding_DelayedCleanUp_Statics
+	{
+		struct AStarPathfinding_eventDelayedCleanUp_Parms
+		{
+			float Delay;
+		};
+		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_Delay;
+		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UE4CodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_AAStarPathfinding_DelayedCleanUp_Statics::NewProp_Delay = { "Delay", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AStarPathfinding_eventDelayedCleanUp_Parms, Delay), METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AAStarPathfinding_DelayedCleanUp_Statics::PropPointers[] = {
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AAStarPathfinding_DelayedCleanUp_Statics::NewProp_Delay,
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AAStarPathfinding_DelayedCleanUp_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/Earth/AStarPathfinding.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AAStarPathfinding_DelayedCleanUp_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AAStarPathfinding, nullptr, "DelayedCleanUp", nullptr, nullptr, sizeof(AStarPathfinding_eventDelayedCleanUp_Parms), Z_Construct_UFunction_AAStarPathfinding_DelayedCleanUp_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AAStarPathfinding_DelayedCleanUp_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00040401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AAStarPathfinding_DelayedCleanUp_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AAStarPathfinding_DelayedCleanUp_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AAStarPathfinding_DelayedCleanUp()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AAStarPathfinding_DelayedCleanUp_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -935,6 +976,7 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 	const FClassFunctionLinkInfo Z_Construct_UClass_AAStarPathfinding_Statics::FuncInfo[] = {
 		{ &Z_Construct_UFunction_AAStarPathfinding_CleanUp, "CleanUp" }, // 1349669793
 		{ &Z_Construct_UFunction_AAStarPathfinding_ClearClosedList, "ClearClosedList" }, // 3994226457
+		{ &Z_Construct_UFunction_AAStarPathfinding_DelayedCleanUp, "DelayedCleanUp" }, // 1418485430
 		{ &Z_Construct_UFunction_AAStarPathfinding_GetAdjacentTiles, "GetAdjacentTiles" }, // 1208114942
 		{ &Z_Construct_UFunction_AAStarPathfinding_GetAdjacentTilesBasedOnDirections, "GetAdjacentTilesBasedOnDirections" }, // 2657874572
 		{ &Z_Construct_UFunction_AAStarPathfinding_GetBestScore, "GetBestScore" }, // 2177980461
@@ -1170,7 +1212,7 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AAStarPathfinding, 2242829684);
+	IMPLEMENT_CLASS(AAStarPathfinding, 988120734);
 	template<> HEXAGONMAPPING_API UClass* StaticClass<AAStarPathfinding>()
 	{
 		return AAStarPathfinding::StaticClass();

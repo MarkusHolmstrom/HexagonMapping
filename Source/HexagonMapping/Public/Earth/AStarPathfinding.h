@@ -26,6 +26,8 @@ public:
 	UPROPERTY(EditAnywhere)
 	AWorldPawn* World;
 
+	UPROPERTY(VisibleAnywhere)
+		int test;
 	UPROPERTY(EditAnywhere)
 		bool bCanTravelWater = false;
 	UPROPERTY(EditAnywhere)
@@ -36,7 +38,7 @@ public:
 		int Tries = 0;
 	// This adds some kind of limit in case the patfinding 
 	// gets stuck in a never ending loop
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere)
 	int MaxTries = 5;
 	// H:
 	UPROPERTY(VisibleAnywhere)

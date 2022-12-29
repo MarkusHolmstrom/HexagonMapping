@@ -708,6 +708,7 @@ bool UGenerateMapComponent::GetHill(AHexagonTile* Hex)
 
 float UGenerateMapComponent::RandomLCGfloat(int32 Min, int32 Max)
 {
+	// check if Max would be smaller than Min, exchange them if thats the case
 	if (Max < Min)
 	{
 		int32 FinMax = Min;
@@ -715,14 +716,15 @@ float UGenerateMapComponent::RandomLCGfloat(int32 Min, int32 Max)
 		Max = FinMax;
 		Min = FinMin;
 	}
-	FRandomStream RS;
+	// Generate new seed
+	/*FRandomStream RS;
 	RS.GenerateNewSeed();
-	Seed = RS.GetCurrentSeed();
-
-	int32 InitialRand = (A * Seed + C) % M;
-	// generate more decimals
+	Seed = RS.GetCurrentSeed();*/
+	// TODO test with Initalrandom as new seed instead!! or have rand seed up and a local float as reuslt down here:
+	Seed = (Multiplier * Seed + Increment) % Modulus;
+	// generate more decimals with the 100, the additional 5 is if Max = 0
 	int32 Divider = (Max * 100) + 5;
-	int32 RandCent = FMath::Abs(InitialRand) % Divider;
+	int32 RandCent = FMath::Abs(Seed) % Divider;
 
 	float RandFloat = (float)RandCent / (float)Divider;
 	return RandFloat;

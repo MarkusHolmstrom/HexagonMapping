@@ -73,7 +73,7 @@ void Path::CalculatePathsLoop()
 {
 	bool Searching = true;
 	int Tries = 0;
-	int test = 0;
+	test = 0;
 	int Maxtest = 10000;
 	while (Searching && !bFoundPath)
 	{
@@ -84,27 +84,31 @@ void Path::CalculatePathsLoop()
 		if (NodePath.Num() == TreeDepth)
 		{
 			bFoundPath = true;
-			GEngine->AddOnScreenDebugMessage(-1, 9.f, FColor::Green, 
+			GEngine->AddOnScreenDebugMessage(-1, 19.f, FColor::Green, 
 				TEXT("astar path found!!"));
-			PathNodes = NodePath; // ge thtis to starpathfind to highlight path
+			PathNodes = NodePath; 
 		}
 		else if (Tries >= TreeDepth)
 		{
 			//Searching = false;
-			GEngine->AddOnScreenDebugMessage(-1, 9.f, FColor::Orange, 
-				TEXT("max tries reached"));
+			/*GEngine->AddOnScreenDebugMessage(-1, 19.f, FColor::Orange, 
+				TEXT("max tries reached"));*/
 			// remove nodes for failed attempt
-			RemoveNodes(NodePath);
+			TArray<Node*> RemNodes;
+			RemNodes.Add(NodePath[NodePath.Num() - 1]);
+			RemoveNodes(RemNodes);
 			Tries = 0;
 		}
 		else if (NodePath.Num() == 0)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 9.f, FColor::Blue,
+			PathNodes = NodePath;
+			GEngine->AddOnScreenDebugMessage(-1, 19.f, FColor::Blue,
 				TEXT("no more node path")); return;
 		}
 		else if (test >= Maxtest)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 9.f, FColor::Red,
+			PathNodes = NodePath;
+			GEngine->AddOnScreenDebugMessage(-1, 19.f, FColor::Red,
 				TEXT("max test tries reached ")); return;
 		}
 	}

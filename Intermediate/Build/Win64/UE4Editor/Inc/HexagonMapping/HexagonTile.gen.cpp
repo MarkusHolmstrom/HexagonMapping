@@ -28,10 +28,10 @@ void EmptyLinkFunctionForGeneratedCodeHexagonTile() {}
 // End Cross Module References
 	DEFINE_FUNCTION(AHexagonTile::execChangeHighlight)
 	{
-		P_GET_UBOOL(Z_Param_HideMesh);
+		P_GET_UBOOL(Z_Param_ShowLight);
 		P_FINISH;
 		P_NATIVE_BEGIN;
-		P_THIS->ChangeHighlight(Z_Param_HideMesh);
+		P_THIS->ChangeHighlight(Z_Param_ShowLight);
 		P_NATIVE_END;
 	}
 	void AHexagonTile::StaticRegisterNativesAHexagonTile()
@@ -46,23 +46,23 @@ void EmptyLinkFunctionForGeneratedCodeHexagonTile() {}
 	{
 		struct HexagonTile_eventChangeHighlight_Parms
 		{
-			bool HideMesh;
+			bool ShowLight;
 		};
-		static void NewProp_HideMesh_SetBit(void* Obj);
-		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_HideMesh;
+		static void NewProp_ShowLight_SetBit(void* Obj);
+		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_ShowLight;
 		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
 #if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
 #endif
 		static const UE4CodeGen_Private::FFunctionParams FuncParams;
 	};
-	void Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::NewProp_HideMesh_SetBit(void* Obj)
+	void Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::NewProp_ShowLight_SetBit(void* Obj)
 	{
-		((HexagonTile_eventChangeHighlight_Parms*)Obj)->HideMesh = 1;
+		((HexagonTile_eventChangeHighlight_Parms*)Obj)->ShowLight = 1;
 	}
-	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::NewProp_HideMesh = { "HideMesh", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(HexagonTile_eventChangeHighlight_Parms), &Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::NewProp_HideMesh_SetBit, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::NewProp_ShowLight = { "ShowLight", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(HexagonTile_eventChangeHighlight_Parms), &Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::NewProp_ShowLight_SetBit, METADATA_PARAMS(nullptr, 0) };
 	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::PropPointers[] = {
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::NewProp_HideMesh,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::NewProp_ShowLight,
 	};
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AHexagonTile_ChangeHighlight_Statics::Function_MetaDataParams[] = {
@@ -160,7 +160,7 @@ void EmptyLinkFunctionForGeneratedCodeHexagonTile() {}
 		(UObject* (*)())Z_Construct_UPackage__Script_HexagonMapping,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_AHexagonTile_Statics::FuncInfo[] = {
-		{ &Z_Construct_UFunction_AHexagonTile_ChangeHighlight, "ChangeHighlight" }, // 2233306008
+		{ &Z_Construct_UFunction_AHexagonTile_ChangeHighlight, "ChangeHighlight" }, // 3970179671
 	};
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AHexagonTile_Statics::Class_MetaDataParams[] = {
@@ -343,7 +343,7 @@ void EmptyLinkFunctionForGeneratedCodeHexagonTile() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AHexagonTile, 3312583371);
+	IMPLEMENT_CLASS(AHexagonTile, 1946880187);
 	template<> HEXAGONMAPPING_API UClass* StaticClass<AHexagonTile>()
 	{
 		return AHexagonTile::StaticClass();

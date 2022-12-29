@@ -216,15 +216,15 @@ public:
 		int32 IncreaseRadius = 1; 
 	UPROPERTY(EditAnywhere, Category = Random)
 		int32 Seed = 5725;
-	// Multiplier
+	// A
 	UPROPERTY(EditAnywhere, Category = Random)
-		int32 A = 1664525;
-	// Increment
+		int32 Multiplier = 1664525;
+	// C
 	UPROPERTY(EditAnywhere, Category = Random)
-		int32 C = 10139042;
-	// Modulus
+		int32 Increment = 10139042;
+	// M
 	UPROPERTY(EditAnywhere, Category = Random)
-		int32 M = 1415461035;
+		int32 Modulus = 1415461035;
 	UPROPERTY(EditAnywhere, Category = Random)
 		int32 MaxRandom = 1;
 

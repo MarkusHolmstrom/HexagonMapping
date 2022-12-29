@@ -31,6 +31,8 @@ class HEXAGONMAPPING_API Path
 {
 public:
 	UPROPERTY()
+		int test = 0;
+	UPROPERTY()
 	TArray<AHexagonTile*> HexagonPath;
 	UPROPERTY()
 		TArray<AHexagonTile*> ChildHexagons;

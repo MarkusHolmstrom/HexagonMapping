@@ -65,7 +65,7 @@ private:
 
 public: 
 	UFUNCTION()
-		void ChangeHighlight(bool HideMesh);
+		void ChangeHighlight(bool ShowLight);
 
 protected:
 	// Called when the game starts or when spawned

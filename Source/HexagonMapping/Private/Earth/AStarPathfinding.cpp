@@ -104,7 +104,6 @@ void AAStarPathfinding::LookForMoreOptions()
 
 	ChildTiles.Empty();
 	ChildTiles.Add(CurrentTile);
-	GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Emerald, TEXT("test a new path now!"));
 	while (bAStarPathFinding)
 	{
 		if (ChildTiles.Num() == 0 || Tries >= MaxTries)
@@ -124,6 +123,7 @@ void AAStarPathfinding::LookForMoreOptions()
 		GoalDirection = GetDirection(Start, Goal);*/
 	}
 	NewPath->CalculatePathsLoop();
+	test = NewPath->test;
 	TArray<AHexagonTile*> PathTiles;
 	for (size_t i = 0; i < NewPath->PathNodes.Num(); i++)
 	{
@@ -134,7 +134,7 @@ void AAStarPathfinding::LookForMoreOptions()
 	}
 	DelayedCleanUp(5.0f);
 
-	// y do thesese be so big??
+	// y do thesese be so big? r they to big?
 	/*GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue,
 		FString::Printf(TEXT("%d"), NewPath->Nodes.Num()));
 	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Purple,
@@ -207,6 +207,8 @@ void AAStarPathfinding::PathfindingLoop()
 		if (bNeedPathFinding || !CurrentTile)// might add this aswell?
 		{
 			Tries = 0;
+			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Emerald, TEXT("need path find: test a new path now!"));
+
 			LookForMoreOptions();
 			bSearchingForPath = false; 
 			return;
@@ -233,6 +235,8 @@ void AAStarPathfinding::PathfindingLoop()
 	// if bird path couldnt find a way to the goal tile
 	if (!bFoundGoal)
 	{
+		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Emerald, TEXT("test a new path now!"));
+
 		LookForMoreOptions();
 		return;
 	}

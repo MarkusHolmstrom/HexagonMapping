@@ -16,9 +16,9 @@ AHexagonTile::AHexagonTile()
 	HighlightMesh->SetupAttachment(RootComponent);
 }
 
-void AHexagonTile::ChangeHighlight(bool HideMesh)
+void AHexagonTile::ChangeHighlight(bool ShowLight)
 {
-	HighlightMesh->SetVisibility(HideMesh);
+	HighlightMesh->SetVisibility(ShowLight);
 }
 
 // Called when the game starts or when spawned

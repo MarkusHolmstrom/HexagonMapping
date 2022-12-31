@@ -3,7 +3,7 @@
   <ItemGroup>
     <None Include="..\..\HexagonMapping.uproject" />
     <Filter Include="Source">
-      <UniqueIdentifier>{9971A944-F48B-46D1-9D0C-E1C35F8324DB}</UniqueIdentifier>
+      <UniqueIdentifier>{B9E42433-2A86-4E61-B69F-992B5AF5B971}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\HexagonMapping.Target.cs">
       <Filter>Source</Filter>
@@ -15,7 +15,7 @@
     <None Include="..\..\.gitignore" />
     <None Include="..\..\README.md" />
     <Filter Include="Config">
-      <UniqueIdentifier>{4167D833-0317-43D3-9831-7FBFD415FB90}</UniqueIdentifier>
+      <UniqueIdentifier>{DE176B7E-0B51-4F71-A7D4-C2A5715C7A9F}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Config\DefaultEditor.ini">
       <Filter>Config</Filter>
@@ -33,7 +33,7 @@
       <Filter>Config</Filter>
     </None>
     <Filter Include="Source\HexagonMapping">
-      <UniqueIdentifier>{9B52A2FC-E1B2-4428-A17E-A7188424A1B2}</UniqueIdentifier>
+      <UniqueIdentifier>{4844D734-BF27-46BE-9C31-69ABB2A628CC}</UniqueIdentifier>
     </Filter>
     <None Include="..\..\Source\HexagonMapping\HexagonMapping.Build.cs">
       <Filter>Source\HexagonMapping</Filter>
@@ -63,7 +63,7 @@
       <Filter>Source\HexagonMapping</Filter>
     </ClInclude>
     <Filter Include="Source\HexagonMapping\Private">
-      <UniqueIdentifier>{F689E8F3-5DC8-4150-88BE-726C393FE3B7}</UniqueIdentifier>
+      <UniqueIdentifier>{794479A1-29DA-4BA8-BD0A-A21A7B55B6E7}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\HexagonMapping\Private\Enums.cpp">
       <Filter>Source\HexagonMapping\Private</Filter>
@@ -72,7 +72,7 @@
       <Filter>Source\HexagonMapping\Private</Filter>
     </ClCompile>
     <Filter Include="Source\HexagonMapping\Private\Earth">
-      <UniqueIdentifier>{3155B53D-F71C-49AD-8551-15853689D463}</UniqueIdentifier>
+      <UniqueIdentifier>{1480D32D-9BCB-4F6E-9662-A11053570020}</UniqueIdentifier>
     </Filter>
     <ClCompile Include="..\..\Source\HexagonMapping\Private\Earth\AStarPathfinding.cpp">
       <Filter>Source\HexagonMapping\Private\Earth</Filter>
@@ -105,7 +105,7 @@
       <Filter>Source\HexagonMapping\Private\Earth</Filter>
     </ClCompile>
     <Filter Include="Source\HexagonMapping\Public">
-      <UniqueIdentifier>{58514AEB-9AAB-4954-B915-B870856650FD}</UniqueIdentifier>
+      <UniqueIdentifier>{90F2FC49-D439-4D30-9333-BB4AC67AB88A}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="..\..\Source\HexagonMapping\Public\Enums.h">
       <Filter>Source\HexagonMapping\Public</Filter>
@@ -114,7 +114,7 @@
       <Filter>Source\HexagonMapping\Public</Filter>
     </ClInclude>
     <Filter Include="Source\HexagonMapping\Public\Earth">
-      <UniqueIdentifier>{3CAE05AC-15FE-49A2-B8BE-979443353BB9}</UniqueIdentifier>
+      <UniqueIdentifier>{B7DC083B-67DC-4156-BC8D-36CDFD7B8F87}</UniqueIdentifier>
     </Filter>
     <ClInclude Include="..\..\Source\HexagonMapping\Public\Earth\AStarPathfinding.h">
       <Filter>Source\HexagonMapping\Public\Earth</Filter>
@@ -146,6 +146,5 @@
     <ClInclude Include="..\..\Source\HexagonMapping\Public\Earth\WorldPawn.h">
       <Filter>Source\HexagonMapping\Public\Earth</Filter>
     </ClInclude>
-    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

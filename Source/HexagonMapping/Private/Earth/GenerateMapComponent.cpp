@@ -8,6 +8,7 @@
 #include "Earth/DetailActor.h"
 #include "Earth/CylinderShapeMapping.h"
 #include "Earth/AStarPathFinding.h"
+#include "Earth/LCGCalculator.h"
 #include "Enums.h"
 #include "Components/StaticMeshComponent.h"
 
@@ -32,6 +33,7 @@ UGenerateMapComponent::UGenerateMapComponent()
 void UGenerateMapComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
 	if (MapType == EMapType::Cylinder)
 	{
 		ShapeMap->SetShape(true);
@@ -163,7 +165,8 @@ void UGenerateMapComponent::GenerateMap(int Height, int Width)
 				// Check if add forest or not
 				if (newTile->Type == EHexType::Grassland || newTile->Type == EHexType::Plains || newTile->Type == EHexType::Tundra)
 				{
-					float ForestChance = RandomLCGfloat(0, 100);
+					float ForestChance = RandomLCGfloatPercentage(0, MaxRandom);
+					Randoms.Add(ForestChance);
 					if (ForestChance < ForestPercentage)
 					{
 						CurHinder = EHinder::Trees;
@@ -227,43 +230,51 @@ TSubclassOf<AHexagonTile> UGenerateMapComponent::SetTile(FClimateInfo Info)
 		CurType = EHexType::Snow;
 		return SnowHexTile;
 	}*/
-	if (RandomLCGfloat(0, 100) <= Info.GrasslandPercentage)
+	if (RandomLCGfloatPercentage(0, MaxRandom) <= Info.GrasslandPercentage)
 	{
+		Randoms.Add(0);
 		CurType = EHexType::Grassland;
 		return GrassHexTile;
 	}
-	if (RandomLCGfloat(0, 100) <= Info.PlainsPercentage)
+	if (RandomLCGfloatPercentage(0, MaxRandom) <= Info.PlainsPercentage)
 	{
+		Randoms.Add(0);
 		CurType = EHexType::Plains;
 		return PlainsHexTile;
 	}
-	if (RandomLCGfloat(0, 100) <= Info.DesertPercentage)
+	if (RandomLCGfloatPercentage(0, MaxRandom) <= Info.DesertPercentage)
 	{
+		Randoms.Add(0);
 		CurType = EHexType::Desert;
 		return DesertHexTile;
 	}
-	if (RandomLCGfloat(0, 100) <= Info.MountainPercentage)
+	if (RandomLCGfloatPercentage(0, MaxRandom) <= Info.MountainPercentage)
 	{
+		Randoms.Add(0);
 		CurType = EHexType::Mountain;
 		return MountainHexTile;
 	}
-	if (RandomLCGfloat(0, 100) <= Info.JunglePercentage)
+	if (RandomLCGfloatPercentage(0, MaxRandom) <= Info.JunglePercentage)
 	{
+		Randoms.Add(0);
 		CurType = EHexType::Jungle;
 		return JungleHexTile;
 	}
-	if (RandomLCGfloat(0, 100) <= Info.TundraPercentage)
+	if (RandomLCGfloatPercentage(0, MaxRandom) <= Info.TundraPercentage)
 	{
+		Randoms.Add(0);
 		CurType = EHexType::Tundra;
 		return TundraHexTile;
 	}
-	if (RandomLCGfloat(0, 100) <= Info.IcePercentage)
+	if (RandomLCGfloatPercentage(0, MaxRandom) <= Info.IcePercentage)
 	{
+		Randoms.Add(0);
 		CurType = EHexType::Ice;
 		return IceHexTile;
 	}
-	if (RandomLCGfloat(0, 100) <= Info.SnowPercentage)
+	if (RandomLCGfloatPercentage(0, MaxRandom) <= Info.SnowPercentage)
 	{
+		Randoms.Add(0);
 		CurType = EHexType::Snow;
 		return SnowHexTile;
 	}
@@ -695,7 +706,8 @@ bool UGenerateMapComponent::GetHill(AHexagonTile* Hex)
 {
 	if (Hex->Type != EHexType::Ocean && Hex->Type != EHexType::Shore && Hex->Type != EHexType::Mountain)
 	{
-		float HillChance = RandomLCGfloat(0, 100);
+		float HillChance = RandomLCGfloatPercentage(0, MaxRandom);
+		Randoms.Add(HillChance);
 		if (HillChance < HillPercentage)
 		{
 			ADetailActor* Hill = GetWorld()->SpawnActor<ADetailActor>(HillTile,
@@ -704,30 +716,6 @@ bool UGenerateMapComponent::GetHill(AHexagonTile* Hex)
 		}
 	}
 	return false;
-}
-
-float UGenerateMapComponent::RandomLCGfloat(int32 Min, int32 Max)
-{
-	// check if Max would be smaller than Min, exchange them if thats the case
-	if (Max < Min)
-	{
-		int32 FinMax = Min;
-		int32 FinMin = Max;
-		Max = FinMax;
-		Min = FinMin;
-	}
-	// Generate new seed
-	/*FRandomStream RS;
-	RS.GenerateNewSeed();
-	Seed = RS.GetCurrentSeed();*/
-	// TODO test with Initalrandom as new seed instead!! or have rand seed up and a local float as reuslt down here:
-	Seed = (Multiplier * Seed + Increment) % Modulus;
-	// generate more decimals with the 100, the additional 5 is if Max = 0
-	int32 Divider = (Max * 100) + 5;
-	int32 RandCent = FMath::Abs(Seed) % Divider;
-
-	float RandFloat = (float)RandCent / (float)Divider;
-	return RandFloat;
 }
 
 void UGenerateMapComponent::OnTileClicked(AActor* Tile)
@@ -744,4 +732,35 @@ void UGenerateMapComponent::OnTileClicked(AActor* Tile)
 	}
 }
 
+float UGenerateMapComponent::RandomLCGfloatPercentage(float Min, float Max)
+{
+    
+	// check if Max would be smaller than Min, exchange them if thats the case
+	if (Max < Min)
+	{
+		float FinMax = Min;
+		float FinMin = Max;
+		Max = FinMax;
+		Min = FinMin;
+	}
+	// Generate new seed
+	if (bGenNewSeed)
+	{
+		FRandomStream RS;
+		RS.GenerateNewSeed();
+		Seed = RS.GetCurrentSeed();
+	}
+	// TODO test with Initalrandom as new seed instead!! or have rand seed up and a local float as reuslt down here:
+	Seed = (Multiplier * Seed + Increment) % Modulus;
+	// generate more decimals with the 100, the additional 5 is if Max = 0
+	int Divider = (Max * 100) + 5;
+	int RandCent = FMath::Abs(Seed) % Divider;
 
+	float RandFloat = (float)RandCent / (float)Divider;
+	if (RandFloat < Min)
+	{
+		RandFloat = Min;
+	}
+
+	return RandFloat;
+}

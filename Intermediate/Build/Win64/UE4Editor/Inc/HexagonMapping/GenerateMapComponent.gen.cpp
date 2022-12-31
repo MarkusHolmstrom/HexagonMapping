@@ -274,8 +274,8 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 	uint32 Get_Z_Construct_UScriptStruct_FClimateInfo_Hash() { return 4184988557U; }
 	DEFINE_FUNCTION(UGenerateMapComponent::execRandomLCGfloat)
 	{
-		P_GET_PROPERTY(FIntProperty,Z_Param_Min);
-		P_GET_PROPERTY(FIntProperty,Z_Param_Max);
+		P_GET_PROPERTY(FFloatProperty,Z_Param_Min);
+		P_GET_PROPERTY(FFloatProperty,Z_Param_Max);
 		P_FINISH;
 		P_NATIVE_BEGIN;
 		*(float*)Z_Param__Result=P_THIS->RandomLCGfloat(Z_Param_Min,Z_Param_Max);
@@ -943,12 +943,12 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 	{
 		struct GenerateMapComponent_eventRandomLCGfloat_Parms
 		{
-			int32 Min;
-			int32 Max;
+			float Min;
+			float Max;
 			float ReturnValue;
 		};
-		static const UE4CodeGen_Private::FIntPropertyParams NewProp_Min;
-		static const UE4CodeGen_Private::FIntPropertyParams NewProp_Max;
+		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_Min;
+		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_Max;
 		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_ReturnValue;
 		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
 #if WITH_METADATA
@@ -956,8 +956,8 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 #endif
 		static const UE4CodeGen_Private::FFunctionParams FuncParams;
 	};
-	const UE4CodeGen_Private::FIntPropertyParams Z_Construct_UFunction_UGenerateMapComponent_RandomLCGfloat_Statics::NewProp_Min = { "Min", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(GenerateMapComponent_eventRandomLCGfloat_Parms, Min), METADATA_PARAMS(nullptr, 0) };
-	const UE4CodeGen_Private::FIntPropertyParams Z_Construct_UFunction_UGenerateMapComponent_RandomLCGfloat_Statics::NewProp_Max = { "Max", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(GenerateMapComponent_eventRandomLCGfloat_Parms, Max), METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UGenerateMapComponent_RandomLCGfloat_Statics::NewProp_Min = { "Min", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(GenerateMapComponent_eventRandomLCGfloat_Parms, Min), METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UGenerateMapComponent_RandomLCGfloat_Statics::NewProp_Max = { "Max", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(GenerateMapComponent_eventRandomLCGfloat_Parms, Max), METADATA_PARAMS(nullptr, 0) };
 	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_UGenerateMapComponent_RandomLCGfloat_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(GenerateMapComponent_eventRandomLCGfloat_Parms, ReturnValue), METADATA_PARAMS(nullptr, 0) };
 	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_UGenerateMapComponent_RandomLCGfloat_Statics::PropPointers[] = {
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_UGenerateMapComponent_RandomLCGfloat_Statics::NewProp_Min,
@@ -1370,6 +1370,11 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_MaxRandom_MetaData[];
 #endif
 		static const UE4CodeGen_Private::FIntPropertyParams NewProp_MaxRandom;
+		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_Randoms_Inner;
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_Randoms_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FArrayPropertyParams NewProp_Randoms;
 		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
 		static const FCppClassTypeInfoStatic StaticCppClassTypeInfo;
 		static const UE4CodeGen_Private::FClassParams ClassParams;
@@ -1391,7 +1396,7 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		{ &Z_Construct_UFunction_UGenerateMapComponent_GetTrees, "GetTrees" }, // 3972870122
 		{ &Z_Construct_UFunction_UGenerateMapComponent_IsLandMoreLikely, "IsLandMoreLikely" }, // 1733478263
 		{ &Z_Construct_UFunction_UGenerateMapComponent_OnTileClicked, "OnTileClicked" }, // 135967366
-		{ &Z_Construct_UFunction_UGenerateMapComponent_RandomLCGfloat, "RandomLCGfloat" }, // 1272175053
+		{ &Z_Construct_UFunction_UGenerateMapComponent_RandomLCGfloat, "RandomLCGfloat" }, // 327077968
 		{ &Z_Construct_UFunction_UGenerateMapComponent_SetHexagonInfo, "SetHexagonInfo" }, // 2367301161
 		{ &Z_Construct_UFunction_UGenerateMapComponent_SetLikelihoodLand, "SetLikelihoodLand" }, // 2983886027
 		{ &Z_Construct_UFunction_UGenerateMapComponent_SetShoreTilesAround, "SetShoreTilesAround" }, // 209382633
@@ -1724,6 +1729,14 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 	};
 #endif
 	const UE4CodeGen_Private::FIntPropertyParams Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_MaxRandom = { "MaxRandom", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UGenerateMapComponent, MaxRandom), METADATA_PARAMS(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_MaxRandom_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_MaxRandom_MetaData)) };
+	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_Randoms_Inner = { "Randoms", nullptr, (EPropertyFlags)0x0000000000020000, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, METADATA_PARAMS(nullptr, 0) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_Randoms_MetaData[] = {
+		{ "Category", "Random" },
+		{ "ModuleRelativePath", "Public/Earth/GenerateMapComponent.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FArrayPropertyParams Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_Randoms = { "Randoms", nullptr, (EPropertyFlags)0x0010000000020001, UE4CodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(UGenerateMapComponent, Randoms), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_Randoms_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_Randoms_MetaData)) };
 	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_UGenerateMapComponent_Statics::PropPointers[] = {
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_WorldPawn,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_Pathfinding,
@@ -1777,6 +1790,8 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_Increment,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_Modulus,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_MaxRandom,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_Randoms_Inner,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_UGenerateMapComponent_Statics::NewProp_Randoms,
 	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_UGenerateMapComponent_Statics::StaticCppClassTypeInfo = {
 		TCppClassTypeTraits<UGenerateMapComponent>::IsAbstract,
@@ -1805,7 +1820,7 @@ static struct FScriptStruct_HexagonMapping_StaticRegisterNativesFClimateInfo
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(UGenerateMapComponent, 4251505510);
+	IMPLEMENT_CLASS(UGenerateMapComponent, 3592330855);
 	template<> HEXAGONMAPPING_API UClass* StaticClass<UGenerateMapComponent>()
 	{
 		return UGenerateMapComponent::StaticClass();

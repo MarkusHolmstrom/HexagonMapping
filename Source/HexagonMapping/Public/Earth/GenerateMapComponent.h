@@ -214,6 +214,7 @@ public:
 		float IncreasedLandMultiplier = 5.0f; // if IR = 2 -> 4 ish
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
 		int32 IncreaseRadius = 1; 
+
 	UPROPERTY(EditAnywhere, Category = Random)
 		int32 Seed = 5725;
 	// A
@@ -225,9 +226,14 @@ public:
 	// M
 	UPROPERTY(EditAnywhere, Category = Random)
 		int32 Modulus = 1415461035;
-	UPROPERTY(EditAnywhere, Category = Random)
-		int32 MaxRandom = 1;
 
+	UPROPERTY(EditAnywhere, Category = Random)
+		int32 MaxRandom = 100;
+	UPROPERTY(EditAnywhere, Category = Random)
+	bool bGenNewSeed = false;
+
+	UPROPERTY(VisibleAnywhere, Category = Random)
+		TArray <float> Randoms;
 private:
 	int32 CurX;
 	int32 CurY;
@@ -284,7 +290,6 @@ public:
 	void OnTileClicked(AActor* Tile);
 
 private:
-
 	UFUNCTION()
-	float RandomLCGfloat(int32 Min, int32 Max);
+		float RandomLCGfloatPercentage(float Min, float Max);
 };

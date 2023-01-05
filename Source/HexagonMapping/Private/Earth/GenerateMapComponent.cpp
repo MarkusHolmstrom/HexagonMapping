@@ -8,7 +8,6 @@
 #include "Earth/DetailActor.h"
 #include "Earth/CylinderShapeMapping.h"
 #include "Earth/AStarPathFinding.h"
-#include "Earth/LCGCalculator.h"
 #include "Enums.h"
 #include "Components/StaticMeshComponent.h"
 

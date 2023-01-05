@@ -28,7 +28,7 @@ template<> HEXAGONMAPPING_API UScriptStruct* StaticStruct<struct FClimateInfo>()
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_127_SPARSE_DATA
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_127_RPC_WRAPPERS \
  \
-	DECLARE_FUNCTION(execRandomLCGfloat); \
+	DECLARE_FUNCTION(execRandomLCGfloatPercentage); \
 	DECLARE_FUNCTION(execOnTileClicked); \
 	DECLARE_FUNCTION(execGetHill); \
 	DECLARE_FUNCTION(execGetTrees); \
@@ -50,7 +50,7 @@ template<> HEXAGONMAPPING_API UScriptStruct* StaticStruct<struct FClimateInfo>()
 
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_GenerateMapComponent_h_127_RPC_WRAPPERS_NO_PURE_DECLS \
  \
-	DECLARE_FUNCTION(execRandomLCGfloat); \
+	DECLARE_FUNCTION(execRandomLCGfloatPercentage); \
 	DECLARE_FUNCTION(execOnTileClicked); \
 	DECLARE_FUNCTION(execGetHill); \
 	DECLARE_FUNCTION(execGetTrees); \

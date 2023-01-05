@@ -60,7 +60,7 @@ bool AAStarPathfinding::IsValidTile(AHexagonTile* Tile)
 		return false;
 	}
 	// if Unit can travel over water
-	else if (!bCanTravelWater && !bWaterVessel && Tile->Hinder == EHinder::Water)
+	if (!bCanTravelWater && !bWaterVessel && Tile->Hinder == EHinder::Water)
 	{
 		return false;
 	}
@@ -110,10 +110,15 @@ void AAStarPathfinding::LookForMoreOptions()
 		{
 			bAStarPathFinding = false;
 		}
-		TArray<AHexagonTile*> NextDepthTiles = GetChildren(ChildTiles);
-		// Add checked tile in CheckedTile list
-		ChildTiles = NextDepthTiles;
-		// if (canfindgoaltile) save high score
+
+		TArray<AHexagonTile*> ViableTiles = GetViableTiles(GetChildren(ChildTiles));
+		for (size_t i = 0; i < ViableTiles.Num(); i++)
+		{
+			ViableTiles[i]->ChangeHighlight(true);
+		}
+		
+		ChildTiles = ViableTiles;
+		
 		Depth++;
 		NewPath->SetTreeDepth(Depth);
 		Tries++;
@@ -122,6 +127,7 @@ void AAStarPathfinding::LookForMoreOptions()
 		FVector Goal = TargetCoordinates[1]->GetActorLocation();
 		GoalDirection = GetDirection(Start, Goal);*/
 	}
+
 	NewPath->CalculatePathsLoop();
 	test = NewPath->test;
 	TArray<AHexagonTile*> PathTiles;
@@ -207,7 +213,8 @@ void AAStarPathfinding::PathfindingLoop()
 		if (bNeedPathFinding || !CurrentTile)// might add this aswell?
 		{
 			Tries = 0;
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Emerald, TEXT("need path find: test a new path now!"));
+			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Emerald, 
+				TEXT("need path find: test a new path now!"));
 
 			LookForMoreOptions();
 			bSearchingForPath = false; 

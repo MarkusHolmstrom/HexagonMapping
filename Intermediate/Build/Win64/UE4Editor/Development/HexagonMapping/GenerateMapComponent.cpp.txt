@@ -13,4 +13,3 @@ C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Source\HexagonMa
 C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Inc\HexagonMapping\CylinderShapeMapping.generated.h
 C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Source\HexagonMapping\Public\Earth/AStarPathFinding.h
 C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Intermediate\Build\Win64\UE4Editor\Inc\HexagonMapping\AStarPathfinding.generated.h
-C:\Users\Marku\OneDrive\Dokument\Unreal Projects\HexagonMapping\Source\HexagonMapping\Public\Earth/LCGCalculator.h

@@ -80,7 +80,7 @@ void Path::CalculatePathsLoop()
 		Tries++;
 		test++;
 		SetupTreeNodes();
-		TArray<Node*> NodePath = GetBestPath();
+		TArray<Node*> NodePath = GetBestPath(); // returns empty list
 		if (NodePath.Num() == TreeDepth)
 		{
 			bFoundPath = true;
@@ -103,7 +103,9 @@ void Path::CalculatePathsLoop()
 		{
 			PathNodes = NodePath;
 			GEngine->AddOnScreenDebugMessage(-1, 19.f, FColor::Blue,
-				TEXT("no more node path")); return;
+				TEXT("no more node path")); 
+			GEngine->AddOnScreenDebugMessage(-1, 19, FColor::Blue,
+				FString::Printf(TEXT("%d"), Tries)); return;
 		}
 		else if (test >= Maxtest)
 		{
@@ -167,12 +169,13 @@ void Path::SetupTreeNodes()
 	TArray<Node*> TempNodes = GetNodesViaDepth(1);
 	ParentNode = GetBestNode(TempNodes);
 }
+
 // get the best path of nodes from the top of tree
 TArray<Node*> Path::GetBestPath()
 {
 	TArray<Node*> BestPath;
 	// loop through the tree, i = 0 is for the start node that is not needed here
-	for (size_t i = 2; i < TreeDepth; i++)
+	for (size_t i = 1; i < TreeDepth; i++)
 	{ 
 		TArray<Node*> TempNodes = GetChildrenNodes(ParentNode, i);
 		if (TempNodes.Num() == 0)

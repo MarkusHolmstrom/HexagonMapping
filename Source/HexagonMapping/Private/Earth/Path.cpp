@@ -68,7 +68,7 @@ void Path::SetTreeDepth(int Depth)
 {
 	TreeDepth = Depth;
 }
-
+// tree structure missing some things...
 void Path::CalculatePathsLoop()
 {
 	bool Searching = true;
@@ -105,7 +105,7 @@ void Path::CalculatePathsLoop()
 			GEngine->AddOnScreenDebugMessage(-1, 19.f, FColor::Blue,
 				TEXT("no more node path")); 
 			GEngine->AddOnScreenDebugMessage(-1, 19, FColor::Blue,
-				FString::Printf(TEXT("%d"), Tries)); return;
+				FString::Printf(TEXT("Tries: %d"), Tries)); return;
 		}
 		else if (test >= Maxtest)
 		{
@@ -170,22 +170,29 @@ void Path::SetupTreeNodes()
 	ParentNode = GetBestNode(TempNodes);
 }
 
-// get the best path of nodes from the top of tree
+// get the best path of nodes from the top of the tree
 TArray<Node*> Path::GetBestPath()
 {
 	TArray<Node*> BestPath;
+	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Cyan,
+		FString::Printf(TEXT("Tree: %d"), TreeDepth));
 	// loop through the tree, i = 0 is for the start node that is not needed here
 	for (size_t i = 1; i < TreeDepth; i++)
 	{ 
-		TArray<Node*> TempNodes = GetChildrenNodes(ParentNode, i);
+		TArray<Node*> TempNodes = GetChildrenNodes(ParentNode, i); // got a zero here!!
 		if (TempNodes.Num() == 0)
 		{
+			GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue,
+				FString::Printf(TEXT("index of tree %d"), i));
 			BestPath.Empty();
-			break;
 		}
-
-		ParentNode = GetBestNode(TempNodes);
-		BestPath.Add(ParentNode);
+		else
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue,
+				FString::Printf(TEXT("temp nodes: %d"), TempNodes.Num()));
+			ParentNode = GetBestNode(TempNodes);
+			BestPath.Add(ParentNode);
+		}
 	}
 	return BestPath;
 }

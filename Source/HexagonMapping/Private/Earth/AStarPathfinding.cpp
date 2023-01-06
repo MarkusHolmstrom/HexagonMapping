@@ -191,8 +191,8 @@ TArray<AHexagonTile*> AAStarPathfinding::GetChildren(TArray<AHexagonTile*> Tiles
 		}
 	}
 
-	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Cyan,
-		FString::Printf(TEXT("%d"), ReturnChildren.Num()));
+	/*GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Cyan,
+		FString::Printf(TEXT("%d"), ReturnChildren.Num()));*/
 	return ReturnChildren;
 }
 

@@ -30,11 +30,9 @@ class AActor;
 	DECLARE_FUNCTION(execGetAdjacentTilesBasedOnDirections); \
 	DECLARE_FUNCTION(execGetDirections); \
 	DECLARE_FUNCTION(execGetDirection); \
-	DECLARE_FUNCTION(execGetVectorDirection); \
 	DECLARE_FUNCTION(execGetAdjacentTiles); \
-	DECLARE_FUNCTION(execGetScore); \
 	DECLARE_FUNCTION(execGetViableTiles); \
-	DECLARE_FUNCTION(execGetBestScore); \
+	DECLARE_FUNCTION(execGetBestTile); \
 	DECLARE_FUNCTION(execPathfindingLoop); \
 	DECLARE_FUNCTION(execGetChildren); \
 	DECLARE_FUNCTION(execLookForMoreOptions); \
@@ -54,11 +52,9 @@ class AActor;
 	DECLARE_FUNCTION(execGetAdjacentTilesBasedOnDirections); \
 	DECLARE_FUNCTION(execGetDirections); \
 	DECLARE_FUNCTION(execGetDirection); \
-	DECLARE_FUNCTION(execGetVectorDirection); \
 	DECLARE_FUNCTION(execGetAdjacentTiles); \
-	DECLARE_FUNCTION(execGetScore); \
 	DECLARE_FUNCTION(execGetViableTiles); \
-	DECLARE_FUNCTION(execGetBestScore); \
+	DECLARE_FUNCTION(execGetBestTile); \
 	DECLARE_FUNCTION(execPathfindingLoop); \
 	DECLARE_FUNCTION(execGetChildren); \
 	DECLARE_FUNCTION(execLookForMoreOptions); \

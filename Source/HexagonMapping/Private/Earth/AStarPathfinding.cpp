@@ -193,14 +193,15 @@ void AAStarPathfinding::PathfindingLoop()
 			Tries = 0;
 			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, 
 				TEXT("need path find: test a new path now!"));
-
+			CleanUp();
 			LookForMoreOptions();
 			bSearchingForPath = false; 
 			return;
 		}
 		if (!CurrentTile)
 		{
-			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("error: np cur tile found!"));
+			CleanUp();
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("error: no cur tile found!"));
 			return;
 		}
 		if (CurrentTile->TileIndex == GoalTile->TileIndex)
@@ -222,7 +223,7 @@ void AAStarPathfinding::PathfindingLoop()
 		Tries = 0;
 		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Emerald, 
 			TEXT("test a new path now!"));
-
+		CleanUp();
 		LookForMoreOptions();
 		return;
 	}

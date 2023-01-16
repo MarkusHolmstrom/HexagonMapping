@@ -75,7 +75,7 @@ void Path::CalculatePathsLoop()
 	bool Searching = true;
 	int Tries = 0;
 	test = 0;
-	int Maxtest = 10000;
+	int Maxtest = 500;
 	while (Searching && !bFoundPath)
 	{
 		Tries++;
@@ -116,6 +116,7 @@ void Path::CalculatePathsLoop()
 		}
 	}
 }
+// TODO update how directional the astar will be
 
 void Path::AddNode(AHexagonTile* Parent, AHexagonTile* AddNode, ENodeIndex Index, int Depth, float Score)
 {

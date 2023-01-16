@@ -98,15 +98,6 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 		*(EDirection*)Z_Param__Result=P_THIS->GetDirection(Z_Param_Start,Z_Param_Goal);
 		P_NATIVE_END;
 	}
-	DEFINE_FUNCTION(AAStarPathfinding::execGetVectorDirection)
-	{
-		P_GET_STRUCT(FVector,Z_Param_Start);
-		P_GET_STRUCT(FVector,Z_Param_Goal);
-		P_FINISH;
-		P_NATIVE_BEGIN;
-		*(EDirection*)Z_Param__Result=P_THIS->GetVectorDirection(Z_Param_Start,Z_Param_Goal);
-		P_NATIVE_END;
-	}
 	DEFINE_FUNCTION(AAStarPathfinding::execGetAdjacentTiles)
 	{
 		P_GET_OBJECT(AHexagonTile,Z_Param_Tile);
@@ -114,15 +105,6 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 		P_FINISH;
 		P_NATIVE_BEGIN;
 		*(TArray<AHexagonTile*>*)Z_Param__Result=P_THIS->GetAdjacentTiles(Z_Param_Tile,EDirection(Z_Param_Direction));
-		P_NATIVE_END;
-	}
-	DEFINE_FUNCTION(AAStarPathfinding::execGetScore)
-	{
-		P_GET_OBJECT(AHexagonTile,Z_Param_Start);
-		P_GET_OBJECT(AHexagonTile,Z_Param_Goal);
-		P_FINISH;
-		P_NATIVE_BEGIN;
-		*(float*)Z_Param__Result=P_THIS->GetScore(Z_Param_Start,Z_Param_Goal);
 		P_NATIVE_END;
 	}
 	DEFINE_FUNCTION(AAStarPathfinding::execGetViableTiles)
@@ -133,13 +115,13 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 		*(TArray<AHexagonTile*>*)Z_Param__Result=P_THIS->GetViableTiles(Z_Param_Tiles);
 		P_NATIVE_END;
 	}
-	DEFINE_FUNCTION(AAStarPathfinding::execGetBestScore)
+	DEFINE_FUNCTION(AAStarPathfinding::execGetBestTile)
 	{
 		P_GET_TARRAY(AHexagonTile*,Z_Param_Tiles);
 		P_GET_PROPERTY(FFloatProperty,Z_Param_TopScore);
 		P_FINISH;
 		P_NATIVE_BEGIN;
-		*(AHexagonTile**)Z_Param__Result=P_THIS->GetBestScore(Z_Param_Tiles,Z_Param_TopScore);
+		*(AHexagonTile**)Z_Param__Result=P_THIS->GetBestTile(Z_Param_Tiles,Z_Param_TopScore);
 		P_NATIVE_END;
 	}
 	DEFINE_FUNCTION(AAStarPathfinding::execPathfindingLoop)
@@ -196,14 +178,12 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 			{ "DelayedCleanUp", &AAStarPathfinding::execDelayedCleanUp },
 			{ "GetAdjacentTiles", &AAStarPathfinding::execGetAdjacentTiles },
 			{ "GetAdjacentTilesBasedOnDirections", &AAStarPathfinding::execGetAdjacentTilesBasedOnDirections },
-			{ "GetBestScore", &AAStarPathfinding::execGetBestScore },
+			{ "GetBestTile", &AAStarPathfinding::execGetBestTile },
 			{ "GetChildren", &AAStarPathfinding::execGetChildren },
 			{ "GetDirection", &AAStarPathfinding::execGetDirection },
 			{ "GetDirections", &AAStarPathfinding::execGetDirections },
 			{ "GetGScore", &AAStarPathfinding::execGetGScore },
 			{ "GetManhattanDistance", &AAStarPathfinding::execGetManhattanDistance },
-			{ "GetScore", &AAStarPathfinding::execGetScore },
-			{ "GetVectorDirection", &AAStarPathfinding::execGetVectorDirection },
 			{ "GetViableTiles", &AAStarPathfinding::execGetViableTiles },
 			{ "IsValidTile", &AAStarPathfinding::execIsValidTile },
 			{ "LookForMoreOptions", &AAStarPathfinding::execLookForMoreOptions },
@@ -323,9 +303,9 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 	};
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AAStarPathfinding_GetAdjacentTiles_Statics::Function_MetaDataParams[] = {
-		{ "Comment", "/*UFUNCTION()\n\x09TArray<AHexagonTile*> GetAdjacentTiles(AHexagonTile* Tile);*/" },
+		{ "Comment", "/*UFUNCTION()\n\x09TArray<AHexagonTile*> GetAdjacentTiles(AHexagonTile* Tile, int AdjLimit);*/" },
 		{ "ModuleRelativePath", "Public/Earth/AStarPathfinding.h" },
-		{ "ToolTip", "UFUNCTION()\n       TArray<AHexagonTile*> GetAdjacentTiles(AHexagonTile* Tile);" },
+		{ "ToolTip", "UFUNCTION()\n       TArray<AHexagonTile*> GetAdjacentTiles(AHexagonTile* Tile, int AdjLimit);" },
 	};
 #endif
 	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AAStarPathfinding_GetAdjacentTiles_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AAStarPathfinding, nullptr, "GetAdjacentTiles", nullptr, nullptr, sizeof(AStarPathfinding_eventGetAdjacentTiles_Parms), Z_Construct_UFunction_AAStarPathfinding_GetAdjacentTiles_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AAStarPathfinding_GetAdjacentTiles_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00040401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AAStarPathfinding_GetAdjacentTiles_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AAStarPathfinding_GetAdjacentTiles_Statics::Function_MetaDataParams)) };
@@ -387,9 +367,9 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 		}
 		return ReturnFunction;
 	}
-	struct Z_Construct_UFunction_AAStarPathfinding_GetBestScore_Statics
+	struct Z_Construct_UFunction_AAStarPathfinding_GetBestTile_Statics
 	{
-		struct AStarPathfinding_eventGetBestScore_Parms
+		struct AStarPathfinding_eventGetBestTile_Parms
 		{
 			TArray<AHexagonTile*> Tiles;
 			float TopScore;
@@ -405,28 +385,28 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 #endif
 		static const UE4CodeGen_Private::FFunctionParams FuncParams;
 	};
-	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AAStarPathfinding_GetBestScore_Statics::NewProp_Tiles_Inner = { "Tiles", nullptr, (EPropertyFlags)0x0000000000000000, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, Z_Construct_UClass_AHexagonTile_NoRegister, METADATA_PARAMS(nullptr, 0) };
-	const UE4CodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_AAStarPathfinding_GetBestScore_Statics::NewProp_Tiles = { "Tiles", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AStarPathfinding_eventGetBestScore_Parms, Tiles), EArrayPropertyFlags::None, METADATA_PARAMS(nullptr, 0) };
-	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_AAStarPathfinding_GetBestScore_Statics::NewProp_TopScore = { "TopScore", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AStarPathfinding_eventGetBestScore_Parms, TopScore), METADATA_PARAMS(nullptr, 0) };
-	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AAStarPathfinding_GetBestScore_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AStarPathfinding_eventGetBestScore_Parms, ReturnValue), Z_Construct_UClass_AHexagonTile_NoRegister, METADATA_PARAMS(nullptr, 0) };
-	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AAStarPathfinding_GetBestScore_Statics::PropPointers[] = {
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AAStarPathfinding_GetBestScore_Statics::NewProp_Tiles_Inner,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AAStarPathfinding_GetBestScore_Statics::NewProp_Tiles,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AAStarPathfinding_GetBestScore_Statics::NewProp_TopScore,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AAStarPathfinding_GetBestScore_Statics::NewProp_ReturnValue,
+	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AAStarPathfinding_GetBestTile_Statics::NewProp_Tiles_Inner = { "Tiles", nullptr, (EPropertyFlags)0x0000000000000000, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, Z_Construct_UClass_AHexagonTile_NoRegister, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FArrayPropertyParams Z_Construct_UFunction_AAStarPathfinding_GetBestTile_Statics::NewProp_Tiles = { "Tiles", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AStarPathfinding_eventGetBestTile_Parms, Tiles), EArrayPropertyFlags::None, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_AAStarPathfinding_GetBestTile_Statics::NewProp_TopScore = { "TopScore", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AStarPathfinding_eventGetBestTile_Parms, TopScore), METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AAStarPathfinding_GetBestTile_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AStarPathfinding_eventGetBestTile_Parms, ReturnValue), Z_Construct_UClass_AHexagonTile_NoRegister, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AAStarPathfinding_GetBestTile_Statics::PropPointers[] = {
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AAStarPathfinding_GetBestTile_Statics::NewProp_Tiles_Inner,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AAStarPathfinding_GetBestTile_Statics::NewProp_Tiles,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AAStarPathfinding_GetBestTile_Statics::NewProp_TopScore,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AAStarPathfinding_GetBestTile_Statics::NewProp_ReturnValue,
 	};
 #if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AAStarPathfinding_GetBestScore_Statics::Function_MetaDataParams[] = {
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AAStarPathfinding_GetBestTile_Statics::Function_MetaDataParams[] = {
 		{ "ModuleRelativePath", "Public/Earth/AStarPathfinding.h" },
 	};
 #endif
-	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AAStarPathfinding_GetBestScore_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AAStarPathfinding, nullptr, "GetBestScore", nullptr, nullptr, sizeof(AStarPathfinding_eventGetBestScore_Parms), Z_Construct_UFunction_AAStarPathfinding_GetBestScore_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AAStarPathfinding_GetBestScore_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00040401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AAStarPathfinding_GetBestScore_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AAStarPathfinding_GetBestScore_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_AAStarPathfinding_GetBestScore()
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AAStarPathfinding_GetBestTile_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AAStarPathfinding, nullptr, "GetBestTile", nullptr, nullptr, sizeof(AStarPathfinding_eventGetBestTile_Parms), Z_Construct_UFunction_AAStarPathfinding_GetBestTile_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AAStarPathfinding_GetBestTile_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00040401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AAStarPathfinding_GetBestTile_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AAStarPathfinding_GetBestTile_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AAStarPathfinding_GetBestTile()
 	{
 		static UFunction* ReturnFunction = nullptr;
 		if (!ReturnFunction)
 		{
-			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AAStarPathfinding_GetBestScore_Statics::FuncParams);
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AAStarPathfinding_GetBestTile_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -637,89 +617,6 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 		if (!ReturnFunction)
 		{
 			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AAStarPathfinding_GetManhattanDistance_Statics::FuncParams);
-		}
-		return ReturnFunction;
-	}
-	struct Z_Construct_UFunction_AAStarPathfinding_GetScore_Statics
-	{
-		struct AStarPathfinding_eventGetScore_Parms
-		{
-			AHexagonTile* Start;
-			AHexagonTile* Goal;
-			float ReturnValue;
-		};
-		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_Start;
-		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_Goal;
-		static const UE4CodeGen_Private::FFloatPropertyParams NewProp_ReturnValue;
-		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
-#if WITH_METADATA
-		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
-#endif
-		static const UE4CodeGen_Private::FFunctionParams FuncParams;
-	};
-	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AAStarPathfinding_GetScore_Statics::NewProp_Start = { "Start", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AStarPathfinding_eventGetScore_Parms, Start), Z_Construct_UClass_AHexagonTile_NoRegister, METADATA_PARAMS(nullptr, 0) };
-	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AAStarPathfinding_GetScore_Statics::NewProp_Goal = { "Goal", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AStarPathfinding_eventGetScore_Parms, Goal), Z_Construct_UClass_AHexagonTile_NoRegister, METADATA_PARAMS(nullptr, 0) };
-	const UE4CodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_AAStarPathfinding_GetScore_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UE4CodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AStarPathfinding_eventGetScore_Parms, ReturnValue), METADATA_PARAMS(nullptr, 0) };
-	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AAStarPathfinding_GetScore_Statics::PropPointers[] = {
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AAStarPathfinding_GetScore_Statics::NewProp_Start,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AAStarPathfinding_GetScore_Statics::NewProp_Goal,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AAStarPathfinding_GetScore_Statics::NewProp_ReturnValue,
-	};
-#if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AAStarPathfinding_GetScore_Statics::Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "Public/Earth/AStarPathfinding.h" },
-	};
-#endif
-	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AAStarPathfinding_GetScore_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AAStarPathfinding, nullptr, "GetScore", nullptr, nullptr, sizeof(AStarPathfinding_eventGetScore_Parms), Z_Construct_UFunction_AAStarPathfinding_GetScore_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AAStarPathfinding_GetScore_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00040401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AAStarPathfinding_GetScore_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AAStarPathfinding_GetScore_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_AAStarPathfinding_GetScore()
-	{
-		static UFunction* ReturnFunction = nullptr;
-		if (!ReturnFunction)
-		{
-			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AAStarPathfinding_GetScore_Statics::FuncParams);
-		}
-		return ReturnFunction;
-	}
-	struct Z_Construct_UFunction_AAStarPathfinding_GetVectorDirection_Statics
-	{
-		struct AStarPathfinding_eventGetVectorDirection_Parms
-		{
-			FVector Start;
-			FVector Goal;
-			EDirection ReturnValue;
-		};
-		static const UE4CodeGen_Private::FStructPropertyParams NewProp_Start;
-		static const UE4CodeGen_Private::FStructPropertyParams NewProp_Goal;
-		static const UE4CodeGen_Private::FBytePropertyParams NewProp_ReturnValue_Underlying;
-		static const UE4CodeGen_Private::FEnumPropertyParams NewProp_ReturnValue;
-		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
-#if WITH_METADATA
-		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
-#endif
-		static const UE4CodeGen_Private::FFunctionParams FuncParams;
-	};
-	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AAStarPathfinding_GetVectorDirection_Statics::NewProp_Start = { "Start", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AStarPathfinding_eventGetVectorDirection_Parms, Start), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(nullptr, 0) };
-	const UE4CodeGen_Private::FStructPropertyParams Z_Construct_UFunction_AAStarPathfinding_GetVectorDirection_Statics::NewProp_Goal = { "Goal", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Struct, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AStarPathfinding_eventGetVectorDirection_Parms, Goal), Z_Construct_UScriptStruct_FVector, METADATA_PARAMS(nullptr, 0) };
-	const UE4CodeGen_Private::FBytePropertyParams Z_Construct_UFunction_AAStarPathfinding_GetVectorDirection_Statics::NewProp_ReturnValue_Underlying = { "UnderlyingType", nullptr, (EPropertyFlags)0x0000000000000000, UE4CodeGen_Private::EPropertyGenFlags::Byte, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, nullptr, METADATA_PARAMS(nullptr, 0) };
-	const UE4CodeGen_Private::FEnumPropertyParams Z_Construct_UFunction_AAStarPathfinding_GetVectorDirection_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UE4CodeGen_Private::EPropertyGenFlags::Enum, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AStarPathfinding_eventGetVectorDirection_Parms, ReturnValue), Z_Construct_UEnum_HexagonMapping_EDirection, METADATA_PARAMS(nullptr, 0) };
-	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AAStarPathfinding_GetVectorDirection_Statics::PropPointers[] = {
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AAStarPathfinding_GetVectorDirection_Statics::NewProp_Start,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AAStarPathfinding_GetVectorDirection_Statics::NewProp_Goal,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AAStarPathfinding_GetVectorDirection_Statics::NewProp_ReturnValue_Underlying,
-		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AAStarPathfinding_GetVectorDirection_Statics::NewProp_ReturnValue,
-	};
-#if WITH_METADATA
-	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AAStarPathfinding_GetVectorDirection_Statics::Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "Public/Earth/AStarPathfinding.h" },
-	};
-#endif
-	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AAStarPathfinding_GetVectorDirection_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AAStarPathfinding, nullptr, "GetVectorDirection", nullptr, nullptr, sizeof(AStarPathfinding_eventGetVectorDirection_Parms), Z_Construct_UFunction_AAStarPathfinding_GetVectorDirection_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AAStarPathfinding_GetVectorDirection_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00840401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AAStarPathfinding_GetVectorDirection_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AAStarPathfinding_GetVectorDirection_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_AAStarPathfinding_GetVectorDirection()
-	{
-		static UFunction* ReturnFunction = nullptr;
-		if (!ReturnFunction)
-		{
-			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AAStarPathfinding_GetVectorDirection_Statics::FuncParams);
 		}
 		return ReturnFunction;
 	}
@@ -1035,16 +932,14 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 		{ &Z_Construct_UFunction_AAStarPathfinding_CleanUp, "CleanUp" }, // 1349669793
 		{ &Z_Construct_UFunction_AAStarPathfinding_ClearClosedList, "ClearClosedList" }, // 3994226457
 		{ &Z_Construct_UFunction_AAStarPathfinding_DelayedCleanUp, "DelayedCleanUp" }, // 1418485430
-		{ &Z_Construct_UFunction_AAStarPathfinding_GetAdjacentTiles, "GetAdjacentTiles" }, // 1208114942
+		{ &Z_Construct_UFunction_AAStarPathfinding_GetAdjacentTiles, "GetAdjacentTiles" }, // 1826869634
 		{ &Z_Construct_UFunction_AAStarPathfinding_GetAdjacentTilesBasedOnDirections, "GetAdjacentTilesBasedOnDirections" }, // 2657874572
-		{ &Z_Construct_UFunction_AAStarPathfinding_GetBestScore, "GetBestScore" }, // 2177980461
+		{ &Z_Construct_UFunction_AAStarPathfinding_GetBestTile, "GetBestTile" }, // 78749451
 		{ &Z_Construct_UFunction_AAStarPathfinding_GetChildren, "GetChildren" }, // 4167641074
 		{ &Z_Construct_UFunction_AAStarPathfinding_GetDirection, "GetDirection" }, // 3357636568
 		{ &Z_Construct_UFunction_AAStarPathfinding_GetDirections, "GetDirections" }, // 1649989943
 		{ &Z_Construct_UFunction_AAStarPathfinding_GetGScore, "GetGScore" }, // 1237381134
 		{ &Z_Construct_UFunction_AAStarPathfinding_GetManhattanDistance, "GetManhattanDistance" }, // 1503327264
-		{ &Z_Construct_UFunction_AAStarPathfinding_GetScore, "GetScore" }, // 3216769093
-		{ &Z_Construct_UFunction_AAStarPathfinding_GetVectorDirection, "GetVectorDirection" }, // 3259793930
 		{ &Z_Construct_UFunction_AAStarPathfinding_GetViableTiles, "GetViableTiles" }, // 92324947
 		{ &Z_Construct_UFunction_AAStarPathfinding_IsValidTile, "IsValidTile" }, // 1454825985
 		{ &Z_Construct_UFunction_AAStarPathfinding_LookForMoreOptions, "LookForMoreOptions" }, // 2958908955
@@ -1279,7 +1174,7 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AAStarPathfinding, 2941525593);
+	IMPLEMENT_CLASS(AAStarPathfinding, 939629403);
 	template<> HEXAGONMAPPING_API UClass* StaticClass<AAStarPathfinding>()
 	{
 		return AAStarPathfinding::StaticClass();

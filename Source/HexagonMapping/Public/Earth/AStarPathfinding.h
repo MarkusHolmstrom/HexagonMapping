@@ -36,10 +36,10 @@ public:
 		bool bSearchingForPath = true;
 	UPROPERTY(VisibleAnywhere)
 		int Tries = 0;
-	// This adds some kind of limit in case the patfinding 
-	// gets stuck in a never ending loop
+	// This adds some kind of limit in case the pathfinding 
+	// gets stuck in a never ending while loop
 	UPROPERTY(EditAnywhere)
-	int MaxTries = 5;
+	int MaxTries = 100;
 	// H:
 	UPROPERTY(VisibleAnywhere)
 		float ManhattanDistance = 0;
@@ -103,15 +103,16 @@ private:
 	UFUNCTION()
 	void PathfindingLoop();
 	UFUNCTION()
-		AHexagonTile* GetBestScore(TArray<AHexagonTile*> Tiles, float TopScore);
+		AHexagonTile* GetBestTile(TArray<AHexagonTile*> Tiles, float TopScore);
 	UFUNCTION()
 		TArray<AHexagonTile*> GetViableTiles(TArray<AHexagonTile*> Tiles);
-	UFUNCTION()
-		float GetScore(AHexagonTile* Start, AHexagonTile* Goal);
 	/*UFUNCTION()
-	TArray<AHexagonTile*> GetAdjacentTiles(AHexagonTile* Tile);*/
+	TArray<AHexagonTile*> GetAdjacentTiles(AHexagonTile* Tile, int AdjLimit);*/
 	UFUNCTION()
 	TArray<AHexagonTile*> GetAdjacentTiles(AHexagonTile* Tile, EDirection Direction);
+
+	UFUNCTION()
+	EDirection GetDirection(FIntPoint Start, FIntPoint Goal);
 
 	UFUNCTION()
 	TArray<EDirection> GetDirections(EDirection MainDirection);
@@ -131,6 +132,4 @@ private:
 	void ClearClosedList();
 	UFUNCTION()
 	void RemoveTilesLight();
-	UFUNCTION()
-	EDirection GetDirection(FVector Start, FVector Goal);
 };

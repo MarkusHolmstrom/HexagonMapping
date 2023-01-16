@@ -9,7 +9,6 @@ Path::Path(AHexagonTile* StartTile, AHexagonTile* GoalTile)
 {
 	this->StartTile = StartTile;
 	this->GoalTile = GoalTile;
-	Score = 0;
 	StartNode = new Node();
 	StartNode->X = StartTile->TileIndex.X;
 	StartNode->Y = StartTile->TileIndex.Y;
@@ -19,7 +18,7 @@ Path::Path(AHexagonTile* StartTile, AHexagonTile* GoalTile)
 
 bool Path::CanAddToPath(AHexagonTile* Tile)
 {
-	// To avoid going backwards trough the former tile
+	// To avoid going backwards trough a former tile
 	if (HexagonPath.Contains(Tile))
 	{
 		return false;
@@ -31,17 +30,12 @@ bool Path::CanAddToPath(AHexagonTile* Tile)
 	}
 }
 
-void Path::AddScore(float AddScore)
-{
-	this->Score += AddScore;
-}
-
 void Path::AddChildNode(Node* ChildNode)
 {
 	Nodes.Add(ChildNode);
 }
 
-void Path::AddChild(AHexagonTile* Parent, AHexagonTile* AddTile, int Index, int Depth)
+void Path::AddChild(AHexagonTile* Parent, AHexagonTile* AddTile, int Index, int Depth, float Score)
 {
 	ENodeIndex NodeIndex = ENodeIndex::None;
 	if (Index == 0)
@@ -59,9 +53,16 @@ void Path::AddChild(AHexagonTile* Parent, AHexagonTile* AddTile, int Index, int 
 	if (Index > 2)
 	{
 		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red,
-			FString::Printf(TEXT("Error index to high: %d"), Index));
+			FString::Printf(TEXT("Error: index to high: %d"), Index));
 	}
-	AddNode(Parent, AddTile, NodeIndex, Depth);
+	else
+	{
+		/*GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Purple,
+			FString::Printf(TEXT("Depth: %d"), Depth));
+		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Purple,
+			FString::Printf(TEXT("Node length: %d"), Nodes.Num()));*/
+		AddNode(Parent, AddTile, NodeIndex, Depth, Score);
+	}
 }
 
 void Path::SetTreeDepth(int Depth)
@@ -116,7 +117,7 @@ void Path::CalculatePathsLoop()
 	}
 }
 
-void Path::AddNode(AHexagonTile* Parent, AHexagonTile* AddNode, ENodeIndex Index, int Depth)
+void Path::AddNode(AHexagonTile* Parent, AHexagonTile* AddNode, ENodeIndex Index, int Depth, float Score)
 {
 	Node* NewNode = new Node();
 	NewNode->X = AddNode->TileIndex.X;
@@ -125,6 +126,8 @@ void Path::AddNode(AHexagonTile* Parent, AHexagonTile* AddNode, ENodeIndex Index
 	NewNode->YParent = Parent->TileIndex.Y;
 	NewNode->Index = Index;
 	NewNode->Depth = Depth;
+	NewNode->Tile = AddNode;
+	NewNode->Score = Score;
 	Nodes.Add(NewNode);
 }
 
@@ -141,10 +144,25 @@ TArray<AHexagonTile*> Path::GetPath(TArray<Node*> NodePaths)
 TArray<Node*> Path::GetChildrenNodes(Node* Parent, int ChildDepth)
 {
 	TArray<Node*> ChildNodes;
+	// TODO parent node doesnt update and cant be found in first iteration
+	/*GEngine->AddOnScreenDebugMessage(-1, 19, FColor::Yellow,
+		FString::Printf(TEXT("Par X: %d"), Parent->X));
+	GEngine->AddOnScreenDebugMessage(-1, 19, FColor::Yellow,
+		FString::Printf(TEXT("Par Y: %d"), Parent->Y));
+	GEngine->AddOnScreenDebugMessage(-1, 19, FColor::Yellow,
+		FString::Printf(TEXT("Child depth: %d"), ChildDepth));*/
+	//UE_LOG(LogTemp, Warning, TEXT("Child depth: %d"), ChildDepth);
+
 	for (size_t i = 0; i < Nodes.Num(); i++)
 	{
-		if (Nodes[i]->IsParent(Parent->X, Parent->Y) && Nodes[i]->Depth == ChildDepth)
+		/*UE_LOG(LogTemp, Warning, TEXT("Noddy X: %d"), Nodes[i]->XParent);
+		UE_LOG(LogTemp, Warning, TEXT("Noddy Y: %d"), Nodes[i]->YParent);*/
+		if (Nodes[i]->IsParent(Parent->X, Parent->Y))// && Nodes[i]->Depth == ChildDepth)
 		{
+			//UE_LOG(LogTemp, Warning, TEXT("Match!!!!! Child depth: %d"), ChildDepth);
+			/*
+			UE_LOG(LogTemp, Warning, TEXT("Par X: %d"), Parent->X);
+			UE_LOG(LogTemp, Warning, TEXT("Par Y: %d"), Parent->Y);*/
 			ChildNodes.Add(Nodes[i]);
 		}
 	}
@@ -174,22 +192,20 @@ void Path::SetupTreeNodes()
 TArray<Node*> Path::GetBestPath()
 {
 	TArray<Node*> BestPath;
-	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Cyan,
-		FString::Printf(TEXT("Tree: %d"), TreeDepth));
 	// loop through the tree, i = 0 is for the start node that is not needed here
 	for (size_t i = 1; i < TreeDepth; i++)
 	{ 
-		TArray<Node*> TempNodes = GetChildrenNodes(ParentNode, i); // got a zero here!!
+		TArray<Node*> TempNodes = GetChildrenNodes(ParentNode, i); // got a zero here!! not when i = 2
 		if (TempNodes.Num() == 0)
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue,
-				FString::Printf(TEXT("index of tree %d"), i));
-			BestPath.Empty();
+			/*GEngine->AddOnScreenDebugMessage(-1, 15, FColor::Blue,
+				FString::Printf(TEXT("index of tree %d"), i));*/
+			//BestPath.Empty();
 		}
 		else
 		{
-			GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue,
-				FString::Printf(TEXT("temp nodes: %d"), TempNodes.Num()));
+			/*GEngine->AddOnScreenDebugMessage(-1, 15, FColor::Blue,
+				FString::Printf(TEXT("temp nodes: %d"), TempNodes.Num()));*/
 			ParentNode = GetBestNode(TempNodes);
 			BestPath.Add(ParentNode);
 		}

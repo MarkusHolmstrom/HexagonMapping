@@ -84,7 +84,7 @@ void AAStarPathfinding::StartCalculatePath()
 	TotalMovementCost = GetGScore(StartTile, GoalTile);
 	/*GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue,
 		FString::Printf(TEXT("%d"), TotalMovementCost));*/
-	GoalDirection = GetDirection(Start, Goal);
+	GoalDirection = GetDirection(StartTile->TileIndex, GoalTile->TileIndex);
 	PathfindingLoop();
 }
 
@@ -112,12 +112,12 @@ void AAStarPathfinding::LookForMoreOptions()
 		}
 
 		TArray<AHexagonTile*> ViableTiles = GetViableTiles(GetChildren(ChildTiles));
-		for (size_t i = 0; i < ViableTiles.Num(); i++)
+		/*for (size_t i = 0; i < ViableTiles.Num(); i++)
 		{
 			ViableTiles[i]->ChangeHighlight(true);
-		}
+		}*/
 		
-		ChildTiles = ViableTiles;
+		ChildTiles = ViableTiles; // = GetViableTiles(GetChildren(ChildTiles)); TODO change after cleanup?
 		
 		Depth++;
 		NewPath->SetTreeDepth(Depth);
@@ -134,9 +134,13 @@ void AAStarPathfinding::LookForMoreOptions()
 	for (size_t i = 0; i < NewPath->PathNodes.Num(); i++)
 	{
 		PathTiles.Add(NewPath->PathNodes[i]->Tile);
-		PathTiles[i]->ChangeHighlight(true);
+		if (PathTiles[i])
+		{
+			PathTiles[i]->ChangeHighlight(true);
 		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald,
 			TEXT("Another light added"));
+
+		}
 	}
 	DelayedCleanUp(5.0f);
 
@@ -160,37 +164,10 @@ TArray<AHexagonTile*> AAStarPathfinding::GetChildren(TArray<AHexagonTile*> Tiles
 			if (AdjTiles[j])
 			{
 				ReturnChildren.Add(AdjTiles[j]);
-				// TODO make a method for this
-				// add left, middle and right nodes for the parent "node" current tile
-				Node* NewNode = new Node();
-				NewNode->X = AdjTiles[j]->TileIndex.X;
-				NewNode->Y = AdjTiles[j]->TileIndex.Y;
-				NewNode->XParent = Tiles[i]->TileIndex.X;
-				NewNode->YParent = Tiles[i]->TileIndex.Y;
-				ENodeIndex NodeIndex = ENodeIndex::None;
-				if (j == 0)
-				{
-					NodeIndex = ENodeIndex::Left;
-				}
-				else if (j == 1)
-				{
-					NodeIndex = ENodeIndex::Middle;
-				}
-				else if (j == 2)
-				{
-					NodeIndex = ENodeIndex::Right;
-				}
-				NewNode->Index = NodeIndex;
-				NewNode->Depth = Depth;
-				NewNode->Score = GetGScore(AdjTiles[j], GoalTile);
-				NewNode->Tile = AdjTiles[j];
-				NewPath->AddChildNode(NewNode);
-				//NewPath->AddChild(Tiles[i], AdjTiles[j], j, Depth); // cur tile or tiles[i] as parent?
+				NewPath->AddChild(Tiles[i], AdjTiles[j], j, Depth, GetGScore(AdjTiles[j], GoalTile)); // cur tile or tiles[i] as parent?
 			}
-
 		}
 	}
-
 	/*GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Cyan,
 		FString::Printf(TEXT("%d"), ReturnChildren.Num()));*/
 	return ReturnChildren;
@@ -198,22 +175,23 @@ TArray<AHexagonTile*> AAStarPathfinding::GetChildren(TArray<AHexagonTile*> Tiles
 
 void AAStarPathfinding::PathfindingLoop()
 {
+	Tries = 0;
 	bNeedPathFinding = false;
 	bool bFoundGoal = false;
 	while (bSearchingForPath)
 	{
 		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("on emore time:"));
 		Tries++;
-
+		GoalDirection = GetDirection(CurrentTile->TileIndex, GoalTile->TileIndex);
 		TArray<AHexagonTile*> AdjTiles = GetAdjacentTiles(CurrentTile, GoalDirection);
 		
-		CurrentTile = GetBestScore(AdjTiles, 1000000.0f);
+		CurrentTile = GetBestTile(AdjTiles, 1000000.0f);
 		CheckedList.Add(CurrentTile);
 
 		if (bNeedPathFinding || !CurrentTile)// might add this aswell?
 		{
 			Tries = 0;
-			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Emerald, 
+			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, 
 				TEXT("need path find: test a new path now!"));
 
 			LookForMoreOptions();
@@ -228,7 +206,7 @@ void AAStarPathfinding::PathfindingLoop()
 		if (CurrentTile->TileIndex == GoalTile->TileIndex)
 		{
 			bFoundGoal = true;
-			//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("target found, sire!"));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Blue, TEXT("Target found via Birdpath, sire!"));
 			bSearchingForPath = false;
 		}
 		else if (Tries >= MaxTries)
@@ -238,11 +216,12 @@ void AAStarPathfinding::PathfindingLoop()
 		}
 	}
 
-	Tries = 0;
 	// if bird path couldnt find a way to the goal tile
 	if (!bFoundGoal)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Emerald, TEXT("test a new path now!"));
+		Tries = 0;
+		GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Emerald, 
+			TEXT("test a new path now!"));
 
 		LookForMoreOptions();
 		return;
@@ -253,7 +232,7 @@ void AAStarPathfinding::PathfindingLoop()
 	DelayedCleanUp(5.0f);
 }
 
-AHexagonTile* AAStarPathfinding::GetBestScore(TArray<AHexagonTile*> Tiles, float TopScore)
+AHexagonTile* AAStarPathfinding::GetBestTile(TArray<AHexagonTile*> Tiles, float TopScore)
 {
 	TArray<AHexagonTile*> ViableTiles = GetViableTiles(Tiles);
 	if (ViableTiles.Num() == 0)
@@ -308,12 +287,7 @@ TArray<AHexagonTile*> AAStarPathfinding::GetViableTiles(TArray<AHexagonTile*> Ti
 	return NewTiles;
 }
 
-float AAStarPathfinding::GetScore(AHexagonTile* Start, AHexagonTile* Goal)
-{
-	return 0.0f;
-}
-
-//TArray<AHexagonTile*> AAStarPathfinding::GetAdjacentTiles(AHexagonTile* Tile)
+//TArray<AHexagonTile*> AAStarPathfinding::GetAdjacentTiles(AHexagonTile* Tile, int AdjLimit)
 //{
 //	TArray<AHexagonTile*> AdjacentTiles;
 //	FIntPoint Coord = Tile->TileIndex;
@@ -365,6 +339,46 @@ TArray<AHexagonTile*> AAStarPathfinding::GetAdjacentTiles(AHexagonTile* Tile, ED
 		}
 	}
 	return AdjacentTiles;
+}
+
+EDirection AAStarPathfinding::GetDirection(FIntPoint Start, FIntPoint Goal)
+{
+	if (Start.X == Goal.X && Start.Y - 1 > Goal.Y)
+	{
+		return EDirection::North;
+	}
+	else if (Start.X <= Goal.X && Start.Y > Goal.Y)
+	{
+		return EDirection::NorthEast;
+	}
+	else if (Start.X < Goal.X && Start.Y == Goal.Y)
+	{
+		return EDirection::East;
+	}
+	else if (Start.X == Goal.X && Start.Y + 1 < Goal.Y)
+	{
+		return EDirection::South;
+	}
+	else if (Start.X <= Goal.X && Start.Y < Goal.Y)
+	{
+		return EDirection::SouthEast;
+	}
+	else if (Start.X > Goal.X && Start.Y < Goal.Y)
+	{
+		return EDirection::SouthWest;
+	}
+	else if (Start.X > Goal.X && Start.Y == Goal.Y)
+	{
+		return EDirection::West;
+	}
+	else if (Start.X > Goal.X && Start.Y > Goal.Y)
+	{
+		return EDirection::NorthWest;
+	}
+
+	GEngine->AddOnScreenDebugMessage(-1, 10.f, FColor::Red, TEXT("Error: no viable Direction found, this shouldnt be reachable, what have you done?"));
+
+	return EDirection();
 }
 // TODO think about this one, needed or not?
 TArray<EDirection> AAStarPathfinding::GetDirections(EDirection MainDirection)
@@ -577,63 +591,10 @@ void AAStarPathfinding::RemoveTilesLight()
 	}
 	else
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Error: cant find the world anymore, sad!!"));
+		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red,
+			TEXT("Error: cant find the world anymore, sad!!"));
 
 	}
 }
 
-EDirection AAStarPathfinding::GetDirection(FVector Start, FVector Goal)
-{
-	if (Start.X == Goal.X && Start.Y - 1 > Goal.Y)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Direction: N"));
-
-		return EDirection::North;
-	}
-	else if (Start.X <= Goal.X && Start.Y > Goal.Y)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Direction: NE"));
-
-		return EDirection::NorthEast;
-	}
-	else if (Start.X < Goal.X && Start.Y == Goal.Y)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Direction: E"));
-
-		return EDirection::East;
-	}
-	// Breaks the pattern a little bit but we need to check for S before SE
-	// because SE overlap when it should be S. Start.Y + 1 is because the offset
-	else if (Start.X == Goal.X && Start.Y + 1 < Goal.Y)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Direction: S"));
-
-		return EDirection::South;
-	}
-	else if (Start.X <= Goal.X && Start.Y < Goal.Y)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Direction: SE"));
-
-		return EDirection::SouthEast;
-	}
-	else if (Start.X > Goal.X && Start.Y < Goal.Y)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Direction: SW"));
-
-		return EDirection::SouthWest;
-	}
-	else if (Start.X > Goal.X && Start.Y == Goal.Y)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Direction: W"));
-
-		return EDirection::West;
-	}
-	else if (Start.X > Goal.X && Start.Y > Goal.Y)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("Direction: NW"));
-
-		return EDirection::NorthWest;
-	}
-	return EDirection();
-}
 

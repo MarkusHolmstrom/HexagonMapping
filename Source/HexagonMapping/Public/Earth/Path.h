@@ -17,7 +17,8 @@ public:
 	float Score = 1000000.0f; // Set a default just in case 
 	ENodeIndex Index;
 	int Depth;
-	bool IsParent(int XPar, int YPar) {
+	bool IsParent(int XPar, int YPar) 
+	{
 		if (XPar == XParent && YPar == YParent)
 		{
 			return true;
@@ -36,8 +37,8 @@ public:
 	TArray<AHexagonTile*> HexagonPath;
 	UPROPERTY()
 		TArray<AHexagonTile*> ChildHexagons;
-	UPROPERTY()
-	float Score;
+	/*UPROPERTY()
+	float Score;*/
 	UPROPERTY()
 	bool bStuck = false;
 	UPROPERTY()
@@ -67,9 +68,7 @@ public:
 	UFUNCTION()
 	void AddChildNode(Node* ChildNode);
 	UFUNCTION()
-	void AddScore(float AddScore);
-	UFUNCTION()
-	void AddChild(AHexagonTile* Parent, AHexagonTile* AddTile, int Index, int Depth);
+	void AddChild(AHexagonTile* Parent, AHexagonTile* AddTile, int Index, int Depth, float Score);
 
 	UFUNCTION()
 		void SetTreeDepth(int Depth);
@@ -78,7 +77,7 @@ public:
 
 private:
 	UFUNCTION()
-		void AddNode(AHexagonTile* Parent, AHexagonTile* AddNode, ENodeIndex Index, int Depth);
+		void AddNode(AHexagonTile* Parent, AHexagonTile* AddNode, ENodeIndex Index, int Depth, float Score);
 
 	UFUNCTION()
 		TArray<AHexagonTile*> GetPath(TArray<Node*> NodePaths);

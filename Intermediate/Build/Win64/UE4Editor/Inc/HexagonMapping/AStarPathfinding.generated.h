@@ -8,9 +8,10 @@
 #include "UObject/ScriptMacros.h"
 
 PRAGMA_DISABLE_DEPRECATION_WARNINGS
+class AHexagonTile;
 struct FVector;
 enum class EDirection : uint8;
-class AHexagonTile;
+struct FIntPoint;
 class AActor;
 #ifdef HEXAGONMAPPING_AStarPathfinding_generated_h
 #error "AStarPathfinding.generated.h already included, missing '#pragma once' in AStarPathfinding.h"
@@ -20,7 +21,6 @@ class AActor;
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_SPARSE_DATA
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_RPC_WRAPPERS \
  \
-	DECLARE_FUNCTION(execGetDirection); \
 	DECLARE_FUNCTION(execRemoveTilesLight); \
 	DECLARE_FUNCTION(execClearClosedList); \
 	DECLARE_FUNCTION(execDelayedCleanUp); \
@@ -29,6 +29,8 @@ class AActor;
 	DECLARE_FUNCTION(execGetManhattanDistance); \
 	DECLARE_FUNCTION(execGetAdjacentTilesBasedOnDirections); \
 	DECLARE_FUNCTION(execGetDirections); \
+	DECLARE_FUNCTION(execGetDirection); \
+	DECLARE_FUNCTION(execGetVectorDirection); \
 	DECLARE_FUNCTION(execGetAdjacentTiles); \
 	DECLARE_FUNCTION(execGetScore); \
 	DECLARE_FUNCTION(execGetViableTiles); \
@@ -43,7 +45,6 @@ class AActor;
 
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_RPC_WRAPPERS_NO_PURE_DECLS \
  \
-	DECLARE_FUNCTION(execGetDirection); \
 	DECLARE_FUNCTION(execRemoveTilesLight); \
 	DECLARE_FUNCTION(execClearClosedList); \
 	DECLARE_FUNCTION(execDelayedCleanUp); \
@@ -52,6 +53,8 @@ class AActor;
 	DECLARE_FUNCTION(execGetManhattanDistance); \
 	DECLARE_FUNCTION(execGetAdjacentTilesBasedOnDirections); \
 	DECLARE_FUNCTION(execGetDirections); \
+	DECLARE_FUNCTION(execGetDirection); \
+	DECLARE_FUNCTION(execGetVectorDirection); \
 	DECLARE_FUNCTION(execGetAdjacentTiles); \
 	DECLARE_FUNCTION(execGetScore); \
 	DECLARE_FUNCTION(execGetViableTiles); \

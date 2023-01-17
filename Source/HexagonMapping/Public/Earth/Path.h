@@ -10,13 +10,23 @@ class AHexagonTile;
 class Node 
 {
 public:
+	UPROPERTY()
 	int X;
+	UPROPERTY()
 	int Y;
+	UPROPERTY()
 	int XParent;
+	UPROPERTY()
 	int YParent;
+	UPROPERTY()
 	float Score = 1000000.0f; // Set a default just in case 
+	UPROPERTY()
 	ENodeIndex Index;
 	int Depth;
+	UPROPERTY()
+	AHexagonTile* Tile;
+
+	UFUNCTION()
 	bool IsParent(int XPar, int YPar) 
 	{
 		if (XPar == XParent && YPar == YParent)
@@ -25,7 +35,6 @@ public:
 		}
 		return false;
 	}
-	AHexagonTile* Tile;
 };
 
 class HEXAGONMAPPING_API Path
@@ -61,6 +70,7 @@ private:
 		int TreeDepth = 0;
 
 public:
+	UFUNCTION()
 	Path(AHexagonTile* StartTile, AHexagonTile* GoalTile);
 
 	UFUNCTION()

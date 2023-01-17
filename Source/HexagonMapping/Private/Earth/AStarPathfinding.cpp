@@ -163,15 +163,16 @@ TArray<AHexagonTile*> AAStarPathfinding::GetChildren(TArray<AHexagonTile*> Tiles
 		TArray<AHexagonTile*> AdjTiles = GetAdjacentTiles(Tiles[i], GoalDirection);
 		for (size_t j = 0; j < AdjTiles.Num(); j++)
 		{
-			if (AdjTiles[j] && Tiles[i] && NewPath)
+			if (AdjTiles[j] && IsValidTile(AdjTiles[j]) && Tiles[i] && NewPath)
 			{
 				ReturnChildren.Add(AdjTiles[j]);
 				NewPath->AddChild(Tiles[i], AdjTiles[j], j, Depth, GetGScore(AdjTiles[j], GoalTile)); // cur tile or tiles[i] as parent?
 			}
 		}
 	}
-	/*GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Cyan,
-		FString::Printf(TEXT("%d"), ReturnChildren.Num()));*/
+	// TODO this must be reduced! 1.9 million is to much after 10 steps!!!
+	GEngine->AddOnScreenDebugMessage(-1, 25, FColor::Cyan,
+		FString::Printf(TEXT("Return children: %d"), ReturnChildren.Num()));
 	return ReturnChildren;
 }
 
@@ -339,7 +340,7 @@ TArray<AHexagonTile*> AAStarPathfinding::GetAdjacentTiles(AHexagonTile* Tile, ED
 		if (AdjacentTiles[i] && IsValidTile(AdjacentTiles[i]) &&
 			!CheckedList.Contains(AdjacentTiles[i]))
 		{
-			AdjacentTiles[i]->ChangeHighlight(true);
+			//AdjacentTiles[i]->ChangeHighlight(true);
 			ClosedList.Add(AdjacentTiles[i]);
 		}
 	}

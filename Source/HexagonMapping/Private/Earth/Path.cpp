@@ -69,7 +69,7 @@ void Path::SetTreeDepth(int Depth)
 {
 	TreeDepth = Depth;
 }
-// tree structure missing some things...
+
 void Path::CalculatePathsLoop()
 {
 	bool Searching = true;
@@ -81,7 +81,7 @@ void Path::CalculatePathsLoop()
 		Tries++;
 		test++;
 		SetupTreeNodes();
-		TArray<Node*> NodePath = GetBestPath(); // returns empty list
+		TArray<Node*> NodePath = GetBestPath(); 
 		if (NodePath.Num() == TreeDepth)
 		{
 			bFoundPath = true;

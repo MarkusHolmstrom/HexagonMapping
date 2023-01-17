@@ -12,6 +12,7 @@ class AActor;
 class AHexagonTile;
 class ADetailActor;
 struct FClimateInfo;
+struct FIntPoint;
 enum class EHinder : uint8;
 #ifdef HEXAGONMAPPING_GenerateMapComponent_generated_h
 #error "GenerateMapComponent.generated.h already included, missing '#pragma once' in GenerateMapComponent.h"
@@ -34,6 +35,8 @@ template<> HEXAGONMAPPING_API UScriptStruct* StaticStruct<struct FClimateInfo>()
 	DECLARE_FUNCTION(execGetTrees); \
 	DECLARE_FUNCTION(execGetCorrectClimate); \
 	DECLARE_FUNCTION(execSetLikelihoodLand); \
+	DECLARE_FUNCTION(execCheckListContains); \
+	DECLARE_FUNCTION(execAddLikeliHoodList); \
 	DECLARE_FUNCTION(execAddToList); \
 	DECLARE_FUNCTION(execIsLandMoreLikely); \
 	DECLARE_FUNCTION(execSetShoreTilesAround); \
@@ -56,6 +59,8 @@ template<> HEXAGONMAPPING_API UScriptStruct* StaticStruct<struct FClimateInfo>()
 	DECLARE_FUNCTION(execGetTrees); \
 	DECLARE_FUNCTION(execGetCorrectClimate); \
 	DECLARE_FUNCTION(execSetLikelihoodLand); \
+	DECLARE_FUNCTION(execCheckListContains); \
+	DECLARE_FUNCTION(execAddLikeliHoodList); \
 	DECLARE_FUNCTION(execAddToList); \
 	DECLARE_FUNCTION(execIsLandMoreLikely); \
 	DECLARE_FUNCTION(execSetShoreTilesAround); \

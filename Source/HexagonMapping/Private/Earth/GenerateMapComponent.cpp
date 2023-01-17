@@ -341,8 +341,6 @@ float UGenerateMapComponent::GetPercentage(float Percentage, float Total)
 void UGenerateMapComponent::SetHexagonInfo(AHexagonTile* Tile, bool Land, EHinder Hinder)
 {
 	Tile->MapComponent = this;
-	//Tile->OnTileClicked.AddDynamic(this, &UGenerateMapComponent::OnTileClicked);
-
 	if (Land)
 	{
 		Tile->Type = CurType;
@@ -388,6 +386,19 @@ void UGenerateMapComponent::SetHexagonInfo(AHexagonTile* Tile, bool Land, EHinde
 
 TSubclassOf<AHexagonTile> UGenerateMapComponent::SetWaterTile(int32 X, int32 Y)
 {
+	if (Y % 2 == 1)
+	{
+		if (CheckTileForCoast(X, Y - 1) ||
+			CheckTileForCoast(X + 1, Y - 1) ||
+			CheckTileForCoast(X - 1, Y))
+		{
+			CurType = EHexType::Shore;
+			return ShoreHexTile;
+		}
+		CurType = EHexType::Ocean;
+		return WaterHexTile;
+	}
+	// if Y is even:
 	if (CheckTileForCoast(X - 1, Y - 1) || 
 		CheckTileForCoast(X, Y - 1) || 
 		CheckTileForCoast(X - 1, Y))
@@ -466,84 +477,230 @@ bool UGenerateMapComponent::IsLandMoreLikely(int32 X, int32 Y)
 	//}
 }
 
-void UGenerateMapComponent::AddToList(int32 X, int32 Y, bool Land, int32 AddRadius)
+void UGenerateMapComponent::AddToList(int X, int Y, bool Land, int AddRadius)
 {
 	if (Land)
 	{
+		AddLikeliHoodList(LandLikely, X, Y, AddRadius);
+
 		// add positive tiles (that has not been iterated) to make em 
 		// more likely to be land tiles
-		if (AddRadius == 1)
-		{
-			LandLikely.Add(FIntPoint(X, Y + 1));
-			LandLikely.Add(FIntPoint(X + 1, Y));
-			if (X > 0)
-			{
-				LandLikely.Add(FIntPoint(X - 1, Y + 1));
-				//LandLikely.Add(FIntPoint(X - 1, Y + 2));
-			}
-			else
-			{
-				// Opposite side of the map
-				LandLikely.Add(FIntPoint(100 - 1, Y));
-				LandLikely.Add(FIntPoint(100 - 1, Y + 1));
-			}
-			LandLikely.Add(FIntPoint(X + 2, Y));
-			//LandLikely.Add(FIntPoint(X + 1, Y + 1));
-			LandLikely.Add(FIntPoint(X + 1, Y + 2));
-			if (X > 1)
-			{
-				LandLikely.Add(FIntPoint(X - 2, Y + 1));
-			}
-		}
-		else
-		{
-			LandLikely.Add(FIntPoint(X, Y + 1));
-			LandLikely.Add(FIntPoint(X + 1, Y));
-			if (X > 0)
-			{
-				LandLikely.Add(FIntPoint(X - 1, Y + 1));
-				LandLikely.Add(FIntPoint(X - 1, Y + 2));
-			}
-			else
-			{
-				// Opposite side of the map
-				LandLikely.Add(FIntPoint(100 - 1, Y));
-				LandLikely.Add(FIntPoint(100 - 1, Y + 1));
-			}
-			LandLikely.Add(FIntPoint(X + 2, Y));
-			LandLikely.Add(FIntPoint(X + 1, Y + 1));
-			LandLikely.Add(FIntPoint(X + 1, Y + 2));
-			if (X > 1)
-			{
-				LandLikely.Add(FIntPoint(X - 2, Y + 1));
-			}
-		}
+		//if (AddRadius >= 1)
+		//{
+		//	if (Y % 2 == 1)
+		//	{
+		//		LandLikely.Add(FIntPoint(X + 1, Y + 1));
+		//		LandLikely.Add(FIntPoint(X + 1, Y));
+		//		LandLikely.Add(FIntPoint(X, Y + 1));
+		//		if (X == 0)
+		//		{
+		//			// Opposite side of the map
+		//			LandLikely.Add(FIntPoint(MapWidth - 1, Y));
+		//		}
+		//		if (AddRadius >= 2)
+		//		{
+		//			LandLikely.Add(FIntPoint(X + 2, Y));
+		//			LandLikely.Add(FIntPoint(X + 2, Y + 1));
+		//			LandLikely.Add(FIntPoint(X + 1, Y + 2));
+		//			LandLikely.Add(FIntPoint(X, Y + 2));
+		//			if (X > 0)
+		//			{
+		//				LandLikely.Add(FIntPoint(X - 1, Y + 1));
+		//				LandLikely.Add(FIntPoint(X - 1, Y + 2));
+		//			}
+		//			else
+		//			{
+		//				// Opposite side of the map
+		//				LandLikely.Add(FIntPoint(MapWidth - 2, Y));
+		//				LandLikely.Add(FIntPoint(MapWidth - 2, Y + 1));
+		//			}
+		//		}
+		//		return;
+		//	}
+		//	// if Y is even:
+		//	LandLikely.Add(FIntPoint(X, Y + 1));
+		//	LandLikely.Add(FIntPoint(X + 1, Y));
+		//	if (X > 0)
+		//	{
+		//		LandLikely.Add(FIntPoint(X - 1, Y + 1));
+		//	}
+		//	else
+		//	{
+		//		// Opposite side of the map
+		//		LandLikely.Add(FIntPoint(MapWidth - 1, Y + 1));
+		//	}
+
+		//	if (AddRadius >= 2)
+		//	{
+		//		LandLikely.Add(FIntPoint(X + 2, Y));
+		//		LandLikely.Add(FIntPoint(X + 1, Y + 1));
+		//		LandLikely.Add(FIntPoint(X + 1, Y + 2));
+		//		LandLikely.Add(FIntPoint(X, Y + 2));
+		//		if (X > 0)
+		//		{
+		//			LandLikely.Add(FIntPoint(X - 1, Y + 2));
+		//			LandLikely.Add(FIntPoint(X - 2, Y + 1));
+		//		}
+		//		else
+		//		{
+		//			// Opposite side of the map
+		//			LandLikely.Add(FIntPoint(MapWidth - 2, Y));
+		//			LandLikely.Add(FIntPoint(MapWidth - 2, Y + 1));
+		//		}
+		//	}
+		//}
 	}
 	else
 	{
-		//OceanLikely.Add(FIntPoint(X, Y));
-		OceanLikely.Add(FIntPoint(X + 1, Y + 1));
-		//OceanLikely.Add(FIntPoint(X + 1, Y + 2));
-		OceanLikely.Add(FIntPoint(X, Y + 1));
-		if (X > 1)
-		{
-			OceanLikely.Add(FIntPoint(X - 2, Y + 1));
-		}
-		else
-		{
-			OceanLikely.Add(FIntPoint(100 - 1, Y + 1));
-		}
-		if (X > 0)
-		{
-			OceanLikely.Add(FIntPoint(X - 1, Y + 1));
-			//OceanLikely.Add(FIntPoint(X - 1, Y + 2));
-		}
-		OceanLikely.Add(FIntPoint(X + 1, Y));
-		//OceanLikely.Add(FIntPoint(X + 2, Y));
+		AddLikeliHoodList(OceanLikely, X, Y, AddRadius);
+		//if (AddRadius >= 1)
+		//{
+		//	if (Y % 2 == 1)
+		//	{
+		//		OceanLikely.Add(FIntPoint(X + 1, Y + 1));
+		//		OceanLikely.Add(FIntPoint(X + 1, Y));
+		//		OceanLikely.Add(FIntPoint(X, Y + 1));
+		//		if (X == 0)
+		//		{
+		//			// Opposite side of the map
+		//			OceanLikely.Add(FIntPoint(MapWidth - 1, Y));
+		//		}
+		//		if (AddRadius >= 2)
+		//		{
+		//			OceanLikely.Add(FIntPoint(X + 2, Y));
+		//			OceanLikely.Add(FIntPoint(X + 2, Y + 1));
+		//			OceanLikely.Add(FIntPoint(X + 1, Y + 2));
+		//			OceanLikely.Add(FIntPoint(X, Y + 2));
+		//			if (X > 0)
+		//			{
+		//				OceanLikely.Add(FIntPoint(X - 1, Y + 1));
+		//				OceanLikely.Add(FIntPoint(X - 1, Y + 2));
+		//			}
+		//			else
+		//			{
+		//				// Opposite side of the map
+		//				OceanLikely.Add(FIntPoint(MapWidth - 2, Y));
+		//				OceanLikely.Add(FIntPoint(MapWidth - 2, Y + 1));
+		//			}
+		//		}
+		//		return;
+		//	}
+		//	// if Y is even:
+		//	OceanLikely.Add(FIntPoint(X, Y + 1));
+		//	OceanLikely.Add(FIntPoint(X + 1, Y));
+		//	if (X > 0)
+		//	{
+		//		OceanLikely.Add(FIntPoint(X - 1, Y + 1));
+		//	}
+		//	else
+		//	{
+		//		// Opposite side of the map
+		//		OceanLikely.Add(FIntPoint(MapWidth - 1, Y));
+		//	}
+
+		//	if (AddRadius >= 2)
+		//	{
+		//		OceanLikely.Add(FIntPoint(X + 2, Y));
+		//		OceanLikely.Add(FIntPoint(X + 1, Y + 1));
+		//		OceanLikely.Add(FIntPoint(X + 1, Y + 2));
+		//		OceanLikely.Add(FIntPoint(X, Y + 2));
+		//		if (X > 0)
+		//		{
+		//			OceanLikely.Add(FIntPoint(X - 1, Y + 2));
+		//			OceanLikely.Add(FIntPoint(X - 2, Y + 1));
+		//		}
+		//		else
+		//		{
+		//			// Opposite side of the map
+		//			OceanLikely.Add(FIntPoint(MapWidth - 2, Y));
+		//			OceanLikely.Add(FIntPoint(MapWidth - 2, Y + 1));
+		//		}
+		//	}
+		//}
 	}
 }
 
-bool UGenerateMapComponent::CheckTileForCoast(int32 X, int32 Y)
+void UGenerateMapComponent::AddLikeliHoodList(TArray<FIntPoint>& List, int X, int Y, int AddRadius)
+{
+	// If add radius is lower than one, this method doesnt do anything
+	if (AddRadius >= 1)
+	{
+		if (Y % 2 == 1)
+		{
+			CheckListContains(List, FIntPoint(X + 1, Y + 1));
+			CheckListContains(List, FIntPoint(X + 1, Y));
+			CheckListContains(List, FIntPoint(X, Y + 1));
+			if (X == 0)
+			{
+				// Opposite side of the map
+				CheckListContains(List, FIntPoint(MapWidth - 1, Y));
+			}
+			if (AddRadius >= 2)
+			{
+				CheckListContains(List, FIntPoint(X + 2, Y));
+				CheckListContains(List, FIntPoint(X + 2, Y + 1));
+				CheckListContains(List, FIntPoint(X + 1, Y + 2));
+				CheckListContains(List, FIntPoint(X, Y + 2));
+
+				if (X > 0)
+				{
+					CheckListContains(List, FIntPoint(X - 1, Y + 1));
+					CheckListContains(List, FIntPoint(X - 1, Y + 2));
+				}
+				else
+				{
+					// Opposite side of the map
+					CheckListContains(List, FIntPoint(MapWidth - 2, Y));
+					CheckListContains(List, FIntPoint(MapWidth - 2, Y + 1));
+				}
+			}
+			return;
+		}
+		// if Y is even:
+		CheckListContains(List, FIntPoint(X + 1, Y));
+		CheckListContains(List, FIntPoint(X, Y + 1));
+		if (X > 0)
+		{
+			CheckListContains(List, FIntPoint(X - 1, Y + 1));
+		}
+		else
+		{
+			// Opposite side of the map
+			CheckListContains(List, FIntPoint(MapWidth - 1, Y));
+		}
+
+		if (AddRadius >= 2)
+		{
+			CheckListContains(List, FIntPoint(X + 2, Y));
+			CheckListContains(List, FIntPoint(X + 1, Y + 1));
+			CheckListContains(List, FIntPoint(X + 1, Y + 2));
+			CheckListContains(List, FIntPoint(X, Y + 2));
+
+			if (X > 0)
+			{
+				CheckListContains(List, FIntPoint(X - 1, Y + 2));
+				CheckListContains(List, FIntPoint(X - 2, Y + 1));
+			}
+			else
+			{
+				// Opposite side of the map
+				CheckListContains(List, FIntPoint(MapWidth - 2, Y));
+				CheckListContains(List, FIntPoint(MapWidth - 2, Y + 1));
+			}
+		}
+	}
+}
+void UGenerateMapComponent::CheckListContains(TArray<FIntPoint>& List, FIntPoint Index)
+{
+	testy++;
+	if (!List.Contains(Index))
+	{
+		checktesty++;
+		List.Add(Index);
+	}
+}
+
+bool UGenerateMapComponent::CheckTileForCoast(int X, int Y)
 {
 	if (LandLikely.Contains(FIntPoint(X, Y)))
 	{

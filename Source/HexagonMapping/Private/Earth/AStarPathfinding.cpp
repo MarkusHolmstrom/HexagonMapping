@@ -282,6 +282,7 @@ TArray<AHexagonTile*> AAStarPathfinding::GetViableTiles(TArray<AHexagonTile*> Ti
 	{
 		if (Tiles[i] && IsValidTile(Tiles[i]))
 		{
+			// TODO can generate memory error, to big for long distances?
 			NewTiles.Add(Tiles[i]);
 		}
 	}

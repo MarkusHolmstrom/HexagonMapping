@@ -19,14 +19,14 @@ struct FClimateInfo
 	GENERATED_BODY()
 
 	UPROPERTY()
-	int32 MinHor = 0;
+	int MinHor = 0;
 	UPROPERTY()
-	int32 MaxHor = 2;
+	int MaxHor = 2;
 
 	UPROPERTY()
-	int32 NegMinHor = 5;
+	int NegMinHor = 5;
 	UPROPERTY()
-	int32 NegMaxHor = 3;
+	int NegMaxHor = 3;
 	UPROPERTY()
 	EClimateType ClimateType = EClimateType::INVALID;
 	UPROPERTY()
@@ -61,7 +61,7 @@ struct FClimateInfo
 	void SetPercentages(TArray<float> Percentages, float NewModifier)
 	{
 		Modifier = NewModifier;
-		for (int32 i = 0; i < Percentages.Num() && i < 7; i++)
+		for (int i = 0; i < Percentages.Num() && i < 7; i++)
 		{
 			if (i == 0)
 			{
@@ -107,7 +107,7 @@ struct FClimateInfo
 	{
 
 	}
-	FClimateInfo(int32 Min, int32 Max, EClimateType SetClimateType, float Modifier, TArray<float> Percentages)
+	FClimateInfo(int Min, int Max, EClimateType SetClimateType, float Modifier, TArray<float> Percentages)
 	{
 		MinHor = Min;
 		MaxHor = Max;
@@ -179,11 +179,11 @@ public:
 		float HillPercentage = 0.35f;
 
 	UPROPERTY(EditAnywhere)
-	int32 MapHeight = 100;
+	int MapHeight = 100;
 	UPROPERTY(EditAnywhere)
-	int32 MapWidth = 100;
+	int MapWidth = 100;
 	UPROPERTY(EditAnywhere)
-	int32 Radius = 5000;
+	int Radius = 5000;
 
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
 	TArray<FClimateInfo> ClimateInfo;
@@ -213,30 +213,36 @@ public:
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
 		float IncreasedLandMultiplier = 5.0f; // if IR = 2 -> 4 ish
 	UPROPERTY(EditAnywhere, Category = ClimateInfo)
-		int32 IncreaseRadius = 1; 
+		int IncreaseRadius = 1; 
 
 	UPROPERTY(EditAnywhere, Category = Random)
-		int32 Seed = 5725;
+		int Seed = 5725;
 	// A
 	UPROPERTY(EditAnywhere, Category = Random)
-		int32 Multiplier = 1664525;
+		int Multiplier = 1664525;
 	// C
 	UPROPERTY(EditAnywhere, Category = Random)
-		int32 Increment = 10139042;
+		int Increment = 10139042;
 	// M
 	UPROPERTY(EditAnywhere, Category = Random)
-		int32 Modulus = 1415461035;
+		int Modulus = 1415461035;
 
 	UPROPERTY(EditAnywhere, Category = Random)
-		int32 MaxRandom = 100;
+		int MaxRandom = 100;
 	UPROPERTY(EditAnywhere, Category = Random)
 	bool bGenNewSeed = false;
 
 	UPROPERTY(VisibleAnywhere, Category = Random)
 		TArray <float> Randoms;
+
+	UPROPERTY(VisibleAnywhere)
+	int testy = 0;
+	UPROPERTY(VisibleAnywhere)
+		int checktesty = 0;
+
 private:
-	int32 CurX;
-	int32 CurY;
+	int CurX;
+	int CurY;
 	EHexType CurType;
 	bool bIsTileLand = false;
 
@@ -265,22 +271,29 @@ public:
 	UFUNCTION()
 	void SetHexagonInfo(AHexagonTile* Tile, bool Land, EHinder Hinder);
 	UFUNCTION()
-	TSubclassOf<AHexagonTile> SetWaterTile(int32 X, int32 Y);
+	TSubclassOf<AHexagonTile> SetWaterTile(int X, int Y);
 	UFUNCTION()
-	bool CheckTileForCoast(int32 X, int32 Y);
+	bool CheckTileForCoast(int X, int Y);
 	UFUNCTION()
-	AHexagonTile* GetTile(int32 X, int32 Y);
+	AHexagonTile* GetTile(int X, int Y);
 	UFUNCTION()
-	void SetShoreTilesAround(int32 X, int32 Y);
+	void SetShoreTilesAround(int X, int Y);
 
+	// Methods regarding likelihood of land vs water tiles
 	UFUNCTION()
-	bool IsLandMoreLikely(int32 X, int32 Y);
+	bool IsLandMoreLikely(int X, int Y);
 	UFUNCTION()
-	void AddToList(int32 X, int32 Y, bool Land, int32 AddRadius);
+	void AddToList(int X, int Y, bool Land, int AddRadius);
+	UFUNCTION()
+	void AddLikeliHoodList(TArray<FIntPoint>& List, int X, int Y, int AddRadius);
+	UFUNCTION()
+	void CheckListContains(TArray<FIntPoint>& List, FIntPoint Index);
 	UFUNCTION()
 	bool SetLikelihoodLand(AHexagonTile* Tile);
+
+	// Climate and detail methods:
 	UFUNCTION()
-	FClimateInfo GetCorrectClimate(int32 Index, bool HigherPossLand);
+	FClimateInfo GetCorrectClimate(int Index, bool HigherPossLand);
 	UFUNCTION()
 	TSubclassOf<ADetailActor> GetTrees(float Random);
 	UFUNCTION()

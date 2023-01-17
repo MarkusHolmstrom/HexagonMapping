@@ -106,6 +106,11 @@ public: \
 
 
 #define HexagonMapping_Source_HexagonMapping_Public_Earth_AStarPathfinding_h_18_PRIVATE_PROPERTY_OFFSET \
+	FORCEINLINE static uint32 __PPO__Depth() { return STRUCT_OFFSET(AAStarPathfinding, Depth); } \
+	FORCEINLINE static uint32 __PPO__ChildTiles() { return STRUCT_OFFSET(AAStarPathfinding, ChildTiles); } \
+	FORCEINLINE static uint32 __PPO__OpenList() { return STRUCT_OFFSET(AAStarPathfinding, OpenList); } \
+	FORCEINLINE static uint32 __PPO__ClosedList() { return STRUCT_OFFSET(AAStarPathfinding, ClosedList); } \
+	FORCEINLINE static uint32 __PPO__CheckedList() { return STRUCT_OFFSET(AAStarPathfinding, CheckedList); } \
 	FORCEINLINE static uint32 __PPO__bNeedPathFinding() { return STRUCT_OFFSET(AAStarPathfinding, bNeedPathFinding); } \
 	FORCEINLINE static uint32 __PPO__StartTile() { return STRUCT_OFFSET(AAStarPathfinding, StartTile); } \
 	FORCEINLINE static uint32 __PPO__GoalTile() { return STRUCT_OFFSET(AAStarPathfinding, GoalTile); } \

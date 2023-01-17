@@ -37,7 +37,7 @@ void EmptyLinkFunctionForGeneratedCodeEnums() {}
 		return ENodeIndex_StaticEnum();
 	}
 	static FCompiledInDeferEnum Z_CompiledInDeferEnum_UEnum_ENodeIndex(ENodeIndex_StaticEnum, TEXT("/Script/HexagonMapping"), TEXT("ENodeIndex"), false, nullptr, nullptr);
-	uint32 Get_Z_Construct_UEnum_HexagonMapping_ENodeIndex_Hash() { return 3898415556U; }
+	uint32 Get_Z_Construct_UEnum_HexagonMapping_ENodeIndex_Hash() { return 722001761U; }
 	UEnum* Z_Construct_UEnum_HexagonMapping_ENodeIndex()
 	{
 #if WITH_HOT_RELOAD
@@ -53,6 +53,8 @@ void EmptyLinkFunctionForGeneratedCodeEnums() {}
 				{ "ENodeIndex::Left", (int64)ENodeIndex::Left },
 				{ "ENodeIndex::Middle", (int64)ENodeIndex::Middle },
 				{ "ENodeIndex::Right", (int64)ENodeIndex::Right },
+				{ "ENodeIndex::SecLeft", (int64)ENodeIndex::SecLeft },
+				{ "ENodeIndex::SecRight", (int64)ENodeIndex::SecRight },
 			};
 #if WITH_METADATA
 			const UE4CodeGen_Private::FMetaDataPairParam Enum_MetaDataParams[] = {
@@ -62,6 +64,8 @@ void EmptyLinkFunctionForGeneratedCodeEnums() {}
 				{ "ModuleRelativePath", "Public/Enums.h" },
 				{ "None.Name", "ENodeIndex::None" },
 				{ "Right.Name", "ENodeIndex::Right" },
+				{ "SecLeft.Name", "ENodeIndex::SecLeft" },
+				{ "SecRight.Name", "ENodeIndex::SecRight" },
 			};
 #endif
 			static const UE4CodeGen_Private::FEnumParams EnumParams = {

@@ -104,6 +104,7 @@ void AAStarPathfinding::LookForMoreOptions()
 
 	ChildTiles.Empty();
 	ChildTiles.Add(CurrentTile);
+	SearchWidth = 5;
 	while (bAStarPathFinding)
 	{
 		if (ChildTiles.Num() == 0 || Tries >= MaxTries)
@@ -111,13 +112,13 @@ void AAStarPathfinding::LookForMoreOptions()
 			bAStarPathFinding = false;
 		}
 
-		TArray<AHexagonTile*> ViableTiles = GetViableTiles(GetChildren(ChildTiles));
+		//TArray<AHexagonTile*> ViableTiles = GetViableTiles(GetChildren(ChildTiles));
 		/*for (size_t i = 0; i < ViableTiles.Num(); i++)
 		{
 			ViableTiles[i]->ChangeHighlight(true);
 		}*/
 		
-		ChildTiles = ViableTiles; // = GetViableTiles(GetChildren(ChildTiles)); TODO change after cleanup?
+		ChildTiles = GetViableTiles(GetChildren(ChildTiles)); //TODO change after cleanup?
 		
 		Depth++;
 		NewPath->SetTreeDepth(Depth);
@@ -128,6 +129,7 @@ void AAStarPathfinding::LookForMoreOptions()
 		GoalDirection = GetDirection(Start, Goal);*/
 	}
 
+	SearchWidth = 3;
 	NewPath->CalculatePathsLoop();
 	test = NewPath->test;
 	TArray<AHexagonTile*> PathTiles;
@@ -137,8 +139,8 @@ void AAStarPathfinding::LookForMoreOptions()
 		if (PathTiles[i])
 		{
 			PathTiles[i]->ChangeHighlight(true);
-		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald,
-			TEXT("Another light added"));
+			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald,
+				TEXT("Another light added"));
 
 		}
 	}
@@ -161,7 +163,7 @@ TArray<AHexagonTile*> AAStarPathfinding::GetChildren(TArray<AHexagonTile*> Tiles
 		TArray<AHexagonTile*> AdjTiles = GetAdjacentTiles(Tiles[i], GoalDirection);
 		for (size_t j = 0; j < AdjTiles.Num(); j++)
 		{
-			if (AdjTiles[j])
+			if (AdjTiles[j] && Tiles[i] && NewPath)
 			{
 				ReturnChildren.Add(AdjTiles[j]);
 				NewPath->AddChild(Tiles[i], AdjTiles[j], j, Depth, GetGScore(AdjTiles[j], GoalTile)); // cur tile or tiles[i] as parent?
@@ -334,9 +336,10 @@ TArray<AHexagonTile*> AAStarPathfinding::GetAdjacentTiles(AHexagonTile* Tile, ED
 
 	for (size_t i = 0; i < AdjacentTiles.Num(); i++)
 	{
-		if (AdjacentTiles[i] && !CheckedList.Contains(AdjacentTiles[i]))
+		if (AdjacentTiles[i] && IsValidTile(AdjacentTiles[i]) &&
+			!CheckedList.Contains(AdjacentTiles[i]))
 		{
-			//AdjacentTiles[i]->ChangeHighlight(true);
+			AdjacentTiles[i]->ChangeHighlight(true);
 			ClosedList.Add(AdjacentTiles[i]);
 		}
 	}
@@ -434,104 +437,251 @@ TArray<AHexagonTile*> AAStarPathfinding::GetAdjacentTilesBasedOnDirections(AHexa
 {
 	TArray<AHexagonTile*> Tiles;
 	FIntPoint Coord = Tile->TileIndex;
-	int Row = Coord.Y;
-	const bool OddRow = Row % 2 == 1;
-	if (OddRow)
+	// if Y is odd
+	if (Coord.Y % 2 == 1)
 	{
 		if (Directions[0] == EDirection::North)
 		{
 			Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y - 1));
 			Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y - 1));
+			if (SearchWidth > 3)
+			{
+				Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y));
+				Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y));
+			}
+			if (SearchWidth > 5)
+			{
+				Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y + 1));
+				Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y + 1));
+			}
 		}
 		else if (Directions[0] == EDirection::NorthEast)
 		{
 			Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y - 1));
 			Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y - 1));
 			Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y));
+			if (SearchWidth > 3)
+			{
+				Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y));
+				Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y + 1));
+			}
+			if (SearchWidth > 5)
+			{
+				Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y + 1));
+			}
 		}
 		else if (Directions[0] == EDirection::East)
 		{
 			Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y - 1));
 			Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y));
 			Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y + 1));
+			if (SearchWidth > 3)
+			{
+				Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y - 1));
+				Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y + 1));
+			}
+			if (SearchWidth > 5)
+			{
+				Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y));
+			}
 		}
 		else if (Directions[0] == EDirection::SouthEast)
 		{
 			Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y));
 			Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y + 1));
 			Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y + 1));
+			if (SearchWidth > 3)
+			{
+				Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y - 1));
+				Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y));
+			}
+			if (SearchWidth > 5)
+			{
+				Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y - 1));
+			}
 		}
 		else if (Directions[0] == EDirection::South)
 		{
 			Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y + 1));
 			Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y + 1));
+			if (SearchWidth > 3)
+			{
+				Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y));
+				Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y));
+			}
+			if (SearchWidth > 5)
+			{
+				Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y - 1));
+				Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y - 1));
+			}
 		}
 		else if (Directions[0] == EDirection::SouthWest)
 		{
 			Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y + 1));
 			Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y + 1));
 			Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y));
+			if (SearchWidth > 3)
+			{
+				Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y - 1));
+				Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y));
+			}
+			if (SearchWidth > 5)
+			{
+				Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y - 1));
+			}
 		}
 		else if (Directions[0] == EDirection::West)
 		{
 			Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y + 1));
 			Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y));
 			Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y - 1));
+			if (SearchWidth > 3)
+			{
+				Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y - 1));
+				Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y + 1));
+			}
+			if (SearchWidth > 5)
+			{
+				Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y));
+			}
 		}
 		else if (Directions[0] == EDirection::NorthWest)
 		{
 			Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y));
 			Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y - 1));
 			Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y - 1));
+			if (SearchWidth > 3)
+			{
+				Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y + 1));
+				Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y));
+			}
+			if (SearchWidth > 5)
+			{
+				Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y + 1));
+			}
 		}
 		return Tiles;
 	}
-	// If Y is even number
+	// If Y is even 
 	if (Directions[0] == EDirection::North)
 	{
 		Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y - 1));
 		Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y - 1));
+		if (SearchWidth > 3)
+		{
+			Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y));
+			Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y));
+		}
+		if (SearchWidth > 5)
+		{
+			Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y + 1));
+			Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y + 1));
+		}
 	}
 	else if (Directions[0] == EDirection::NorthEast)
 	{
 		Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y - 1));
 		Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y - 1));
 		Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y));
+		if (SearchWidth > 3)
+		{
+			Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y));
+			Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y + 1));
+		}
+		if (SearchWidth > 5)
+		{
+			Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y + 1));
+		}
 	}
 	else if (Directions[0] == EDirection::East)
 	{
 		Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y - 1));
 		Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y));
 		Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y + 1));
+		if (SearchWidth > 3)
+		{
+			Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y - 1));
+			Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y + 1));
+		}
+		if (SearchWidth > 5)
+		{
+			Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y));
+		}
 	}
 	else if (Directions[0] == EDirection::SouthEast)
 	{
 		Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y));
 		Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y + 1));
 		Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y + 1));
+		if (SearchWidth > 3)
+		{
+			Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y));
+			Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y + 1));
+		}
+		if (SearchWidth > 5)
+		{
+			Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y - 1));
+		}
 	}
 	else if (Directions[0] == EDirection::South)
 	{
 		Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y + 1));
 		Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y + 1));
+		if (SearchWidth > 3)
+		{
+			Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y));
+			Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y));
+		}
+		if (SearchWidth > 5)
+		{
+			Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y - 1));
+			Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y - 1));
+		}
 	}
 	else if (Directions[0] == EDirection::SouthWest)
 	{
 		Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y + 1));
 		Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y + 1));
 		Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y));
+		if (SearchWidth > 3)
+		{
+			Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y - 1));
+			Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y));
+		}
+		if (SearchWidth > 5)
+		{
+			Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y - 1));
+		}
 	}
 	else if (Directions[0] == EDirection::West)
 	{
 		Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y + 1));
 		Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y));
 		Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y - 1));
+		if (SearchWidth > 3)
+		{
+			Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y - 1));
+			Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y + 1));
+		}
+		if (SearchWidth > 5)
+		{
+			Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y));
+		}
 	}
 	else if (Directions[0] == EDirection::NorthWest)
 	{
 		Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y));
 		Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y - 1));
 		Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y - 1));
+		if (SearchWidth > 3)
+		{
+			Tiles.Add(MapGenerator->GetTile(Coord.X - 1, Coord.Y + 1));
+			Tiles.Add(MapGenerator->GetTile(Coord.X + 1, Coord.Y));
+		}
+		if (SearchWidth > 5)
+		{
+			Tiles.Add(MapGenerator->GetTile(Coord.X, Coord.Y + 1));
+		}
 	}
 	if (Tiles.Num() == 0)
 	{

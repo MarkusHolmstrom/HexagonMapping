@@ -690,12 +690,11 @@ void UGenerateMapComponent::AddLikeliHoodList(TArray<FIntPoint>& List, int X, in
 		}
 	}
 }
+
 void UGenerateMapComponent::CheckListContains(TArray<FIntPoint>& List, FIntPoint Index)
 {
-	testy++;
 	if (!List.Contains(Index))
 	{
-		checktesty++;
 		List.Add(Index);
 	}
 }

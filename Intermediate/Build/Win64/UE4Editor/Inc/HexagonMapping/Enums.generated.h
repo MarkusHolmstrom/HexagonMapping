@@ -21,7 +21,9 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 	op(ENodeIndex::None) \
 	op(ENodeIndex::Left) \
 	op(ENodeIndex::Middle) \
-	op(ENodeIndex::Right) 
+	op(ENodeIndex::Right) \
+	op(ENodeIndex::SecLeft) \
+	op(ENodeIndex::SecRight) 
 
 enum class ENodeIndex : uint8;
 template<> HEXAGONMAPPING_API UEnum* StaticEnum<ENodeIndex>();

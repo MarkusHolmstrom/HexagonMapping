@@ -34,12 +34,17 @@ public:
 		bool bWaterVessel = false;
 	UPROPERTY(VisibleAnywhere)
 		bool bSearchingForPath = true;
+	// Default for Birdpath is 3, 5 for Astar
+	UPROPERTY(VisibleAnywhere)
+		int SearchWidth = 5;
 	UPROPERTY(VisibleAnywhere)
 		int Tries = 0;
+
+
 	// This adds some kind of limit in case the pathfinding 
 	// gets stuck in a never ending while loop
 	UPROPERTY(EditAnywhere)
-	int MaxTries = 100;
+	int MaxTries = 10;
 	// H:
 	UPROPERTY(VisibleAnywhere)
 		float ManhattanDistance = 0;
@@ -52,11 +57,18 @@ public:
 
 private:
 	Path* NewPath;
-	int Depth;
-	TArray<AHexagonTile*> ChildTiles;
 	Path* BestPath;
+
+	UPROPERTY()
+	int Depth;
+	UPROPERTY()
+	TArray<AHexagonTile*> ChildTiles;
+
+	UPROPERTY()
 	TArray<AHexagonTile*> OpenList;
+	UPROPERTY()
 	TArray<AHexagonTile*> ClosedList;
+	UPROPERTY()
 	TArray<AHexagonTile*> CheckedList;
 	UPROPERTY(VisibleAnywhere)
 		bool bNeedPathFinding = false;

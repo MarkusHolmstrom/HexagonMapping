@@ -235,10 +235,6 @@ public:
 	UPROPERTY(VisibleAnywhere, Category = Random)
 		TArray <float> Randoms;
 
-	UPROPERTY(VisibleAnywhere)
-	int testy = 0;
-	UPROPERTY(VisibleAnywhere)
-		int checktesty = 0;
 
 private:
 	int CurX;
@@ -304,5 +300,5 @@ public:
 
 private:
 	UFUNCTION()
-		float RandomLCGfloatPercentage(float Min, float Max);
+	float RandomLCGfloatPercentage(float Min, float Max);
 };

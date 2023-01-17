@@ -57,7 +57,7 @@ enum class EDirection : uint8
 UENUM(BlueprintType)
 enum class ENodeIndex : uint8
 {
-	None, Left, Middle, Right
+	None, Left, Middle, Right, SecLeft, SecRight
 };
 
 

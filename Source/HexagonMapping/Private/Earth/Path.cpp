@@ -50,12 +50,20 @@ void Path::AddChild(AHexagonTile* Parent, AHexagonTile* AddTile, int Index, int 
 	{
 		NodeIndex = ENodeIndex::Right;
 	}
-	if (Index > 2)
+	else if (Index == 3)
 	{
-		GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red,
-			FString::Printf(TEXT("Error: index to high: %d"), Index));
+		NodeIndex = ENodeIndex::SecLeft;
 	}
-	else
+	else if (Index == 4)
+	{
+		NodeIndex = ENodeIndex::SecRight;
+	}
+	//if (Index > 4)
+	//{
+	//	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Red,
+	//		FString::Printf(TEXT("Error: index to high: %d"), Index));
+	//}
+	//else
 	{
 		/*GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Purple,
 			FString::Printf(TEXT("Depth: %d"), Depth));
@@ -116,8 +124,7 @@ void Path::CalculatePathsLoop()
 		}
 	}
 }
-// TODO update how directional the astar will be
-
+// TODO: fix performance and probably use hex tiles instead of nodes?
 void Path::AddNode(AHexagonTile* Parent, AHexagonTile* AddNode, ENodeIndex Index, int Depth, float Score)
 {
 	Node* NewNode = new Node();

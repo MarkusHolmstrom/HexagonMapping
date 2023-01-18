@@ -35,12 +35,16 @@ public:
 	UPROPERTY(VisibleAnywhere)
 		bool bSearchingForPath = true;
 	// Default for Birdpath is 3, 5 for Astar
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(EditAnywhere)
 		int SearchWidth = 5;
 	UPROPERTY(VisibleAnywhere)
 		int Tries = 0;
 
+	UPROPERTY(EditAnywhere)
+		int RemoveDepth = 1;
 
+	UPROPERTY(VisibleAnywhere)
+		int tempremoves = 0;
 	// This adds some kind of limit in case the pathfinding 
 	// gets stuck in a never ending while loop
 	UPROPERTY(EditAnywhere)
@@ -112,6 +116,9 @@ private:
 	void LookForMoreOptions();
 	UFUNCTION()
 		TArray<AHexagonTile*> GetChildren(TArray<AHexagonTile*> Tiles);
+	UFUNCTION()
+		bool AlreadyInTree(AHexagonTile* CheckTile);
+	
 	UFUNCTION()
 	void PathfindingLoop();
 	UFUNCTION()

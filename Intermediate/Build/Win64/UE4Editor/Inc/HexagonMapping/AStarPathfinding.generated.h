@@ -34,6 +34,7 @@ class AActor;
 	DECLARE_FUNCTION(execGetViableTiles); \
 	DECLARE_FUNCTION(execGetBestTile); \
 	DECLARE_FUNCTION(execPathfindingLoop); \
+	DECLARE_FUNCTION(execAlreadyInTree); \
 	DECLARE_FUNCTION(execGetChildren); \
 	DECLARE_FUNCTION(execLookForMoreOptions); \
 	DECLARE_FUNCTION(execStartCalculatePath); \
@@ -56,6 +57,7 @@ class AActor;
 	DECLARE_FUNCTION(execGetViableTiles); \
 	DECLARE_FUNCTION(execGetBestTile); \
 	DECLARE_FUNCTION(execPathfindingLoop); \
+	DECLARE_FUNCTION(execAlreadyInTree); \
 	DECLARE_FUNCTION(execGetChildren); \
 	DECLARE_FUNCTION(execLookForMoreOptions); \
 	DECLARE_FUNCTION(execStartCalculatePath); \

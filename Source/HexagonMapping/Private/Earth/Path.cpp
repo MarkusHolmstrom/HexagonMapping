@@ -14,6 +14,8 @@ Path::Path(AHexagonTile* StartTile, AHexagonTile* GoalTile)
 	StartNode->Y = StartTile->TileIndex.Y;
 	StartNode->Index = ENodeIndex::None;
 	StartNode->Depth = 0;
+	CurrentDepthNodes.Add(StartNode);
+	Nodes.Add(CurrentDepthNodes);
 }
 
 bool Path::CanAddToPath(AHexagonTile* Tile)
@@ -32,11 +34,16 @@ bool Path::CanAddToPath(AHexagonTile* Tile)
 
 void Path::AddChildNode(Node* ChildNode)
 {
-	Nodes.Add(ChildNode);
+	CurrentDepthNodes.Add(ChildNode);
 }
 
 void Path::AddChild(AHexagonTile* Parent, AHexagonTile* AddTile, int Index, int Depth, float Score)
 {
+	//if (CheckTileForDepth(AddTile, Depth))
+	//{
+	//	//UE_LOG(LogTemp, Warning, TEXT("Depth: %d"), Depth);
+	//	return;
+	//}
 	ENodeIndex NodeIndex = ENodeIndex::None;
 	if (Index == 0)
 	{
@@ -76,6 +83,11 @@ void Path::AddChild(AHexagonTile* Parent, AHexagonTile* AddTile, int Index, int 
 void Path::SetTreeDepth(int Depth)
 {
 	TreeDepth = Depth;
+
+	Nodes.Add(CurrentDepthNodes);
+	GEngine->AddOnScreenDebugMessage(-1, 19, FColor::Purple,
+		FString::Printf(TEXT("Set tree depth; cur depth nodes length: %d"), CurrentDepthNodes.Num()));
+	CurrentDepthNodes.Empty();
 }
 
 void Path::CalculatePathsLoop()
@@ -124,6 +136,56 @@ void Path::CalculatePathsLoop()
 		}
 	}
 }
+
+bool Path::CheckForTile(AHexagonTile* Parent, int DepthToRemove)
+{
+	for (size_t i = 0; i < Nodes[DepthToRemove].Num(); i++)
+	{
+		if (Nodes[DepthToRemove][i]->Tile == Parent)
+		{
+			return true;
+		}
+	}
+	return false;
+	//if (NodesToRemove.Num() == 0)
+	//{
+	//	return;
+	//}
+	////Node* NodeRemove = NodesToRemove[0];
+	//for (size_t i = 0; i < NodesToRemove.Num(); i++) //DepthToRemove
+	//{
+	//	Nodes[DepthToRemove].Remove(NodesToRemove[i]);
+	//	//NodeRemove = GetNode(NodeRemove->ParentTile, DepthToRemove);
+	//}
+}
+
+Node* Path::GetNode(AHexagonTile* Tile, int Depth)
+{
+	/*for (size_t i = 0; i < Nodes[Depth].Num(); i++)
+	{
+		if (Nodes[Depth][i]->Tile == Tile)
+		{
+			return Nodes[Depth][i];
+		}
+	}*/
+	GEngine->AddOnScreenDebugMessage(-1, 15, FColor::Red,
+		FString::Printf(TEXT("Error: no node found for tile, nodes num: %d"), Nodes.Num()));
+	return nullptr;
+}
+// Check if tile/node already exists higher upp (have lower depth) in the
+// path tree. Returns true if it finds a match
+bool Path::CheckTileForDepth(AHexagonTile* Tile, int Depth)
+{
+	for (size_t i = 0; i < Nodes[Depth].Num(); i++)
+	{
+		if (Nodes[Depth][i]->Tile == Tile && Nodes[Depth][i]->Depth > Depth)
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 // TODO: fix performance and probably use hex tiles instead of nodes?
 void Path::AddNode(AHexagonTile* Parent, AHexagonTile* AddNode, ENodeIndex Index, int Depth, float Score)
 {
@@ -135,8 +197,22 @@ void Path::AddNode(AHexagonTile* Parent, AHexagonTile* AddNode, ENodeIndex Index
 	NewNode->Index = Index;
 	NewNode->Depth = Depth;
 	NewNode->Tile = AddNode;
+	NewNode->ParentTile = Parent;
 	NewNode->Score = Score;
-	Nodes.Add(NewNode);
+	//if (Depth == 0)
+	{
+		CurrentDepthNodes.Add(NewNode); 
+		return;
+	}
+	/*if (!Nodes[Depth - 1].Contains(NewNode))
+	{
+		CurrentDepthNodes.Add(NewNode);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("nde already exissts, depth: %d"), Depth);
+
+	}*/
 }
 
 TArray<AHexagonTile*> Path::GetPath(TArray<Node*> NodePaths)
@@ -161,17 +237,17 @@ TArray<Node*> Path::GetChildrenNodes(Node* Parent, int ChildDepth)
 		FString::Printf(TEXT("Child depth: %d"), ChildDepth));*/
 	//UE_LOG(LogTemp, Warning, TEXT("Child depth: %d"), ChildDepth);
 
-	for (size_t i = 0; i < Nodes.Num(); i++)
+	for (size_t i = 0; i < Nodes[ChildDepth].Num(); i++)
 	{
 		/*UE_LOG(LogTemp, Warning, TEXT("Noddy X: %d"), Nodes[i]->XParent);
 		UE_LOG(LogTemp, Warning, TEXT("Noddy Y: %d"), Nodes[i]->YParent);*/
-		if (Nodes[i]->IsParent(Parent->X, Parent->Y))// && Nodes[i]->Depth == ChildDepth)
+		if (Nodes[ChildDepth][i]->IsParent(Parent->X, Parent->Y))// && Nodes[i]->Depth == ChildDepth)
 		{
 			//UE_LOG(LogTemp, Warning, TEXT("Match!!!!! Child depth: %d"), ChildDepth);
 			/*
 			UE_LOG(LogTemp, Warning, TEXT("Par X: %d"), Parent->X);
 			UE_LOG(LogTemp, Warning, TEXT("Par Y: %d"), Parent->Y);*/
-			ChildNodes.Add(Nodes[i]);
+			ChildNodes.Add(Nodes[ChildDepth][i]);
 		}
 	}
 	return ChildNodes;
@@ -179,7 +255,9 @@ TArray<Node*> Path::GetChildrenNodes(Node* Parent, int ChildDepth)
 
 TArray<Node*> Path::GetNodesViaDepth(int Depth)
 {
-	TArray<Node*> DepthNodes;
+	return Nodes[Depth];
+	/*TArray<Node*> DepthNodes;
+
 	for (size_t i = 0; i < Nodes.Num(); i++)
 	{
 		if (Nodes[i]->Depth == Depth)
@@ -187,7 +265,7 @@ TArray<Node*> Path::GetNodesViaDepth(int Depth)
 			DepthNodes.Add(Nodes[i]);
 		}
 	}
-	return DepthNodes;
+	return DepthNodes;*/
 }
 
 void Path::SetupTreeNodes()
@@ -238,12 +316,12 @@ Node* Path::GetBestNode(TArray<Node*> CompNodes)
 
 void Path::RemoveNodes(TArray<Node*> RemNodes)
 {
-	for (size_t i = 0; i < RemNodes.Num(); i++)
+	/*for (size_t i = 0; i < RemNodes.Num(); i++)
 	{
 		if (Nodes.Contains(RemNodes[i]))
 		{
 			Nodes.Remove(RemNodes[i]);
 		}
-	}
+	}*/
 }
 

@@ -25,6 +25,8 @@ public:
 	int Depth;
 	UPROPERTY()
 	AHexagonTile* Tile;
+	UPROPERTY()
+		AHexagonTile* ParentTile;
 
 	UFUNCTION()
 	bool IsParent(int XPar, int YPar) 
@@ -55,7 +57,10 @@ public:
 	UPROPERTY()
 		TArray<Node*> PathNodes;
 	UPROPERTY()
-	TArray<Node*> Nodes;
+		TArray<Node*> CurrentDepthNodes;
+	UPROPERTY()
+		TArray<TArray<Node*>> Nodes;
+
 private:
 	UPROPERTY()
 	AHexagonTile* StartTile;
@@ -84,8 +89,14 @@ public:
 		void SetTreeDepth(int Depth);
 	UFUNCTION()
 		void CalculatePathsLoop();
+	UFUNCTION()
+		bool CheckForTile(AHexagonTile* Parent, int DepthToRemove);
+	UFUNCTION()
+		Node* GetNode(AHexagonTile* Tile, int Depth);
 
 private:
+	UFUNCTION()
+		bool CheckTileForDepth(AHexagonTile* Tile, int Depth);
 	UFUNCTION()
 		void AddNode(AHexagonTile* Parent, AHexagonTile* AddNode, ENodeIndex Index, int Depth, float Score);
 

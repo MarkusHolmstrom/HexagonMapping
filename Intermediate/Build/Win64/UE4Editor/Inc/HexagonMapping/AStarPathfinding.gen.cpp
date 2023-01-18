@@ -131,6 +131,14 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 		P_THIS->PathfindingLoop();
 		P_NATIVE_END;
 	}
+	DEFINE_FUNCTION(AAStarPathfinding::execAlreadyInTree)
+	{
+		P_GET_OBJECT(AHexagonTile,Z_Param_CheckTile);
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*(bool*)Z_Param__Result=P_THIS->AlreadyInTree(Z_Param_CheckTile);
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(AAStarPathfinding::execGetChildren)
 	{
 		P_GET_TARRAY(AHexagonTile*,Z_Param_Tiles);
@@ -173,6 +181,7 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 	{
 		UClass* Class = AAStarPathfinding::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
+			{ "AlreadyInTree", &AAStarPathfinding::execAlreadyInTree },
 			{ "CleanUp", &AAStarPathfinding::execCleanUp },
 			{ "ClearClosedList", &AAStarPathfinding::execClearClosedList },
 			{ "DelayedCleanUp", &AAStarPathfinding::execDelayedCleanUp },
@@ -193,6 +202,47 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 			{ "StartCalculatePath", &AAStarPathfinding::execStartCalculatePath },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
+	}
+	struct Z_Construct_UFunction_AAStarPathfinding_AlreadyInTree_Statics
+	{
+		struct AStarPathfinding_eventAlreadyInTree_Parms
+		{
+			AHexagonTile* CheckTile;
+			bool ReturnValue;
+		};
+		static const UE4CodeGen_Private::FObjectPropertyParams NewProp_CheckTile;
+		static void NewProp_ReturnValue_SetBit(void* Obj);
+		static const UE4CodeGen_Private::FBoolPropertyParams NewProp_ReturnValue;
+		static const UE4CodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UE4CodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UE4CodeGen_Private::FObjectPropertyParams Z_Construct_UFunction_AAStarPathfinding_AlreadyInTree_Statics::NewProp_CheckTile = { "CheckTile", nullptr, (EPropertyFlags)0x0010000000000080, UE4CodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AStarPathfinding_eventAlreadyInTree_Parms, CheckTile), Z_Construct_UClass_AHexagonTile_NoRegister, METADATA_PARAMS(nullptr, 0) };
+	void Z_Construct_UFunction_AAStarPathfinding_AlreadyInTree_Statics::NewProp_ReturnValue_SetBit(void* Obj)
+	{
+		((AStarPathfinding_eventAlreadyInTree_Parms*)Obj)->ReturnValue = 1;
+	}
+	const UE4CodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_AAStarPathfinding_AlreadyInTree_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UE4CodeGen_Private::EPropertyGenFlags::Bool | UE4CodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(AStarPathfinding_eventAlreadyInTree_Parms), &Z_Construct_UFunction_AAStarPathfinding_AlreadyInTree_Statics::NewProp_ReturnValue_SetBit, METADATA_PARAMS(nullptr, 0) };
+	const UE4CodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AAStarPathfinding_AlreadyInTree_Statics::PropPointers[] = {
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AAStarPathfinding_AlreadyInTree_Statics::NewProp_CheckTile,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AAStarPathfinding_AlreadyInTree_Statics::NewProp_ReturnValue,
+	};
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AAStarPathfinding_AlreadyInTree_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Public/Earth/AStarPathfinding.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FFunctionParams Z_Construct_UFunction_AAStarPathfinding_AlreadyInTree_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AAStarPathfinding, nullptr, "AlreadyInTree", nullptr, nullptr, sizeof(AStarPathfinding_eventAlreadyInTree_Parms), Z_Construct_UFunction_AAStarPathfinding_AlreadyInTree_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AAStarPathfinding_AlreadyInTree_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x00040401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AAStarPathfinding_AlreadyInTree_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AAStarPathfinding_AlreadyInTree_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AAStarPathfinding_AlreadyInTree()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UE4CodeGen_Private::ConstructUFunction(ReturnFunction, Z_Construct_UFunction_AAStarPathfinding_AlreadyInTree_Statics::FuncParams);
+		}
+		return ReturnFunction;
 	}
 	struct Z_Construct_UFunction_AAStarPathfinding_CleanUp_Statics
 	{
@@ -874,6 +924,14 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 #endif
 		static const UE4CodeGen_Private::FUnsizedIntPropertyParams NewProp_Tries;
 #if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_RemoveDepth_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FUnsizedIntPropertyParams NewProp_RemoveDepth;
+#if WITH_METADATA
+		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_tempremoves_MetaData[];
+#endif
+		static const UE4CodeGen_Private::FUnsizedIntPropertyParams NewProp_tempremoves;
+#if WITH_METADATA
 		static const UE4CodeGen_Private::FMetaDataPairParam NewProp_MaxTries_MetaData[];
 #endif
 		static const UE4CodeGen_Private::FUnsizedIntPropertyParams NewProp_MaxTries;
@@ -957,6 +1015,7 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 		(UObject* (*)())Z_Construct_UPackage__Script_HexagonMapping,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_AAStarPathfinding_Statics::FuncInfo[] = {
+		{ &Z_Construct_UFunction_AAStarPathfinding_AlreadyInTree, "AlreadyInTree" }, // 454488430
 		{ &Z_Construct_UFunction_AAStarPathfinding_CleanUp, "CleanUp" }, // 1349669793
 		{ &Z_Construct_UFunction_AAStarPathfinding_ClearClosedList, "ClearClosedList" }, // 3994226457
 		{ &Z_Construct_UFunction_AAStarPathfinding_DelayedCleanUp, "DelayedCleanUp" }, // 1418485430
@@ -1054,7 +1113,7 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 		{ "ToolTip", "Default for Birdpath is 3, 5 for Astar" },
 	};
 #endif
-	const UE4CodeGen_Private::FUnsizedIntPropertyParams Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_SearchWidth = { "SearchWidth", nullptr, (EPropertyFlags)0x0010000000020001, UE4CodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AAStarPathfinding, SearchWidth), METADATA_PARAMS(Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_SearchWidth_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_SearchWidth_MetaData)) };
+	const UE4CodeGen_Private::FUnsizedIntPropertyParams Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_SearchWidth = { "SearchWidth", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AAStarPathfinding, SearchWidth), METADATA_PARAMS(Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_SearchWidth_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_SearchWidth_MetaData)) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_Tries_MetaData[] = {
 		{ "Category", "AStarPathfinding" },
@@ -1062,6 +1121,20 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 	};
 #endif
 	const UE4CodeGen_Private::FUnsizedIntPropertyParams Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_Tries = { "Tries", nullptr, (EPropertyFlags)0x0010000000020001, UE4CodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AAStarPathfinding, Tries), METADATA_PARAMS(Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_Tries_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_Tries_MetaData)) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_RemoveDepth_MetaData[] = {
+		{ "Category", "AStarPathfinding" },
+		{ "ModuleRelativePath", "Public/Earth/AStarPathfinding.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FUnsizedIntPropertyParams Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_RemoveDepth = { "RemoveDepth", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AAStarPathfinding, RemoveDepth), METADATA_PARAMS(Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_RemoveDepth_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_RemoveDepth_MetaData)) };
+#if WITH_METADATA
+	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_tempremoves_MetaData[] = {
+		{ "Category", "AStarPathfinding" },
+		{ "ModuleRelativePath", "Public/Earth/AStarPathfinding.h" },
+	};
+#endif
+	const UE4CodeGen_Private::FUnsizedIntPropertyParams Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_tempremoves = { "tempremoves", nullptr, (EPropertyFlags)0x0010000000020001, UE4CodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AAStarPathfinding, tempremoves), METADATA_PARAMS(Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_tempremoves_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_tempremoves_MetaData)) };
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_MaxTries_MetaData[] = {
 		{ "Category", "AStarPathfinding" },
@@ -1204,6 +1277,8 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_bSearchingForPath,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_SearchWidth,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_Tries,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_RemoveDepth,
+		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_tempremoves,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_MaxTries,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_ManhattanDistance,
 		(const UE4CodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_TotalMovementCost,
@@ -1255,7 +1330,7 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AAStarPathfinding, 2706914813);
+	IMPLEMENT_CLASS(AAStarPathfinding, 3897607495);
 	template<> HEXAGONMAPPING_API UClass* StaticClass<AAStarPathfinding>()
 	{
 		return AAStarPathfinding::StaticClass();

@@ -163,10 +163,17 @@ TArray<AHexagonTile*> AAStarPathfinding::GetChildren(TArray<AHexagonTile*> Tiles
 		TArray<AHexagonTile*> AdjTiles = GetAdjacentTiles(Tiles[i], GoalDirection);
 		for (size_t j = 0; j < AdjTiles.Num(); j++)
 		{
-			if (AdjTiles[j] && IsValidTile(AdjTiles[j]) && Tiles[i] && NewPath)
+			if (AdjTiles[j] && IsValidTile(AdjTiles[j]) && Tiles[i] 
+				&& NewPath && !AlreadyInTree(AdjTiles[j]))
 			{
 				ReturnChildren.Add(AdjTiles[j]);
 				NewPath->AddChild(Tiles[i], AdjTiles[j], j, Depth, GetGScore(AdjTiles[j], GoalTile)); // cur tile or tiles[i] as parent?
+			}
+			else
+			{
+				tempremoves++; // 170000 ish
+				// this doesnt help does it?
+				//NewPath->RemovePartOfPath(Tiles[i], Depth - RemoveDepth);
 			}
 		}
 	}
@@ -174,6 +181,11 @@ TArray<AHexagonTile*> AAStarPathfinding::GetChildren(TArray<AHexagonTile*> Tiles
 	GEngine->AddOnScreenDebugMessage(-1, 25, FColor::Cyan,
 		FString::Printf(TEXT("Return children: %d"), ReturnChildren.Num()));
 	return ReturnChildren;
+}
+
+bool AAStarPathfinding::AlreadyInTree(AHexagonTile* CheckTile)
+{
+	return NewPath->CheckForTile(CheckTile, Depth - RemoveDepth);
 }
 
 void AAStarPathfinding::PathfindingLoop()

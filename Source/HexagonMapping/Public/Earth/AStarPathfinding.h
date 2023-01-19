@@ -36,19 +36,19 @@ public:
 		bool bSearchingForPath = true;
 	// Default for Birdpath is 3, 5 for Astar
 	UPROPERTY(EditAnywhere)
-		int SearchWidth = 5;
+		int SearchWidth = 3;
+	UPROPERTY(EditAnywhere)
+		int AstarSearchWidth = 5;
 	UPROPERTY(VisibleAnywhere)
 		int Tries = 0;
 
 	UPROPERTY(EditAnywhere)
 		int RemoveDepth = 1;
 
-	UPROPERTY(VisibleAnywhere)
-		int tempremoves = 0;
 	// This adds some kind of limit in case the pathfinding 
 	// gets stuck in a never ending while loop
 	UPROPERTY(EditAnywhere)
-	int MaxTries = 10;
+	int MaxTries = 30;
 	// H:
 	UPROPERTY(VisibleAnywhere)
 		float ManhattanDistance = 0;

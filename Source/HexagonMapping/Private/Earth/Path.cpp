@@ -85,8 +85,8 @@ void Path::SetTreeDepth(int Depth)
 	TreeDepth = Depth;
 
 	Nodes.Add(CurrentDepthNodes);
-	GEngine->AddOnScreenDebugMessage(-1, 19, FColor::Purple,
-		FString::Printf(TEXT("Set tree depth; cur depth nodes length: %d"), CurrentDepthNodes.Num()));
+	/*GEngine->AddOnScreenDebugMessage(-1, 19, FColor::Purple,
+		FString::Printf(TEXT("Set tree depth; cur depth nodes length: %d"), CurrentDepthNodes.Num()));*/
 	CurrentDepthNodes.Empty();
 }
 
@@ -119,6 +119,7 @@ void Path::CalculatePathsLoop()
 			RemNodes.Add(NodePath[NodePath.Num() - 1]);
 			RemoveNodes(RemNodes);
 			Tries = 0;
+			return;
 		}
 		else if (NodePath.Num() == 0)
 		{
@@ -139,6 +140,11 @@ void Path::CalculatePathsLoop()
 
 bool Path::CheckForTile(AHexagonTile* Parent, int DepthToRemove)
 {
+	if (DepthToRemove >= Nodes.Num())
+	{
+		return true;
+	}
+	//TODO improve search method!!1!!?
 	for (size_t i = 0; i < Nodes[DepthToRemove].Num(); i++)
 	{
 		if (Nodes[DepthToRemove][i]->Tile == Parent)
@@ -146,17 +152,20 @@ bool Path::CheckForTile(AHexagonTile* Parent, int DepthToRemove)
 			return true;
 		}
 	}
+	// TODO play around with this depthtoremove limit a bit, if 0 = excellent perf!
+	// Around 5 might be fine too, sweetspot is between 5 and 0
+	// how to find goal and have good perf at same time?
+	if (DepthToRemove > 4)
+	{
+		for (size_t i = 0; i < Nodes[DepthToRemove - 1].Num(); i++)
+		{
+			if (Nodes[DepthToRemove - 1][i]->Tile == Parent)
+			{
+				return true;
+			}
+		}
+	}
 	return false;
-	//if (NodesToRemove.Num() == 0)
-	//{
-	//	return;
-	//}
-	////Node* NodeRemove = NodesToRemove[0];
-	//for (size_t i = 0; i < NodesToRemove.Num(); i++) //DepthToRemove
-	//{
-	//	Nodes[DepthToRemove].Remove(NodesToRemove[i]);
-	//	//NodeRemove = GetNode(NodeRemove->ParentTile, DepthToRemove);
-	//}
 }
 
 Node* Path::GetNode(AHexagonTile* Tile, int Depth)
@@ -199,20 +208,8 @@ void Path::AddNode(AHexagonTile* Parent, AHexagonTile* AddNode, ENodeIndex Index
 	NewNode->Tile = AddNode;
 	NewNode->ParentTile = Parent;
 	NewNode->Score = Score;
-	//if (Depth == 0)
-	{
-		CurrentDepthNodes.Add(NewNode); 
-		return;
-	}
-	/*if (!Nodes[Depth - 1].Contains(NewNode))
-	{
-		CurrentDepthNodes.Add(NewNode);
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("nde already exissts, depth: %d"), Depth);
-
-	}*/
+	
+	CurrentDepthNodes.Add(NewNode);
 }
 
 TArray<AHexagonTile*> Path::GetPath(TArray<Node*> NodePaths)
@@ -279,16 +276,10 @@ TArray<Node*> Path::GetBestPath()
 {
 	TArray<Node*> BestPath;
 	// loop through the tree, i = 0 is for the start node that is not needed here
-	for (size_t i = 1; i < TreeDepth; i++)
+	for (size_t i = 0; i < TreeDepth; i++)
 	{ 
 		TArray<Node*> TempNodes = GetChildrenNodes(ParentNode, i); // got a zero here!! not when i = 2
-		if (TempNodes.Num() == 0)
-		{
-			/*GEngine->AddOnScreenDebugMessage(-1, 15, FColor::Blue,
-				FString::Printf(TEXT("index of tree %d"), i));*/
-			//BestPath.Empty();
-		}
-		else
+		if (TempNodes.Num() > 0)
 		{
 			/*GEngine->AddOnScreenDebugMessage(-1, 15, FColor::Blue,
 				FString::Printf(TEXT("temp nodes: %d"), TempNodes.Num()));*/
@@ -305,6 +296,13 @@ Node* Path::GetBestNode(TArray<Node*> CompNodes)
 	float BestScore = 1000000000.0f;
 	for (size_t i = 0; i < CompNodes.Num(); i++)
 	{
+		FIntPoint NodeIndex = FIntPoint(CompNodes[i]->X, CompNodes[i]->Y);
+		if (FoundTargetTile(NodeIndex))
+		{
+			GEngine->AddOnScreenDebugMessage(-1, 15, FColor::Blue,
+				FString::Printf(TEXT("Found target node: %d , %d"), NodeIndex.X, NodeIndex.Y ));
+			return CompNodes[i];
+		}
 		if (CompNodes[i]->Score < BestScore)
 		{
 			BestScore = CompNodes[i]->Score;
@@ -312,6 +310,15 @@ Node* Path::GetBestNode(TArray<Node*> CompNodes)
 		}
 	}
 	return BestNode;
+}
+
+bool Path::FoundTargetTile(FIntPoint Index)
+{
+	if (GoalTile->TileIndex == Index)
+	{
+		return true;
+	}
+	return false;
 }
 
 void Path::RemoveNodes(TArray<Node*> RemNodes)

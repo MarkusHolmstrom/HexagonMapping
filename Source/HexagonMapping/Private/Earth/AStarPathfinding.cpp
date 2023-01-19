@@ -90,11 +90,6 @@ void AAStarPathfinding::StartCalculatePath()
 
 void AAStarPathfinding::LookForMoreOptions()
 {
-	// Clear prev nodes if NewPath exists:
-	/*if (NewPath && NewPath->Nodes.Num() > 0)
-	{
-		NewPath->Nodes.Empty();
-	}*/
 	// Create a new path
 	NewPath = new Path(StartTile, GoalTile);
 	// Depth = 0 is parent node/tile
@@ -104,7 +99,10 @@ void AAStarPathfinding::LookForMoreOptions()
 
 	ChildTiles.Empty();
 	ChildTiles.Add(CurrentTile);
-	SearchWidth = 5;
+
+	int DefWidth = SearchWidth;
+	SearchWidth = AstarSearchWidth;
+	// Gathering possible paths
 	while (bAStarPathFinding)
 	{
 		if (ChildTiles.Num() == 0 || Tries >= MaxTries)
@@ -118,10 +116,10 @@ void AAStarPathfinding::LookForMoreOptions()
 			ViableTiles[i]->ChangeHighlight(true);
 		}*/
 		
-		ChildTiles = GetViableTiles(GetChildren(ChildTiles)); //TODO change after cleanup?
+		ChildTiles = GetViableTiles(GetChildren(ChildTiles)); 
 		
-		Depth++;
 		NewPath->SetTreeDepth(Depth);
+		Depth++;
 		Tries++;
 		// update direction - behovs?
 		/*FVector Start = CurrentTile->GetActorLocation();
@@ -129,13 +127,14 @@ void AAStarPathfinding::LookForMoreOptions()
 		GoalDirection = GetDirection(Start, Goal);*/
 	}
 
-	SearchWidth = 3;
+	SearchWidth = DefWidth;
 	NewPath->CalculatePathsLoop();
 	test = NewPath->test;
 	TArray<AHexagonTile*> PathTiles;
-	for (size_t i = 0; i < NewPath->PathNodes.Num(); i++)
+	TArray<Node*> PathNodes = NewPath->PathNodes;
+	for (size_t i = 0; i < PathNodes.Num(); i++)
 	{
-		PathTiles.Add(NewPath->PathNodes[i]->Tile);
+		PathTiles.Add(PathNodes[i]->Tile);
 		if (PathTiles[i])
 		{
 			PathTiles[i]->ChangeHighlight(true);
@@ -160,7 +159,10 @@ TArray<AHexagonTile*> AAStarPathfinding::GetChildren(TArray<AHexagonTile*> Tiles
 	TArray<AHexagonTile*> ReturnChildren;
 	for (size_t i = 0; i < Tiles.Num(); i++)
 	{
+		//TODO too much perf heavy with this goal dir, poss fix?
+		//GoalDirection = GetDirection(Tiles[i]->TileIndex, GoalTile->TileIndex);
 		TArray<AHexagonTile*> AdjTiles = GetAdjacentTiles(Tiles[i], GoalDirection);
+
 		for (size_t j = 0; j < AdjTiles.Num(); j++)
 		{
 			if (AdjTiles[j] && IsValidTile(AdjTiles[j]) && Tiles[i] 
@@ -169,15 +171,9 @@ TArray<AHexagonTile*> AAStarPathfinding::GetChildren(TArray<AHexagonTile*> Tiles
 				ReturnChildren.Add(AdjTiles[j]);
 				NewPath->AddChild(Tiles[i], AdjTiles[j], j, Depth, GetGScore(AdjTiles[j], GoalTile)); // cur tile or tiles[i] as parent?
 			}
-			else
-			{
-				tempremoves++; // 170000 ish
-				// this doesnt help does it?
-				//NewPath->RemovePartOfPath(Tiles[i], Depth - RemoveDepth);
-			}
 		}
 	}
-	// TODO this must be reduced! 1.9 million is to much after 10 steps!!!
+	// TODO why 0 after 8 or so steps?
 	GEngine->AddOnScreenDebugMessage(-1, 25, FColor::Cyan,
 		FString::Printf(TEXT("Return children: %d"), ReturnChildren.Num()));
 	return ReturnChildren;
@@ -195,7 +191,6 @@ void AAStarPathfinding::PathfindingLoop()
 	bool bFoundGoal = false;
 	while (bSearchingForPath)
 	{
-		//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Green, TEXT("on emore time:"));
 		Tries++;
 		GoalDirection = GetDirection(CurrentTile->TileIndex, GoalTile->TileIndex);
 		TArray<AHexagonTile*> AdjTiles = GetAdjacentTiles(CurrentTile, GoalDirection);

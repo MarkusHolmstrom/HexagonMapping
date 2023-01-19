@@ -114,6 +114,9 @@ private:
 		Node* GetBestNode(TArray<Node*> CompNodes);
 
 	UFUNCTION()
+		bool FoundTargetTile(FIntPoint Index);
+
+	UFUNCTION()
 		void RemoveNodes(TArray<Node*> RemNodes);
 
 };

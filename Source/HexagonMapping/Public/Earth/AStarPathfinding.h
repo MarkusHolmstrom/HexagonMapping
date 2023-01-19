@@ -34,9 +34,9 @@ public:
 		bool bWaterVessel = false;
 	UPROPERTY(VisibleAnywhere)
 		bool bSearchingForPath = true;
-	// Default for Birdpath is 3, 5 for Astar
+	// Default for Birdpath is 3, 5 for Astar TODO only have 5?
 	UPROPERTY(EditAnywhere)
-		int SearchWidth = 3;
+		int SearchWidth = 5;
 	UPROPERTY(EditAnywhere)
 		int AstarSearchWidth = 5;
 	UPROPERTY(VisibleAnywhere)

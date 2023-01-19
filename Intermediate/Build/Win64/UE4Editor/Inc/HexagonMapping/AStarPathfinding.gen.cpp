@@ -1108,9 +1108,9 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 #if WITH_METADATA
 	const UE4CodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_SearchWidth_MetaData[] = {
 		{ "Category", "AStarPathfinding" },
-		{ "Comment", "// Default for Birdpath is 3, 5 for Astar\n" },
+		{ "Comment", "// Default for Birdpath is 3, 5 for Astar TODO only have 5?\n" },
 		{ "ModuleRelativePath", "Public/Earth/AStarPathfinding.h" },
-		{ "ToolTip", "Default for Birdpath is 3, 5 for Astar" },
+		{ "ToolTip", "Default for Birdpath is 3, 5 for Astar TODO only have 5?" },
 	};
 #endif
 	const UE4CodeGen_Private::FUnsizedIntPropertyParams Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_SearchWidth = { "SearchWidth", nullptr, (EPropertyFlags)0x0010000000000001, UE4CodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AAStarPathfinding, SearchWidth), METADATA_PARAMS(Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_SearchWidth_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AAStarPathfinding_Statics::NewProp_SearchWidth_MetaData)) };
@@ -1330,7 +1330,7 @@ void EmptyLinkFunctionForGeneratedCodeAStarPathfinding() {}
 		}
 		return OuterClass;
 	}
-	IMPLEMENT_CLASS(AAStarPathfinding, 646938516);
+	IMPLEMENT_CLASS(AAStarPathfinding, 3212983164);
 	template<> HEXAGONMAPPING_API UClass* StaticClass<AAStarPathfinding>()
 	{
 		return AAStarPathfinding::StaticClass();

@@ -137,6 +137,7 @@ void AAStarPathfinding::LookForMoreOptions()
 		PathTiles.Add(PathNodes[i]->Tile);
 		if (PathTiles[i])
 		{
+			ClosedList.Add(PathTiles[i]);
 			PathTiles[i]->ChangeHighlight(true);
 			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald,
 				TEXT("Another light added"));
@@ -162,13 +163,14 @@ TArray<AHexagonTile*> AAStarPathfinding::GetChildren(TArray<AHexagonTile*> Tiles
 		//TODO too much perf heavy with this goal dir, poss fix?
 		//GoalDirection = GetDirection(Tiles[i]->TileIndex, GoalTile->TileIndex);
 		TArray<AHexagonTile*> AdjTiles = GetAdjacentTiles(Tiles[i], GoalDirection);
-
+		// Todo find goal tile here?
 		for (size_t j = 0; j < AdjTiles.Num(); j++)
 		{
 			if (AdjTiles[j] && IsValidTile(AdjTiles[j]) && Tiles[i] 
 				&& NewPath && !AlreadyInTree(AdjTiles[j]))
 			{
 				ReturnChildren.Add(AdjTiles[j]);
+				AdjTiles[j]->ChangeHighlight(true);
 				NewPath->AddChild(Tiles[i], AdjTiles[j], j, Depth, GetGScore(AdjTiles[j], GoalTile)); // cur tile or tiles[i] as parent?
 			}
 		}
@@ -743,6 +745,7 @@ void AAStarPathfinding::ClearClosedList()
 	ClosedList.Empty();
 }
 
+// remove cube light over tiles
 void AAStarPathfinding::RemoveTilesLight()
 {
 	if (World)

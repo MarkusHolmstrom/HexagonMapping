@@ -42,8 +42,12 @@ public:
 	UPROPERTY(VisibleAnywhere)
 		int Tries = 0;
 
+	UPROPERTY(VisibleAnywhere)
+		int tempgoalfounds = 0;
 	UPROPERTY(EditAnywhere)
 		int RemoveDepth = 1;
+	UPROPERTY(VisibleAnywhere)
+		bool bAStarPathFinding = false;
 
 	// This adds some kind of limit in case the pathfinding 
 	// gets stuck in a never ending while loop

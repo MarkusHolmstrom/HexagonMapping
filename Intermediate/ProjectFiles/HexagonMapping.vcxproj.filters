@@ -146,5 +146,6 @@
     <ClInclude Include="..\..\Source\HexagonMapping\Public\Earth\WorldPawn.h">
       <Filter>Source\HexagonMapping\Public\Earth</Filter>
     </ClInclude>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

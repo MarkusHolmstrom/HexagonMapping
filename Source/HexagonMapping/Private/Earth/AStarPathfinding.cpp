@@ -94,7 +94,7 @@ void AAStarPathfinding::LookForMoreOptions()
 	NewPath = new Path(StartTile, GoalTile);
 	// Depth = 0 is parent node/tile
 	Depth = 1;
-	bool bAStarPathFinding = true;
+	bAStarPathFinding = true;
 	CurrentTile = StartTile;
 
 	ChildTiles.Empty();
@@ -130,20 +130,20 @@ void AAStarPathfinding::LookForMoreOptions()
 	SearchWidth = DefWidth;
 	NewPath->CalculatePathsLoop();
 	test = NewPath->test;
-	TArray<AHexagonTile*> PathTiles;
-	TArray<Node*> PathNodes = NewPath->PathNodes;
-	for (size_t i = 0; i < PathNodes.Num(); i++)
-	{
-		PathTiles.Add(PathNodes[i]->Tile);
-		if (PathTiles[i])
-		{
-			ClosedList.Add(PathTiles[i]);
-			PathTiles[i]->ChangeHighlight(true);
-			GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald,
-				TEXT("Another light added"));
+	//TArray<AHexagonTile*> PathTiles;
+	//TArray<Node*> PathNodes = NewPath->PathNodes;
+	//for (size_t i = 0; i < PathNodes.Num(); i++)
+	//{
+	//	PathTiles.Add(PathNodes[i]->Tile);
+	//	if (PathTiles[i])
+	//	{
+	//		ClosedList.Add(PathTiles[i]);
+	//		//PathTiles[i]->ChangeHighlight(true);
+	//		GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Emerald,
+	//			TEXT("Another light added"));
 
-		}
-	}
+	//	}
+	//}
 	DelayedCleanUp(5.0f);
 
 	// y do thesese be so big? r they to big?
@@ -163,21 +163,38 @@ TArray<AHexagonTile*> AAStarPathfinding::GetChildren(TArray<AHexagonTile*> Tiles
 		//TODO too much perf heavy with this goal dir, poss fix?
 		//GoalDirection = GetDirection(Tiles[i]->TileIndex, GoalTile->TileIndex);
 		TArray<AHexagonTile*> AdjTiles = GetAdjacentTiles(Tiles[i], GoalDirection);
-		// Todo find goal tile here?
+		
 		for (size_t j = 0; j < AdjTiles.Num(); j++)
 		{
 			if (AdjTiles[j] && IsValidTile(AdjTiles[j]) && Tiles[i] 
 				&& NewPath && !AlreadyInTree(AdjTiles[j]))
 			{
 				ReturnChildren.Add(AdjTiles[j]);
-				AdjTiles[j]->ChangeHighlight(true);
-				NewPath->AddChild(Tiles[i], AdjTiles[j], j, Depth, GetGScore(AdjTiles[j], GoalTile)); // cur tile or tiles[i] as parent?
+				Node* NewNode = NewPath->AddChild(Tiles[i], AdjTiles[j], j, Depth, GetGScore(AdjTiles[j], GoalTile)); // cur tile or tiles[i] as parent?
+				// search for goal tile
+				if (AdjTiles[j] == GoalTile)
+				{
+					// thisworks!!
+						tempgoalfounds++;
+					NewPath->SetGoalNode(NewNode, Depth);
+					TArray<AHexagonTile*> GoalTiles = NewPath->GetGoalPath(NewNode);
+					for (size_t k = 0; k < GoalTiles.Num(); k++)
+					{
+						UE_LOG(LogTemp, Warning, TEXT("X: %d"), GoalTiles[k]->TileIndex.X);
+						UE_LOG(LogTemp, Warning, TEXT("Y: %d"), GoalTiles[k]->TileIndex.Y);
+
+						GoalTiles[k]->ChangeHighlight(true);
+						ClosedList.Add(GoalTiles[k]);
+					}
+					// End the while loop in LookForMoreOptions()
+					bAStarPathFinding = false;
+				}
 			}
 		}
 	}
 	// TODO why 0 after 8 or so steps?
-	GEngine->AddOnScreenDebugMessage(-1, 25, FColor::Cyan,
-		FString::Printf(TEXT("Return children: %d"), ReturnChildren.Num()));
+	/*GEngine->AddOnScreenDebugMessage(-1, 25, FColor::Cyan,
+		FString::Printf(TEXT("Return children: %d"), ReturnChildren.Num()));*/
 	return ReturnChildren;
 }
 
@@ -253,7 +270,7 @@ AHexagonTile* AAStarPathfinding::GetBestTile(TArray<AHexagonTile*> Tiles, float 
 		bNeedPathFinding = true;
 		return nullptr;
 	}
-	AHexagonTile* BestTile = ViableTiles[0]; // test to avoid nullptr
+	AHexagonTile* BestTile = ViableTiles[0]; 
 	// TODO fix this so it iteraties more options, rather than the best by step by step
 	// and add new options if the easy tiles is not viable. add stop as well when the
 	// path is not possible for some reason along the way
@@ -349,7 +366,6 @@ TArray<AHexagonTile*> AAStarPathfinding::GetAdjacentTiles(AHexagonTile* Tile, ED
 		if (AdjacentTiles[i] && IsValidTile(AdjacentTiles[i]) &&
 			!CheckedList.Contains(AdjacentTiles[i]))
 		{
-			//AdjacentTiles[i]->ChangeHighlight(true);
 			ClosedList.Add(AdjacentTiles[i]);
 		}
 	}

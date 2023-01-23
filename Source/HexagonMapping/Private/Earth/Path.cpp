@@ -37,7 +37,7 @@ void Path::AddChildNode(Node* ChildNode)
 	CurrentDepthNodes.Add(ChildNode);
 }
 
-void Path::AddChild(AHexagonTile* Parent, AHexagonTile* AddTile, int Index, int Depth, float Score)
+Node* Path::AddChild(AHexagonTile* Parent, AHexagonTile* AddTile, int Index, int Depth, float Score)
 {
 	//if (CheckTileForDepth(AddTile, Depth))
 	//{
@@ -76,7 +76,7 @@ void Path::AddChild(AHexagonTile* Parent, AHexagonTile* AddTile, int Index, int 
 			FString::Printf(TEXT("Depth: %d"), Depth));
 		GEngine->AddOnScreenDebugMessage(-1, 10, FColor::Purple,
 			FString::Printf(TEXT("Node length: %d"), Nodes.Num()));*/
-		AddNode(Parent, AddTile, NodeIndex, Depth, Score);
+		return AddNode(Parent, AddTile, NodeIndex, Depth, Score);
 	}
 }
 
@@ -155,7 +155,7 @@ bool Path::CheckForTile(AHexagonTile* Parent, int DepthToRemove)
 	// TODO play around with this depthtoremove limit a bit, if 0 = excellent perf!
 	// Around 5 might be fine too, sweetspot is between 5 and 0
 	// how to find goal and have good perf at same time?
-	if (DepthToRemove > 4)
+	if (DepthToRemove > 5)
 	{
 		for (size_t i = 0; i < Nodes[DepthToRemove - 1].Num(); i++)
 		{
@@ -181,6 +181,43 @@ Node* Path::GetNode(AHexagonTile* Tile, int Depth)
 		FString::Printf(TEXT("Error: no node found for tile, nodes num: %d"), Nodes.Num()));
 	return nullptr;
 }
+
+void Path::SetGoalNode(Node* Node, int Depth)
+{
+	GoalNodes.Add(Node);
+
+}
+
+TArray<AHexagonTile*> Path::GetGoalPath(Node* GoalNode)
+{
+	TArray<AHexagonTile*> GoalPath;
+	GoalPath.Add(GoalNode->Tile);
+	GoalPath.Add(GoalNode->ParentTile);
+		Node* NextNode = GoalNode;
+	for (size_t i = GoalNode->Depth - 1; i > 0; i--)
+	{
+		TArray<Node*> NodesDepth = GetNodesViaDepth(i);
+
+		for (size_t j = 0; j < NodesDepth.Num(); j++)
+		{
+			/*UE_LOG(LogTemp, Warning, TEXT("Xs: %d, %d"), NodesDepth[j]->X, NextNode->ParentTile->TileIndex.X);
+			UE_LOG(LogTemp, Warning, TEXT("Ys: %d, %d"), NodesDepth[j]->Y, NextNode->ParentTile->TileIndex.Y);*/
+
+			if (NodesDepth[j]->Tile == NextNode->ParentTile)
+			{
+				GoalPath.Add(NodesDepth[j]->Tile);
+				NextNode = NodesDepth[j];
+				break;
+			}
+		}
+		/*AHexagonTile* ParentTile = GoalNode->ParentTile;
+		GoalPath.Add(GoalNode->ParentTile);*/
+	}
+	// End while loop in CalculatePathsLoop()
+	bFoundPath = true;
+	return GoalPath;
+}
+
 // Check if tile/node already exists higher upp (have lower depth) in the
 // path tree. Returns true if it finds a match
 bool Path::CheckTileForDepth(AHexagonTile* Tile, int Depth)
@@ -196,7 +233,7 @@ bool Path::CheckTileForDepth(AHexagonTile* Tile, int Depth)
 }
 
 // TODO: fix performance and probably use hex tiles instead of nodes?
-void Path::AddNode(AHexagonTile* Parent, AHexagonTile* AddNode, ENodeIndex Index, int Depth, float Score)
+Node* Path::AddNode(AHexagonTile* Parent, AHexagonTile* AddNode, ENodeIndex Index, int Depth, float Score)
 {
 	Node* NewNode = new Node();
 	NewNode->X = AddNode->TileIndex.X;
@@ -210,6 +247,7 @@ void Path::AddNode(AHexagonTile* Parent, AHexagonTile* AddNode, ENodeIndex Index
 	NewNode->Score = Score;
 	
 	CurrentDepthNodes.Add(NewNode);
+	return NewNode;
 }
 
 TArray<AHexagonTile*> Path::GetPath(TArray<Node*> NodePaths)

@@ -221,7 +221,7 @@ void AAStarPathfinding::PathfindingLoop()
 		{
 			Tries = 0;
 			GEngine->AddOnScreenDebugMessage(-1, 15.f, FColor::Red, 
-				TEXT("need path find: test a new path now!"));
+				TEXT("need astar path find: test a new path now!"));
 			CleanUp();
 			LookForMoreOptions();
 			bSearchingForPath = false; 

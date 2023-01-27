@@ -155,7 +155,7 @@ bool Path::CheckForTile(AHexagonTile* Parent, int DepthToRemove)
 	// TODO play around with this depthtoremove limit a bit, if 0 = excellent perf!
 	// Around 5 might be fine too, sweetspot is between 5 and 0
 	// how to find goal and have good perf at same time?
-	if (DepthToRemove > 5)
+	if (DepthToRemove > 0)
 	{
 		for (size_t i = 0; i < Nodes[DepthToRemove - 1].Num(); i++)
 		{

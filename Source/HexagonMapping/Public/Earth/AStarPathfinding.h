@@ -42,8 +42,6 @@ public:
 	UPROPERTY(VisibleAnywhere)
 		int Tries = 0;
 
-	UPROPERTY(VisibleAnywhere)
-		int tempgoalfounds = 0;
 	UPROPERTY(EditAnywhere)
 		int RemoveDepth = 1;
 	UPROPERTY(VisibleAnywhere)

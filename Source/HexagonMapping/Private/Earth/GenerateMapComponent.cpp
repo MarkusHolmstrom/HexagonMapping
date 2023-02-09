@@ -609,53 +609,89 @@ void UGenerateMapComponent::SetShoreTilesAround(int32 X, int32 Y)
 		return;
 	}
 	AHexagonTile* NewShoreTile = nullptr;
+	if (Y % 2 == 1)
+	{
+		if (Y > 0)
+		{
+			NewShoreTile = GetTile(X, Y - 1);
+			if (!NewShoreTile)
+			{
+				return;
+			}
+			if (NewShoreTile->Type == EHexType::Ocean)
+			{
+				NewShoreTile = SetTileShore(NewShoreTile, X, Y - 1);
+				return;
+			}
+			NewShoreTile = GetTile(X - 1, Y - 1);
+			if (!NewShoreTile)
+			{
+				return;
+			}
+			else if (X > 0 && NewShoreTile->Type == EHexType::Ocean)
+			{
+				NewShoreTile = SetTileShore(NewShoreTile, X - 1, Y - 1);
+				return;
+			}
+		}
+		NewShoreTile = GetTile(X - 1, Y);
+		if (!NewShoreTile)
+		{
+			return;
+		}
+		if (X > 0 && NewShoreTile->Type == EHexType::Ocean)
+		{
+			NewShoreTile = SetTileShore(NewShoreTile, X - 1, Y);
+		}
+	}
+	
 	if (Y > 0)
 	{
-		NewShoreTile = GetTile(X, Y - 1);
+		NewShoreTile = GetTile(X + 1, Y - 1);
 		if (!NewShoreTile)
 		{
 			return;
 		}
 		if (NewShoreTile->Type == EHexType::Ocean)
 		{
-			HexGrid[X][Y - 1]->Destroy();
-			HexGrid[X][Y - 1] = GetWorld()->SpawnActor<AHexagonTile>(ShoreHexTile,
-				HexGrid[X][Y - 1]->GetActorLocation(), FRotator::ZeroRotator);
-			NewShoreTile = GetTile(X, Y - 1);
-			NewShoreTile->Type = EHexType::Shore;
-			NewShoreTile->Hinder = EHinder::Water;
+			NewShoreTile = SetTileShore(NewShoreTile, X + 1, Y - 1);
 			return;
 		}
-		NewShoreTile = GetTile(X - 1, Y - 1);
+		NewShoreTile = GetTile(X, Y - 1);
 		if (!NewShoreTile)
 		{
 			return;
 		}
 		else if (X > 0 && NewShoreTile->Type == EHexType::Ocean)
 		{
-			HexGrid[X - 1][Y - 1]->Destroy();
-			HexGrid[X - 1][Y - 1] = GetWorld()->SpawnActor<AHexagonTile>(ShoreHexTile,
-				HexGrid[X - 1][Y - 1]->GetActorLocation(), FRotator::ZeroRotator);
-			NewShoreTile = GetTile(X - 1, Y - 1);
-			NewShoreTile->Type = EHexType::Shore;
-			NewShoreTile->Hinder = EHinder::Water;
+			NewShoreTile = SetTileShore(NewShoreTile, X, Y - 1);
 			return;
 		}
 	}
-	NewShoreTile = GetTile(X - 1, Y);
-	if (!NewShoreTile)
+	if (X > 0)
 	{
-		return;
-	}
-	if (X > 0 && NewShoreTile->Type == EHexType::Ocean)
-	{
-		HexGrid[X - 1][Y]->Destroy();
-		HexGrid[X - 1][Y] = GetWorld()->SpawnActor<AHexagonTile>(ShoreHexTile,
-			HexGrid[X - 1][Y]->GetActorLocation(), FRotator::ZeroRotator);
 		NewShoreTile = GetTile(X - 1, Y);
-		NewShoreTile->Type = EHexType::Shore;
-		NewShoreTile->Hinder = EHinder::Water;
+		if (!NewShoreTile)
+		{
+			return;
+		}
+		if (X > 0 && NewShoreTile->Type == EHexType::Ocean)
+		{
+			NewShoreTile = SetTileShore(NewShoreTile, X - 1, Y);
+		}
 	}
+}
+
+
+AHexagonTile* UGenerateMapComponent::SetTileShore(AHexagonTile* Tile, int X, int Y)
+{
+	HexGrid[X][Y]->Destroy();
+	HexGrid[X][Y] = GetWorld()->SpawnActor<AHexagonTile>(ShoreHexTile,
+		HexGrid[X][Y]->GetActorLocation(), FRotator::ZeroRotator);
+	Tile = GetTile(X, Y);
+	Tile->Type = EHexType::Shore;
+	Tile->Hinder = EHinder::Water;
+	return Tile;
 }
 
 bool UGenerateMapComponent::SetLikelihoodLand(AHexagonTile* Tile)

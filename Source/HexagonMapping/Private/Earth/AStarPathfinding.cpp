@@ -146,7 +146,7 @@ void AAStarPathfinding::LookForMoreOptions()
 	//}
 	DelayedCleanUp(5.0f);
 
-	// y do thesese be so big? r they to big?
+	// y do thesese be so big? r they too big?
 	/*GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Blue,
 		FString::Printf(TEXT("%d"), NewPath->Nodes.Num()));
 	GEngine->AddOnScreenDebugMessage(-1, 5, FColor::Purple,
@@ -174,14 +174,12 @@ TArray<AHexagonTile*> AAStarPathfinding::GetChildren(TArray<AHexagonTile*> Tiles
 				// search for goal tile
 				if (AdjTiles[j] == GoalTile)
 				{
-					// thisworks!!
-						tempgoalfounds++;
 					NewPath->SetGoalNode(NewNode, Depth);
 					TArray<AHexagonTile*> GoalTiles = NewPath->GetGoalPath(NewNode);
 					for (size_t k = 0; k < GoalTiles.Num(); k++)
 					{
-						UE_LOG(LogTemp, Warning, TEXT("X: %d"), GoalTiles[k]->TileIndex.X);
-						UE_LOG(LogTemp, Warning, TEXT("Y: %d"), GoalTiles[k]->TileIndex.Y);
+						/*UE_LOG(LogTemp, Warning, TEXT("X: %d"), GoalTiles[k]->TileIndex.X);
+						UE_LOG(LogTemp, Warning, TEXT("Y: %d"), GoalTiles[k]->TileIndex.Y);*/
 
 						GoalTiles[k]->ChangeHighlight(true);
 						ClosedList.Add(GoalTiles[k]);

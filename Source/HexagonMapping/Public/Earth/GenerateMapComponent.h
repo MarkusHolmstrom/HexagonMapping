@@ -274,6 +274,8 @@ public:
 	AHexagonTile* GetTile(int X, int Y);
 	UFUNCTION()
 	void SetShoreTilesAround(int X, int Y);
+	UFUNCTION()
+	AHexagonTile* SetTileShore(AHexagonTile* Tile, int X, int Y);
 
 	// Methods regarding likelihood of land vs water tiles
 	UFUNCTION()

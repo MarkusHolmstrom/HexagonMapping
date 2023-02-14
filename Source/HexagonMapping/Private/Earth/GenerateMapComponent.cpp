@@ -804,7 +804,6 @@ void UGenerateMapComponent::OnTileClicked(AActor* Tile)
 
 float UGenerateMapComponent::RandomLCGfloatPercentage(float Min, float Max)
 {
-    
 	// check if Max would be smaller than Min, exchange them if thats the case
 	if (Max < Min)
 	{
@@ -820,7 +819,7 @@ float UGenerateMapComponent::RandomLCGfloatPercentage(float Min, float Max)
 		RS.GenerateNewSeed();
 		Seed = RS.GetCurrentSeed();
 	}
-	// TODO test with Initalrandom as new seed instead!! or have rand seed up and a local float as reuslt down here:
+	// The LCG calculation
 	Seed = (Multiplier * Seed + Increment) % Modulus;
 	// generate more decimals with the 100, the additional 5 is if Max = 0
 	int Divider = (Max * 100) + 5;
